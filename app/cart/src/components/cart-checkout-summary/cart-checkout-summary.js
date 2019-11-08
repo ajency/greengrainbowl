@@ -40,7 +40,7 @@ class CartCheckoutSummary extends Component {
 				window.removeCartLoader();
 			} else {
 				console.log(this.props.match.params);
-				let url = generalConfig.apiEndPont+ '/anonymous/cart/create-order'
+				let url = generalConfig.apiEndPoint+ '/anonymous/cart/create-order'
 				axios.post(url, {cart_id:this.props.match.params.cart_id, fetchDraft:true})
 				.then((res) => {
 					if(res.data.code =='PAYMENT_DONE') {
@@ -95,7 +95,7 @@ class CartCheckoutSummary extends Component {
 							<h1 className="font-weight-bold d-block mobile-header mb-4 text-muted">Your cart summary</h1>
 						</div>
 						<div>
-							<DeliveryAddress showSummaryContent={true} address={this.state.orderSummary.formatted_address} delivery_time={this.state.orderSummary.approx_delivery_time}/>
+							<DeliveryAddress showSummaryContent={true} address={this.state.orderSummary.shipping_address.formatted_address} delivery_time={this.state.orderSummary.approx_delivery_time}/>
                             
                         </div>
 
