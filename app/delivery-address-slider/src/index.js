@@ -72,6 +72,9 @@ class gpsModalPrompt extends React.Component {
 			      <h4 className="font-weight-light mt-4 pb-4">
 			        We currently serve at Panjim, Porvorim & its neighbourhood.
 			      </h4>
+				  <div className="map-container d-done">
+					<div id="marker"><i class="fas fa-map-marker-alt"></i></div>
+				  </div>
 			      <div className="mb-3 pt-4">
 			       		{this.showFetchLocationUsingGps()}
 			      </div>
