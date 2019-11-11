@@ -87,7 +87,7 @@ class OrderSummary extends Component {
                     <h4 className="font-weight-light mt-4 pb-4">You can check your order status below.</h4>
                     </div>  
                     <div className="map-container">
-                        <GoogleMap latlng={this.state.orderSummary.order_data.lat_lng}/>
+                        <GoogleMap latlng={this.state.orderSummary.order_data.shipping_address.lat_long}/>
                         <div id="marker"><i className="fas fa-map-marker-alt"></i></div>
                     </div>  
                     <div className="p-15 pt-0 pb-0">
