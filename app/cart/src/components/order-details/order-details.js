@@ -51,11 +51,11 @@ class OrderDetails extends Component {
                             this.setState({shippingAddress: " "+this.state.pickupPoint})
                         } else {
                             let shipping_address='';
-                            if (res.order_data.shipping_address.address!='') {
+                            if (res.order_data.shipping_address.address) {
                                 shipping_address = res.order_data.shipping_address.address+', '
                             }
 
-                            if(res.order_data.shipping_address.landmark != '') {
+                            if(res.order_data.shipping_address.landmark) {
                                 shipping_address = shipping_address + res.order_data.shipping_address.landmark+', '
                             }
                             shipping_address = shipping_address + res.order_data.shipping_address.formatted_address;
