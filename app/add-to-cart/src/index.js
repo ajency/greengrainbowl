@@ -38,8 +38,8 @@ class addToCart extends React.Component {
 		}
 		if(this.state.quantity == 0)
 			return (
-				 <a className="btn-add-to-cart text-white bg-primary p-15 text-decoration-none m-0 font-size-25 ft6 cursor-pointer d-inline-block" onClick={() => this.checkVariant('add')} disabled={this.state.apiCallInProgress}>
-					<span>Add to cart</span>
+				 <a className="btn-add-to-cart text-white bg-primary p-15 text-decoration-none m-0 font-size-25 ft6 cursor-pointer d-inline-block p-add" onClick={() => this.checkVariant('add')} disabled={this.state.apiCallInProgress}>
+					<span className="zindex-1">Add to cart</span><i class="text-white fa fa-arrow-right font-size-20" aria-hidden="true"></i>
                  </a>
 				)
 
