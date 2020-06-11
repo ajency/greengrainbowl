@@ -314,57 +314,57 @@ class Cart extends Component {
 	async fetchCart() {
 		window.addCartLoader();
 		console.log("inside fetch cart");
-		let tempdata = {
-			"success": true,
-			"cart": {
-			  "business_id": "zq6Rzdvcx0UrULwzeSEr",
-			  "cart_count": 2,
-			  "created_at": 1591779823445,
-			  "items": [
-				{
-				  "variant_id": "1CG6P1slxnr9TSNnPzvZ-bowl",
-				  "attributes": {
-					"title": "Orange Barley Bowl (Tofu)",
-					"images": {
-					  "1x": "https://greengrainbowl.com/wp-content/themes/ajency-portfolio/images/products/OBB-Tofu_1x.jpg"
-					},
-					"size": "bowl",
-					"price_mrp": 230,
-					"price_final": 1,
-					"discount_per": 0
-				  },
-				  "availability": true,
-				  "quantity": 2,
-				  "timestamp": 1591781637462,
-				  "deliverable": true,
-				  "product_id": "1CG6P1slxnr9TSNnPzvZ"
-				}
-			  ],
-			  "mobile_number": "",
-			  "order_mode": "online",
-			  "order_type": "cart",
-			  "shipping_address": {
-				"formatted_address": "Panjim Bus Stand, Bus Stand,, Patto Centre, Panaji, Goa 403001, India",
-				"lat_long": [
-				  15.4952312,
-				  73.836518
-				]
-			  },
-			  "stock_location_id": "8vwd1rQRGiw0iQeMdlU0",
-			  "summary": {
-				"cart_discount": 0,
-				"mrp_total": 460,
-				"sale_price_total": 2,
-				"shipping_fee": 1,
-				"you_pay": 3
-			  },
-			  "user_id": "mWOyzNP1bUP6efaSRaffM3lbUzD2",
-			  "verified": false
-			},
-			"coupon_applied": null,
-			"coupons": []
-		  };
-		  this.setState({cartData : tempdata, fetchCartComplete : true});
+		// let tempdata = {
+		// 	"success": true,
+		// 	"cart": {
+		// 	  "business_id": "zq6Rzdvcx0UrULwzeSEr",
+		// 	  "cart_count": 2,
+		// 	  "created_at": 1591779823445,
+		// 	  "items": [
+		// 		{
+		// 		  "variant_id": "1CG6P1slxnr9TSNnPzvZ-bowl",
+		// 		  "attributes": {
+		// 			"title": "Orange Barley Bowl (Tofu)",
+		// 			"images": {
+		// 			  "1x": "https://greengrainbowl.com/wp-content/themes/ajency-portfolio/images/products/OBB-Tofu_1x.jpg"
+		// 			},
+		// 			"size": "bowl",
+		// 			"price_mrp": 230,
+		// 			"price_final": 1,
+		// 			"discount_per": 0
+		// 		  },
+		// 		  "availability": true,
+		// 		  "quantity": 2,
+		// 		  "timestamp": 1591781637462,
+		// 		  "deliverable": true,
+		// 		  "product_id": "1CG6P1slxnr9TSNnPzvZ"
+		// 		}
+		// 	  ],
+		// 	  "mobile_number": "",
+		// 	  "order_mode": "online",
+		// 	  "order_type": "cart",
+		// 	  "shipping_address": {
+		// 		"formatted_address": "Panjim Bus Stand, Bus Stand,, Patto Centre, Panaji, Goa 403001, India",
+		// 		"lat_long": [
+		// 		  15.4952312,
+		// 		  73.836518
+		// 		]
+		// 	  },
+		// 	  "stock_location_id": "8vwd1rQRGiw0iQeMdlU0",
+		// 	  "summary": {
+		// 		"cart_discount": 0,
+		// 		"mrp_total": 460,
+		// 		"sale_price_total": 2,
+		// 		"shipping_fee": 1,
+		// 		"you_pay": 3
+		// 	  },
+		// 	  "user_id": "mWOyzNP1bUP6efaSRaffM3lbUzD2",
+		// 	  "verified": false
+		// 	},
+		// 	"coupon_applied": null,
+		// 	"coupons": []
+		//   };
+		//   this.setState({cartData : tempdata, fetchCartComplete : true});
 		let cart_id =  window.readFromLocalStorage(generalConfig.site_mode+'-cart_id-'+generalConfig.businessId);
 		if(cart_id){
 			try{
