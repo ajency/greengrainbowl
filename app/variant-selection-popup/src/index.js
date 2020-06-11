@@ -1,6 +1,22 @@
 'use strict';
-
+// import Select from 'react-select'
+// var Select;
 const e = React.createElement;
+
+// const optionsDays = [
+// 	{ value: 'monday', label: 'Monday' },
+// 	{ value: 'tuesday', label: 'Tuesday' },
+// 	{ value: 'wednesday', label: 'Wednesday' },
+// 	{ value: 'thursday', label: 'Thursday' },
+// 	{ value: 'friday', label: 'Friday' },
+// 	{ value: 'saturday', label: 'Saturday' }
+// ];
+
+// const optionsSlot = [
+// 	{ value: 'slot', label: 'Select a slot' },
+// 	{ value: 'lunch', label: 'Lunch' },
+// 	{ value: 'dinner', label: 'Dinner' }
+// ];
 
 class variantSelection extends React.Component {
 	constructor(props) {
@@ -25,6 +41,35 @@ class variantSelection extends React.Component {
 			          <div className="variant-list mb-4">
 			          		{this.getVariants()}
 			          </div>
+					  <div class="d-flex mb-4">
+							<div class="select-wrapper w-50">
+								<div class="select-wrapper-title">
+									<span class="d-block">Select day</span>
+								</div>
+								<div class="select-inner-wrap">
+									<select name="days" id="days">
+										<option value="monday">Monday</option>
+										<option value="tuesday">Tuesday</option>
+										<option value="wednesday">Wednesday</option>
+										<option value="thursday">Thursday</option>
+										<option value="friday">Friday</option>
+										<option value="saturday">Saturday</option>
+									</select>
+								</div>
+							</div>
+							<div class="select-wrapper w-50">
+								<div class="select-wrapper-title">
+									<span class="d-block">Select slot</span>
+								</div>
+								<div class="select-inner-wrap">
+									<select name="slot" id="slot">
+										<option value="choose">Choose a slot</option>
+										<option value="lunch">Lunch</option>
+										<option value="dinner">Dinner</option>
+									</select>
+								</div>
+							</div>
+						</div>
 			        </div>
 			        <div className="custom-modal-footer d-flex justify-content-between">
 						<button type="button" className="btn-reset btn-continue btn-arrow-icon font-size-15 text-capitalize p-15 bg-primary text-white text-left w-100 position-relative d-flex align-items-center justify-content-between" onClick={()=>this.addToCart(this.state.selectedVariant)} >
