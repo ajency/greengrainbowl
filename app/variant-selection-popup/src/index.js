@@ -92,7 +92,7 @@ class variantSelection extends React.Component {
 									<span class="d-block">Select slot</span>
 								</div>
 								<div class="select-inner-wrap">
-									<select name="slot" id="slot" disable={disableSlot}>
+									<select name="slot" id="slot" disable={disableSlot} value={selectedSlot}>
 										<option value="choose" >Choose a slot</option>
 										{!disableSlot && slotsArray.map((slot) => {
 											return (
@@ -140,6 +140,7 @@ class variantSelection extends React.Component {
 					</div>
 				)
 			})
+			this.setState({selectedSize:variantsArray[0].size, selectedVariant: variantsArray[0].id})
 			return variants;
 		}
 		else {
