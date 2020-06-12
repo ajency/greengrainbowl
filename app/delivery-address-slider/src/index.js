@@ -7,6 +7,8 @@ const CancelToken = axios.CancelToken;
 let cancel;
 let debounceTimer;
 
+const logo = "https://greengrainbowl.com/assets/images/cart-images/app-logo.png";
+
 const locationStyle = {
 	'listStyle' : 'none'
 }
@@ -64,7 +66,7 @@ class gpsModalPrompt extends React.Component {
 		    <div className="slide-in" id="gpsModal">
 			  <div className="slide-in-header header-container d-flex align-items-center">
 			      <div className="app-name d-flex align-items-center">			
-			          <img src={window.site_url + "/wp-content/themes/ajency-portfolio/images/slidein/app-logo.png"} className="app-log" alt="Green Grain Bowl" title="Green Grain Bowl"/>
+			          <img src={logo} className="app-log" alt="Green Grain Bowl" title="Green Grain Bowl"/>
 			      </div>
 			      <div className="app-chekout text-green">
 				  	  <i class="sprite sprite-checkout"></i>
@@ -205,11 +207,11 @@ class gpsModalPrompt extends React.Component {
 
 	getAddressIcon(type){
 		console.log("type :  ", type);
-		let src = this.state.webSiteLink + "wp-content/themes/ajency-portfolio/images/slidein/map.png"
+		let src = "https://greengrainbowl.com/assets/images/cart-images/map.png"
 		if(type == 'home')
-			src = this.state.webSiteLink + "wp-content/themes/ajency-portfolio/images/slidein/home.png"
+			src = "https://greengrainbowl.com/assets/images/cart-images/home.png"
 		else if(type == 'office')
-			src = this.state.webSiteLink + "wp-content/themes/ajency-portfolio/images/slidein/office.png"
+			src = "https://greengrainbowl.com/assets/images/cart-images/office.png"
 		return (<img src={src} className="address-icon"/>)
 	}
 

@@ -5,6 +5,11 @@ import './add-new-address.scss'
 import GoogleMap from '../google-map/google-map';
 import { generalConfig } from '../config.js';
 import * as _ from 'underscore';
+
+import homeLocation from '../../assets/images/home_location.png';
+import addressLocation from '../../assets/images/address_location.png';
+import officeLocation from '../../assets/images/office_location.png';
+
 const CancelToken = axios.CancelToken;
 let cancel;
 let debounceTimer;
@@ -177,21 +182,21 @@ class AddNewAddress extends Component {
                 <div className="radio d-inline-block pr-5">
                     <label className="text-center">
                         <input class="invisible position-absolute radio-input" type="radio" onChange={this.handleAddressTypeChange} value="Home"  checked={this.state.address_type ==='Home'} />
-                        <img src={window.site_url + "/wp-content/themes/ajency-portfolio/images/home_location.png"} className="mb-1" height="30"/>
+                        <img src={homeLocation} className="mb-1" height="30"/>
                         <span className="radio-text d-block">Home</span>
                     </label>
                 </div>
                 <div className="radio d-inline-block pr-5">
                     <label className="text-center">
                         <input class="invisible position-absolute radio-input" type="radio" onChange={this.handleAddressTypeChange} value="Work" checked={this.state.address_type ==='Work'} />
-                        <img src={window.site_url + "/wp-content/themes/ajency-portfolio/images/office_location.png"} className="mb-1" height="30"/>
+                        <img src={officeLocation} className="mb-1" height="30"/>
                         <span className="radio-text d-block">Work</span>
                     </label>
                 </div>
                 <div className="radio d-inline-block">
                     <label className="text-center">
                         <input class="invisible position-absolute radio-input" type="radio" onChange={this.handleAddressTypeChange}  value="Other" checked={this.state.address_type ==='Other'} />
-                        <img src={window.site_url + "/wp-content/themes/ajency-portfolio/images/address_location.png"} className="mb-1" height="30"/>
+                        <img src={addressLocation} className="mb-1" height="30"/>
                         <span className="radio-text d-block">Other</span>
                     </label>
                 </div>
