@@ -50,6 +50,7 @@ class variantSelection extends React.Component {
 	}
 
 	setDay(e){
+		console.log(e.target.value);
 		this.setState({ selectedDay: e.target.value })
 	}
 	render() {
@@ -71,6 +72,7 @@ class variantSelection extends React.Component {
 								</div>
 								<div class="select-inner-wrap">
 									<select name="days" id="days" onChange={(e) => this.setDay(e)} value={selectedDay}>
+										<option>Choose a day</option>
 										{this.getDays()}
 									</select>
 								</div>
