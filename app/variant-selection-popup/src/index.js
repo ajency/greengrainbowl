@@ -159,9 +159,6 @@ class variantSelection extends React.Component {
 		}
 	}
 
-	setSlots(e) {
-
-	}
 
 	getItemType() {
 		if (this.state.product && this.state.product.veg) {
@@ -279,9 +276,8 @@ class variantSelection extends React.Component {
 			this.setState({slotError:true})
 			return
 		} 
-		if(selectedSize) {
+		if(!selectedSize) {
 			return
-			
 		} 
 		const selectedVariant = variants.filter((v) => {
 			return v.size == selectedSize && v.day == selectedDay && v.slot == selectedSlot
