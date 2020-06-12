@@ -126,7 +126,7 @@ class variantSelection extends React.Component {
 					<div key={variant.id} className="list-item pt-3 pb-3 border-bottom-lightgrey">
 						<label className="custom-radio-btn mb-0 font-size-16">
 							<span className={"mr-3 d-inline-block mw-70 text-capitalize " + (this.state.selectedVariant == variant.id ? 'text-primary' : '')}>{variant.size}</span> <span className="price-span text-right"><span className="currency-symbol">₹</span>{variant.sale_price}</span>
-							<input type="radio" name={"variant-" + this.state.productId} value={variant.id} checked={this.state.selectedVariant == variant.id} onChange={(event) => this.handleOptionChange(event)} />
+							<input type="radio" data-productid={variant.id} name={"variant-" + this.state.productId} value={variant.size} checked={this.state.selectedVariant == variant.id} onChange={(event) => this.handleOptionChange(event)} />
 							<span className="checkmark"></span>
 						</label>
 						{this.getComboText(variant.size)}
@@ -201,7 +201,7 @@ class variantSelection extends React.Component {
 
 
 	handleOptionChange(event) {
-		this.setState({ selectedVariant: event.target.value });
+		this.setState({ selectedSize: event.target.value });
 	}
 
 
@@ -251,8 +251,16 @@ class variantSelection extends React.Component {
 
 	addToCart(variant_id = null) {
 		console.log("variant id==>", variant_id);
-		this.hideVariantModal();
-		window.addToCartFromVariant(this.state.productId, variant_id, this.state.product);
+		const {variants, selectedDay, selectedSize,selectedSlot,product,productId} =this.state
+		const selectedVariant = variants.filter((v) => {
+			return v.size == selectedSize && v.day == selectedDay && v.slot == selectedSlot
+		})
+	
+		this.setState({selectedDay:'', selectedSize:'',selectedSlot:''}, ()=> {
+			this.hideVariantModal();
+			window.addToCartFromVariant(productId, selectedVariant[0].id, product);
+		})
+	
 	}
 }
 
