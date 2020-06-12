@@ -62,7 +62,7 @@ class variantSelection extends React.Component {
 		this.setState({ selectedDay: e.target.value, disableSlot: false, selectedSlot: '' })
 	}
 	render() {
-		const { selectedDay, disableSlot, variants } = this.state
+		const { selectedDay, disableSlot, variants,selectedSlot } = this.state
 		const slotsArray = variants.filter((v) =>{ return v.day == selectedDay }).map((p) => { return p.slot }).filter((value, index, self) => self.indexOf(value) === index)
 
 		return (
