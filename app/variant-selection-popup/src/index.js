@@ -33,7 +33,7 @@ class variantSelection extends React.Component {
 		};
 	}
 
-	getDays = () => {
+	getDays(){
 		const { variants } = this.state
 		const daysArray = variants.map((p) => { return p.day }).filter((value, index, self) => self.indexOf(value) === index)
 		let days = daysArray.map((day) => {
@@ -44,12 +44,12 @@ class variantSelection extends React.Component {
 		return days;
 	}
 
-	getSlots = () => {
+	getSlots(){
 		const { variants, selectedDay } = this.state
 		const slots = variants.map((p) => { return p.day == selectedDay }).filter((value, index, self) => self.indexOf(value) === index)
 	}
 
-	setDay = (e) => {
+	setDay(e){
 		this.setState({ selectedDay: e.target.value })
 	}
 	render() {
