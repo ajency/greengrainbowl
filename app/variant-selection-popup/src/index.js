@@ -68,7 +68,7 @@ class variantSelection extends React.Component {
 						<div class="d-flex mb-4">
 							<div class="select-wrapper w-50">
 								<div class="select-wrapper-title">
-									<span class="d-block">Select day</span>
+									<span class="d-block">Select day *</span>
 								</div>
 								<div class="select-inner-wrap">
 									<select name="days" id="days" onChange={(e) => this.setDay(e)} value={selectedDay}>
@@ -76,13 +76,14 @@ class variantSelection extends React.Component {
 										{this.getDays()}
 									</select>
 								</div>
+								<div class="error-msg mt-2 text-danger">Please select a day.</div>
 							</div>
 							<div class="select-wrapper w-50">
 								<div class="select-wrapper-title">
-									<span class="d-block">Select slot</span>
+									<span class="d-block">Select slot *</span>
 								</div>
 								<div class="select-inner-wrap">
-									<select name="slot" id="slot" disable={disableSlot} value={selectedSlot}>
+									<select name="slot" id="slot" disable={disableSlot} value={selectedSlot} onChange={(e) => this.setSlots(e)} >
 										<option value="choose" >Choose a slot</option>
 										{!disableSlot && slotsArray.map((slot) => {
 											return (
@@ -91,6 +92,7 @@ class variantSelection extends React.Component {
 										})}
 									</select>
 								</div>
+								<div class="error-msg mt-2 text-danger">Please select a day.</div>
 							</div>
 						</div>
 					</div>
@@ -155,6 +157,10 @@ class variantSelection extends React.Component {
 		}
 	}
 
+	setSlots(e) {
+
+	}
+
 	getItemType() {
 		if (this.state.product && this.state.product.veg) {
 			return (<div class="list-meta mt-4 mb-4">
@@ -201,6 +207,9 @@ class variantSelection extends React.Component {
 		this.setState({ selectedSize: event.target.value });
 	}
 
+	setSlots(e) {
+		this.setState({ selectedSlot: event.target.value });
+	}
 
 	fetchVariants(product_id, last_selected) {
 		if (window.products && window.products.length) {
@@ -244,7 +253,7 @@ class variantSelection extends React.Component {
 				this.setState({ variants: variants, selectedVariant: variantsArray[0].id });
 			}
 			else {
-				this.setState({ variants: variants, selectedVariant: last_selected });
+				this.setState({ variants: variants, selectedVariant: variantsArray[0].id });
 			}
 		}
 		else {
@@ -259,6 +268,17 @@ class variantSelection extends React.Component {
 	addToCart(variant_id = null) {
 		console.log("variant id==>", variant_id);
 		const { variants, selectedDay, selectedSize, selectedSlot, product, productId } = this.state
+		if(selectedDay =='' || selectedDay =='choose') {
+			return
+
+		} 
+		if(selectedSlot =='' || selectedSlot =='choose') {
+			return
+		} 
+		if(selectedSize) {
+			return
+			
+		} 
 		const selectedVariant = variants.filter((v) => {
 			return v.size == selectedSize && v.day == selectedDay && v.slot == selectedSlot
 		})
