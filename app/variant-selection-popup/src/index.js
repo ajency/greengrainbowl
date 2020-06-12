@@ -59,10 +59,19 @@ class variantSelection extends React.Component {
 
 	setDay(e){
 		console.log(e.target.value);
-		this.setState({ selectedDay: e.target.value, disableSlot:false })
+		this.setState({ selectedDay: e.target.value, disableSlot:false, selectedSlot:'' })
 	}
 	render() {
-		const { selectedDay, disableSlot } = this.state
+		const { selectedDay, disableSlot,variants } = this.state
+		const getSlots = (function (){
+			const slotsArray = variants.map((p) => { return p.day == selectedDay }).filter((value, index, self) => self.indexOf(value) === index)
+			let slots = slotsArray.map((slot) => {
+				return (
+					<option value={slot}>{SLOTS[slot]}</option>
+				)
+			})
+			return slots
+		})()
 		return (
 			<div className="custom-modal" id="variation-selection-popup">
 				<div className="custom-modal-content p-15">
@@ -92,7 +101,7 @@ class variantSelection extends React.Component {
 								<div class="select-inner-wrap">
 									<select name="slot" id="slot" disable={disableSlot}>
 										<option value="choose" >Choose a slot</option>
-										{!disableSlot && this.getSlots()}
+										{!disableSlot && getSlots()}
 									</select>
 								</div>
 							</div>
