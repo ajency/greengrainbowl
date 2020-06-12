@@ -17,7 +17,8 @@ const e = React.createElement;
 // 	{ value: 'lunch', label: 'Lunch' },
 // 	{ value: 'dinner', label: 'Dinner' }
 // ];
-const DAYS ={"monday": "Monday", "tue":"Tuesday", "wed":"Wednesday", "thus":"Thusday", "fri":'Friday', 'sat': "Saturday", "sun":"Sunday"}
+const DAYS ={"monday": "Monday", "tue":"Tuesday", "wed":"Wednesday", "thus":"Thusday", "fri":'Friday', 'sat': "Saturday", "sun":"Sunday"};
+const SLOTS={"lunch":"Lunch", "dinner":"Dinner"};
 class variantSelection extends React.Component {
 	constructor(props) {
 		super(props);
@@ -29,7 +30,8 @@ class variantSelection extends React.Component {
 			product: null,
 			selectedDay: '',
 			selectedSize: '',
-			selectedSlot: ''
+			selectedSlot: '',
+			disableSlot:true
 		};
 	}
 
@@ -46,15 +48,21 @@ class variantSelection extends React.Component {
 
 	getSlots(){
 		const { variants, selectedDay } = this.state
-		const slots = variants.map((p) => { return p.day == selectedDay }).filter((value, index, self) => self.indexOf(value) === index)
+		const slotsArray = variants.map((p) => { return p.day == selectedDay }).filter((value, index, self) => self.indexOf(value) === index)
+		let slots = slotsArray.map((slot) => {
+			return (
+				<option value={slot}>{SLOTS[slot]}</option>
+			)
+		})
+		return slots
 	}
 
 	setDay(e){
 		console.log(e.target.value);
-		this.setState({ selectedDay: e.target.value })
+		this.setState({ selectedDay: e.target.value, disableSlot:false })
 	}
 	render() {
-		const { selectedDay } = this.state
+		const { selectedDay, disableSlot } = this.state
 		return (
 			<div className="custom-modal" id="variation-selection-popup">
 				<div className="custom-modal-content p-15">
@@ -72,7 +80,7 @@ class variantSelection extends React.Component {
 								</div>
 								<div class="select-inner-wrap">
 									<select name="days" id="days" onChange={(e) => this.setDay(e)} value={selectedDay}>
-										<option>Choose a day</option>
+										<option value="choose">Choose a day</option>
 										{this.getDays()}
 									</select>
 								</div>
@@ -82,10 +90,9 @@ class variantSelection extends React.Component {
 									<span class="d-block">Select slot</span>
 								</div>
 								<div class="select-inner-wrap">
-									<select name="slot" id="slot">
-										<option value="choose">Choose a slot</option>
-										<option value="lunch">Lunch</option>
-										<option value="dinner">Dinner</option>
+									<select name="slot" id="slot" disable={disableSlot}>
+										<option value="choose" >Choose a slot</option>
+										{!disableSlot && this.getSlots()}
 									</select>
 								</div>
 							</div>
