@@ -107,7 +107,7 @@ class variantSelection extends React.Component {
 			for (const item of this.state.variants) {
 				if (!map.has(item.size)) {
 					map.set(item.size, true);    // set any value to Map
-					result.push({
+					variantsArray.push({
 						...item
 					});
 				}
