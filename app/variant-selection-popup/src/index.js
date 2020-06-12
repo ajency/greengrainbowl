@@ -130,7 +130,7 @@ class variantSelection extends React.Component {
 					</div>
 				)
 			})
-			this.setState({selectedSize:variantsArray[0].size, selectedVariant: variantsArray[0].id})
+			// this.setState({selectedSize:variantsArray[0].size, selectedVariant: variantsArray[0].id})
 			return variants;
 		}
 		else {
@@ -230,8 +230,18 @@ class variantSelection extends React.Component {
 			variants = product.variants.filter((variant) => { return variant.active })
 		}
 		if (variants.length) {
+			const variantsArray = [];
+			const map = new Map();
+			for (const item of variants) {
+				if (!map.has(item.size)) {
+					map.set(item.size, true);    // set any value to Map
+					variantsArray.push({
+						...item
+					});
+				}
+			}
 			if (!last_selected) {
-				this.setState({ variants: variants, selectedVariant: variants[0].id });
+				this.setState({ variants: variants, selectedVariant: variantsArray[0].id });
 			}
 			else {
 				this.setState({ variants: variants, selectedVariant: last_selected });
