@@ -13,12 +13,12 @@ const e = React.createElement;
 // ];
 
 // const optionsSlot = [
-	// 	{ value: 'slot', label: 'Select a slot' },
-	// 	{ value: 'lunch', label: 'Lunch' },
-	// 	{ value: 'dinner', label: 'Dinner' }
-	// ];
-	
-	class variantSelection extends React.Component {
+// 	{ value: 'slot', label: 'Select a slot' },
+// 	{ value: 'lunch', label: 'Lunch' },
+// 	{ value: 'dinner', label: 'Dinner' }
+// ];
+const DAYS ={"monday": "Monday", "tue":"Tuesday", "wed":"Wednesday", "thus":"Thusday", "fri":'Friday', 'sat': "Saturday", "sun":"Sunday"}
+class variantSelection extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -29,17 +29,23 @@ const e = React.createElement;
 			product: null,
 			selectedDay: '',
 			selectedSize: '',
-			selectedSlot:''
+			selectedSlot: ''
 		};
 	}
-	
+
 	getDays = () => {
-		const {variants} = this.state
-		const days = variants.map((p) => { return p.day }).filter((value, index, self) => self.indexOf(value) === index)
+		const { variants } = this.state
+		const daysArray = variants.map((p) => { return p.day }).filter((value, index, self) => self.indexOf(value) === index)
+		let days = daysArray.map((day) => {
+			return (
+				<option value={day}>{DAYS[day]}</option>
+			)
+		})
+		return days;
 	}
 
 	getSlots = () => {
-		const {variants, selectedDay} = this.state
+		const { variants, selectedDay } = this.state
 		const slots = variants.map((p) => { return p.day == selectedDay }).filter((value, index, self) => self.indexOf(value) === index)
 	}
 
@@ -65,12 +71,7 @@ const e = React.createElement;
 								</div>
 								<div class="select-inner-wrap">
 									<select name="days" id="days" onChange={(e) => this.setDay(e)} value={selectedDay}>
-										<option value="monday">Monday</option>
-										<option value="tuesday">Tuesday</option>
-										<option value="wednesday">Wednesday</option>
-										<option value="thursday">Thursday</option>
-										<option value="friday">Friday</option>
-										<option value="saturday">Saturday</option>
+										{this.getDays()}
 									</select>
 								</div>
 							</div>
@@ -139,12 +140,12 @@ const e = React.createElement;
 			)
 		}
 	}
-	
+
 	getComboText(size) {
 		if (size == "combo") {
 			return (
 				<div class="text-silver combo-text">Combo of Bowl + Homemade Lemonade Sweetened With Jaggery</div>
-				)
+			)
 		}
 	}
 
@@ -161,24 +162,24 @@ const e = React.createElement;
 			</div>)
 		}
 	}
-	
+
 	showVariantModal(product_id, last_selected) {
 		this.fetchVariants(product_id, last_selected);
 		document.querySelector('#variation-selection-popup').classList.add('show-modal');
 		document.querySelectorAll('.product-wrapper')
-		.forEach((domContainer) => {
-			domContainer.classList.add('transform-none');
-		});
+			.forEach((domContainer) => {
+				domContainer.classList.add('transform-none');
+			});
 		let product_element = document.querySelector('#product-' + this.state.productId)
 		if (product_element)
-		product_element.classList.add('zindex');
+			product_element.classList.add('zindex');
 		window.hideScroll();
 	}
-	
+
 	hideVariantModal() {
 		document.querySelector('#variation-selection-popup').classList.remove('show-modal');
 		document.querySelectorAll('.product-wrapper')
-		.forEach((domContainer) => {
+			.forEach((domContainer) => {
 				domContainer.classList.remove('transform-none');
 			});
 
