@@ -504,7 +504,10 @@ async function fetchCart(cart_id){
                     size : item.size,
                     price_mrp : item.mrp,
                     price_final : item.sale_price,
-                    discount_per : 0
+                    discount_per : 0,
+                    slot : item.slot,
+                    day : item.day
+
                 },
                   availability : in_stock,
                   quantity : item.quantity,
