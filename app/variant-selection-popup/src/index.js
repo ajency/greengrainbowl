@@ -31,7 +31,9 @@ class variantSelection extends React.Component {
 			selectedDay: '',
 			selectedSize: '',
 			selectedSlot: '',
-			disableSlot: true
+			disableSlot: true,
+			slotError:false,
+			dayError:false
 		};
 	}
 
@@ -49,10 +51,10 @@ class variantSelection extends React.Component {
 
 	setDay(e) {
 		console.log(e.target.value);
-		this.setState({ selectedDay: e.target.value, disableSlot: false, selectedSlot: '' })
+		this.setState({ selectedDay: e.target.value, disableSlot: false, selectedSlot: '', dayError:false })
 	}
 	render() {
-		const { selectedDay, disableSlot, variants,selectedSlot } = this.state
+		const { selectedDay, disableSlot, variants,selectedSlot, dayError,slotError } = this.state
 		const slotsArray = variants.filter((v) =>{ return v.day == selectedDay }).map((p) => { return p.slot }).filter((value, index, self) => self.indexOf(value) === index)
 
 		return (
@@ -76,7 +78,7 @@ class variantSelection extends React.Component {
 										{this.getDays()}
 									</select>
 								</div>
-								<div class="error-msg mt-2 text-danger">Please select a day.</div>
+								{dayError && <div class="error-msg mt-2 text-danger">Please select a day.</div>}
 							</div>
 							<div class="select-wrapper w-50">
 								<div class="select-wrapper-title">
@@ -92,7 +94,7 @@ class variantSelection extends React.Component {
 										})}
 									</select>
 								</div>
-								<div class="error-msg mt-2 text-danger">Please select a day.</div>
+								{slotError && <div class="error-msg mt-2 text-danger">Please select a slot.</div>}
 							</div>
 						</div>
 					</div>
@@ -208,7 +210,7 @@ class variantSelection extends React.Component {
 	}
 
 	setSlots(e) {
-		this.setState({ selectedSlot: event.target.value });
+		this.setState({ selectedSlot: event.target.value, slotError:false });
 	}
 
 	fetchVariants(product_id, last_selected) {
@@ -269,10 +271,12 @@ class variantSelection extends React.Component {
 		console.log("variant id==>", variant_id);
 		const { variants, selectedDay, selectedSize, selectedSlot, product, productId } = this.state
 		if(selectedDay =='' || selectedDay =='choose') {
+			this.setState({dayError:true})
 			return
 
 		} 
 		if(selectedSlot =='' || selectedSlot =='choose') {
+			this.setState({slotError:true})
 			return
 		} 
 		if(selectedSize) {
