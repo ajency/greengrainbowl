@@ -46,16 +46,6 @@ class variantSelection extends React.Component {
 		return days;
 	}
 
-	getSlots() {
-		const { variants, selectedDay } = this.state
-		const slotsArray = variants.map((p) => { return p.day == selectedDay }).filter((value, index, self) => self.indexOf(value) === index)
-		let slots = slotsArray.map((slot) => {
-			return (
-				<option value={slot}>{SLOTS[slot]}</option>
-			)
-		})
-		return slots
-	}
 
 	setDay(e) {
 		console.log(e.target.value);
