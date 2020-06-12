@@ -135,7 +135,7 @@ class variantSelection extends React.Component {
 					<div key={variant.id} className="list-item pt-3 pb-3 border-bottom-lightgrey">
 						<label className="custom-radio-btn mb-0 font-size-16">
 							<span className={"mr-3 d-inline-block mw-70 text-capitalize " + (this.state.selectedVariant == variant.id ? 'text-primary' : '')}>{variant.size}</span> <span className="price-span text-right"><span className="currency-symbol">₹</span>{variant.sale_price}</span>
-							<input type="radio" data-productid={variant.id} name={"variant-" + this.state.productId} value={variant.size} checked={this.state.selectedVariant == variant.id} onChange={(event) => this.handleOptionChange(event)} />
+							<input type="radio" data-productid={variant.id} name={"variant-" + this.state.productId} value={variant.size} checked={this.state.selectedSize == variant.size} onChange={(event) => this.handleOptionChange(event)} />
 							<span className="checkmark"></span>
 						</label>
 						{this.getComboText(variant.size)}
