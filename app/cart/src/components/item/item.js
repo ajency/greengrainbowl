@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import './item.scss';
 // import addToCart from '../../../add-to-cart/add-to-cart.js';
 import Quantity from './components/cart_quantity.js';
+const DAYS = { "monday": "Monday", "tue": "Tuesday", "wed": "Wednesday", "thus": "Thusday", "fri": 'Friday', 'sat': "Saturday", "sun": "Sunday" };
+const SLOTS = { "lunch": "Lunch", "dinner": "Dinner" };
 
 class Item extends Component {
 	constructor(props) {
@@ -11,6 +13,7 @@ class Item extends Component {
 		}
 	}
 	render() {
+		const extraContent  = this.props.item.attributes.day? `(${DAYS[this.props.item.attributes.day]}-${SLOTS[this.props.item.attributes.slot]})`:''
 		return (
 			<div className="item-container flex-column">
 				<div className="d-flex mb-4">
@@ -23,7 +26,7 @@ class Item extends Component {
 						</div>	
 						<div className="d-flex justify-content-between">
 							<div className="product-size-c font-italic text-capitalize">
-								{this.props.item.attributes.size}
+								{this.props.item.attributes.size}{extraContent}
 							</div>
 							<div className="d-flex align-items-center">
 								<div className="product-quantity d-inline-block">

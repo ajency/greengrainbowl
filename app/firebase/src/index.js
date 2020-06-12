@@ -612,6 +612,8 @@ async function addToCart(site_mode, variant_id = null, lat_long = null, cart_id 
                 images : product.image_urls,
                 size : variant.size,
                 mrp : variant.mrp,
+                day:variant.day,
+                slot:variant.slot,
                 sale_price : variant.sale_price,
                 discount_per : 0,
                 description : product.description,
