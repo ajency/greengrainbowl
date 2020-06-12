@@ -17,8 +17,8 @@ const e = React.createElement;
 // 	{ value: 'lunch', label: 'Lunch' },
 // 	{ value: 'dinner', label: 'Dinner' }
 // ];
-const DAYS ={"monday": "Monday", "tue":"Tuesday", "wed":"Wednesday", "thus":"Thusday", "fri":'Friday', 'sat': "Saturday", "sun":"Sunday"};
-const SLOTS={"lunch":"Lunch", "dinner":"Dinner"};
+const DAYS = { "monday": "Monday", "tue": "Tuesday", "wed": "Wednesday", "thus": "Thusday", "fri": 'Friday', 'sat': "Saturday", "sun": "Sunday" };
+const SLOTS = { "lunch": "Lunch", "dinner": "Dinner" };
 class variantSelection extends React.Component {
 	constructor(props) {
 		super(props);
@@ -31,11 +31,11 @@ class variantSelection extends React.Component {
 			selectedDay: '',
 			selectedSize: '',
 			selectedSlot: '',
-			disableSlot:true
+			disableSlot: true
 		};
 	}
 
-	getDays(){
+	getDays() {
 		const { variants } = this.state
 		const daysArray = variants.map((p) => { return p.day }).filter((value, index, self) => self.indexOf(value) === index)
 		let days = daysArray.map((day) => {
@@ -46,7 +46,7 @@ class variantSelection extends React.Component {
 		return days;
 	}
 
-	getSlots(){
+	getSlots() {
 		const { variants, selectedDay } = this.state
 		const slotsArray = variants.map((p) => { return p.day == selectedDay }).filter((value, index, self) => self.indexOf(value) === index)
 		let slots = slotsArray.map((slot) => {
@@ -57,21 +57,14 @@ class variantSelection extends React.Component {
 		return slots
 	}
 
-	setDay(e){
+	setDay(e) {
 		console.log(e.target.value);
-		this.setState({ selectedDay: e.target.value, disableSlot:false, selectedSlot:'' })
+		this.setState({ selectedDay: e.target.value, disableSlot: false, selectedSlot: '' })
 	}
 	render() {
-		const { selectedDay, disableSlot,variants } = this.state
-		const getSlots = (function (){
-			const slotsArray = variants.map((p) => { return p.day == selectedDay }).filter((value, index, self) => self.indexOf(value) === index)
-			let slots = slotsArray.map((slot) => {
-				return (
-					<option value={slot}>{SLOTS[slot]}</option>
-				)
-			})
-			return slots
-		})()
+		const { selectedDay, disableSlot, variants } = this.state
+		const slotsArray = variants.map((p) => { return p.day == selectedDay }).filter((value, index, self) => self.indexOf(value) === index)
+
 		return (
 			<div className="custom-modal" id="variation-selection-popup">
 				<div className="custom-modal-content p-15">
@@ -101,7 +94,11 @@ class variantSelection extends React.Component {
 								<div class="select-inner-wrap">
 									<select name="slot" id="slot" disable={disableSlot}>
 										<option value="choose" >Choose a slot</option>
-										{!disableSlot && getSlots()}
+										{!disableSlot && slotsArray.map((slot) => {
+											return (
+												<option value={slot}>{SLOTS[slot]}</option>
+											)
+										})}
 									</select>
 								</div>
 							</div>
@@ -260,16 +257,16 @@ class variantSelection extends React.Component {
 
 	addToCart(variant_id = null) {
 		console.log("variant id==>", variant_id);
-		const {variants, selectedDay, selectedSize,selectedSlot,product,productId} =this.state
+		const { variants, selectedDay, selectedSize, selectedSlot, product, productId } = this.state
 		const selectedVariant = variants.filter((v) => {
 			return v.size == selectedSize && v.day == selectedDay && v.slot == selectedSlot
 		})
-	
-		this.setState({selectedDay:'', selectedSize:'',selectedSlot:''}, ()=> {
+
+		this.setState({ selectedDay: '', selectedSize: '', selectedSlot: '' }, () => {
 			this.hideVariantModal();
 			window.addToCartFromVariant(productId, selectedVariant[0].id, product);
 		})
-	
+
 	}
 }
 
