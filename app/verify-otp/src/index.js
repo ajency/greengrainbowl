@@ -1,6 +1,8 @@
 'use strict';
 const e = React.createElement;
 
+const logo = "https://greengrainbowl.com/assets/images/cart-images/app-logo.png";
+
 
 class verifyOtp extends React.Component {
 	constructor(props) {
@@ -27,7 +29,7 @@ class verifyOtp extends React.Component {
 			<div className="slide-in flex-slide-in" id="otp">
 			  <div className="slide-in-header header-container d-flex align-items-center">
 			      <div className="app-name d-flex align-items-center">					
-				  	<img src={window.site_url + "/wp-content/themes/ajency-portfolio/images/slidein/app-logo.png"} className="app-log" alt="Green Grain Bowl" title="Green Grain Bowl"/>
+				  	<img src={logo} className="app-log" alt="Green Grain Bowl" title="Green Grain Bowl"/>
 			      </div>
 			      <div className="app-chekout text-green">
 				  	<i class="sprite sprite-checkout"></i>
