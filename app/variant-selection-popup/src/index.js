@@ -63,7 +63,7 @@ class variantSelection extends React.Component {
 	}
 	render() {
 		const { selectedDay, disableSlot, variants } = this.state
-		const slotsArray = variants.map((p) => { return p.day == selectedDay }).filter((value, index, self) => self.indexOf(value) === index)
+		const slotsArray = variants.filter((v) =>{ return p.day == selectedDay }).map((p) => { return p.slot }).filter((value, index, self) => self.indexOf(value) === index)
 
 		return (
 			<div className="custom-modal" id="variation-selection-popup">
