@@ -27,7 +27,7 @@ class addToCart extends React.Component {
 
 	showVariantModal(){
 		if (window.products && window.products.length) {
-			let product = window.products.filter((product) => product.id == product_id);
+			let product = window.products.filter((product) => product.id == this.props.product_data.product_id);
 			const variants = product.variants.filter((variant) => { return variant.active })
 			if(variants.length) {
 				window.showVariantSelectionPopup(this.props.product_data.product_id, this.state.lastSelected, this.props.product_data.title)
