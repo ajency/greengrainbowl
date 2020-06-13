@@ -174,7 +174,7 @@ class OrderDetails extends Component {
 
     getItems = () =>{
         let items =   this.state.orderSummary.order_data.items.map((item) => {
-            const extraContent  = item.day? ` | ${DAYS[item.day]} | ${SLOTS[item.slot]})`:''
+            const extraContent  = item.day? ` | ${DAYS[item.day]} | ${SLOTS[item.slot]}`:''
             return  <div class="item-container flex-column">
             <div class="d-flex mb-4">
                 <div class="product-cartimage d-inline-block"><img class="border-radius-rounded" alt="" title="" height="50" width="50" src={item.attributes.image}/></div>
