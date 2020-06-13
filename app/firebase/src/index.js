@@ -370,8 +370,8 @@ function formateOrderLine(item){
         veg : item.attributes.veg,
         size : item.attributes.size,
         product_id : item.product_id,
-        slot:item.slot,
-        day:item.day,
+        slot:item.attributes.slot,
+        day:item.attributes.day,
         timestamp : new Date().getTime()
     }
     return order_line_item;
