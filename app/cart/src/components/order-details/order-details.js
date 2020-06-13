@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Header from '../header/header.js';
 import {Link} from 'react-router-dom';
 import {generalConfig} from '../config'
-const DAYS = { "monday": "Monday", "tuesday": "Tuesday", "wednesday": "Wednesday", "thusday": "Thusday", "friday": 'Friday', 'saturday': "Saturday", "sunday": "Sunday" };
+const DAYS = { "monday": "Monday", "tuesday": "Tuesday", "wednesday": "Wednesday", "thursday": "Thursday", "friday": 'Friday', 'saturday': "Saturday", "sunday": "Sunday" };
 const SLOTS = { "lunch": "Lunch", "dinner": "Dinner" };
 
 class OrderDetails extends Component {

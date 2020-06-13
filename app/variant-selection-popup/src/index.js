@@ -17,7 +17,7 @@ const e = React.createElement;
 // 	{ value: 'lunch', label: 'Lunch' },
 // 	{ value: 'dinner', label: 'Dinner' }
 // ];
-const DAYS = { "monday": "Monday", "tuesday": "Tuesday", "wednesday": "Wednesday", "thusday": "Thusday", "friday": 'Friday', 'saturday': "Saturday", "sunday": "Sunday" };
+const DAYS = { "monday": "Monday", "tuesday": "Tuesday", "wednesday": "Wednesday", "thursday": "Thursday", "friday": 'Friday', 'saturday': "Saturday", "sunday": "Sunday" };
 const SLOTS = { "lunch": "Lunch", "dinner": "Dinner" };
 class variantSelection extends React.Component {
 	constructor(props) {
