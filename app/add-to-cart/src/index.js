@@ -162,7 +162,7 @@ class addToCart extends React.Component {
 					console.time("updateViewCartCompoent")
 					window.updateViewCartCompoent(res);
 					console.timeEnd("updateViewCartCompoent")
-					window.displaySuccess(res.item.attributes.size + '-' +res.item.attributes.title + " added to cart");
+					window.displaySuccess(res.item.attributes.size + '-' +res.item.attributes.title + '-' +res.item.attributes.day + '-' +res.item.attributes.slot +" added to cart");
 					this.setState({apiCallInProgress : false});
 					window.removeBackDrop();
 				}
