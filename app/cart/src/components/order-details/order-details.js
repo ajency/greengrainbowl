@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Header from '../header/header.js';
 import {Link} from 'react-router-dom';
 import {generalConfig} from '../config'
-const DAYS = { "monday": "Monday", "tue": "Tuesday", "wed": "Wednesday", "thus": "Thusday", "fri": 'Friday', 'sat': "Saturday", "sun": "Sunday" };
+const DAYS = { "monday": "Monday", "tuesday": "Tuesday", "wednesday": "Wednesday", "thusday": "Thusday", "friday": 'Friday', 'saturday': "Saturday", "sunday": "Sunday" };
 const SLOTS = { "lunch": "Lunch", "dinner": "Dinner" };
 
 class OrderDetails extends Component {
@@ -174,7 +174,7 @@ class OrderDetails extends Component {
 
     getItems = () =>{
         let items =   this.state.orderSummary.order_data.items.map((item) => {
-            const extraContent  = item.day? ` | ${DAYS[item.day]}| ${SLOTS[item.slot]})`:''
+            const extraContent  = item.day? ` | ${DAYS[item.day]} | ${SLOTS[item.slot]})`:''
             return  <div class="item-container flex-column">
             <div class="d-flex mb-4">
                 <div class="product-cartimage d-inline-block"><img class="border-radius-rounded" alt="" title="" height="50" width="50" src={item.attributes.image}/></div>

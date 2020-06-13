@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './item.scss';
 // import addToCart from '../../../add-to-cart/add-to-cart.js';
 import Quantity from './components/cart_quantity.js';
-const DAYS = { "monday": "Monday", "tue": "Tuesday", "wed": "Wednesday", "thus": "Thusday", "fri": 'Friday', 'sat': "Saturday", "sun": "Sunday" };
+const DAYS = { "monday": "Monday", "tuesday": "Tuesday", "wednesday": "Wednesday", "thusday": "Thusday", "friday": 'Friday', 'saturday': "Saturday", "sunday": "Sunday" };
 const SLOTS = { "lunch": "Lunch", "dinner": "Dinner" };
 
 class Item extends Component {
