@@ -863,7 +863,9 @@ async function assignAddressToCart (address_id, fetchDraft, phoneNumber) {
             size : item.size,
             price_mrp : item.mrp,
             price_final : item.sale_price,
-            discount_per : 0
+            discount_per : 0,
+            slot: item.slot,
+            day: item.day
         },
           availability : in_stock,
           quantity : item.quantity,
@@ -1035,6 +1037,8 @@ async function orderDetails(order_id) {
                 price_final : item.sale_price,
                 discount_per : 0
             },
+            slot : item.slot,
+            day: item.day,
             availability : in_stock,
             quantity : item.quantity,
             timestamp : item.timestamp,

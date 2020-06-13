@@ -13,7 +13,7 @@ class Item extends Component {
 		}
 	}
 	render() {
-		const extraContent  = this.props.item.attributes.day? `(${DAYS[this.props.item.attributes.day]}-${SLOTS[this.props.item.attributes.slot]})`:''
+		const extraContent  = this.props.item.attributes.day? ` (${DAYS[this.props.item.attributes.day]}-${SLOTS[this.props.item.attributes.slot]})`:''
 		return (
 			<div className="item-container flex-column">
 				<div className="d-flex mb-4">
