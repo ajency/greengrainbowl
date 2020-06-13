@@ -30,13 +30,13 @@ class addToCart extends React.Component {
 			let products = window.products.filter((product) => product.id == this.props.product_data.product_id);
 			const variants = products[0].variants.filter((variant) => { return variant.active })
 			if(variants.length) {
-				window.showVariantSelectionPopup(this.props.product_data.product_id, this.state.lastSelected, this.props.product_data.title)
+				window.showVariantSelectionPopup(this.props.product_data, this.state.lastSelected, this.props.product_data.title)
 			} else {
 				let msg = 'Sorry, this product is sold out.'
 				window.displayError(msg);
 			}
 		} else {
-			window.showVariantSelectionPopup(this.props.product_data.product_id, this.state.lastSelected, this.props.product_data.title)
+			window.showVariantSelectionPopup(this.props.product_data, this.state.lastSelected, this.props.product_data.title)
 		}
 
 	}

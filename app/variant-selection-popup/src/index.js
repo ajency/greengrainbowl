@@ -303,10 +303,11 @@ let domContainer = document.querySelector('#react-variant-selection-modal');
 const VariantSelectionComponent = ReactDOM.render(e(variantSelection), domContainer);
 
 
-window.showVariantSelectionPopup = (product_id, last_selected, title) => {
-	console.log("inside updateViewCartCompoent", product_id, last_selected);
-	VariantSelectionComponent.setState({ variants: [], productId: product_id, title: title });
-	VariantSelectionComponent.showVariantModal(product_id, last_selected);
+window.showVariantSelectionPopup = (product, last_selected, title) => {
+	console.log("inside updateViewCartCompoent", product.product_id, last_selected);
+	const selectedDay = product.day? product.day:""
+	VariantSelectionComponent.setState({ variants: [], productId: product.product_id, title: title, selectedDay: selectedDay});
+	VariantSelectionComponent.showVariantModal(product.product_id, last_selected);
 }
 
 function hideVariantSelectionPopup(event) {
