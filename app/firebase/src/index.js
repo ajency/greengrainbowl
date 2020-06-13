@@ -666,7 +666,7 @@ function getNewCartData (lat_long, formatted_address, site_mode) {
             sale_price_total : 0,
             cart_discount : 0,
             shipping_fee : (site_mode == 'kiosk') ? 0 : 0, // get from config or db
-            you_pay : (site_mode == 'kiosk') ? 0 : 0, // change accordingly
+            you_pay : (site_mode == 'kiosk') ? 0 : 50, // change accordingly
         },
         order_mode : site_mode,
         order_type : 'cart',

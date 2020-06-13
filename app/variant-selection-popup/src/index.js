@@ -249,10 +249,10 @@ class variantSelection extends React.Component {
 				}
 			}
 			if (!last_selected) {
-				this.setState({ variants: variants, selectedVariant: variantsArray[0].id });
+				this.setState({ variants: variants, selectedVariant: variantsArray[0].id, selectedSize: variantsArray[0].size });
 			}
 			else {
-				this.setState({ variants: variants, selectedVariant: variantsArray[0].id });
+				this.setState({ variants: variants, selectedVariant: variantsArray[0].id, selectedSize: variantsArray[0].size});
 			}
 		}
 		else {
