@@ -110,6 +110,8 @@ class variantSelection extends React.Component {
 	}
 
 	getVariants() {
+		console.log("getVariants===>", this.state.selectedSize);
+		
 		if (this.state.variants.length) {
 			const variantsArray = [];
 			const map = new Map();
@@ -175,6 +177,8 @@ class variantSelection extends React.Component {
 	}
 
 	showVariantModal(product_id, last_selected) {
+		console.log("showVariantModal",last_selected);
+		
 		this.fetchVariants(product_id, last_selected);
 		document.querySelector('#variation-selection-popup').classList.add('show-modal');
 		document.querySelectorAll('.product-wrapper')
@@ -211,6 +215,8 @@ class variantSelection extends React.Component {
 	}
 
 	fetchVariants(product_id, last_selected) {
+		console.log("fetchVariants",last_selected);
+
 		if (window.products && window.products.length) {
 			let product = window.products.filter((product) => product.id == product_id);
 			this.setVariants(product[0], last_selected)
@@ -248,6 +254,7 @@ class variantSelection extends React.Component {
 					});
 				}
 			}
+			console.log("setVariants  ====>",variantsArray)
 			if (!last_selected) {
 				this.setState({ variants: variants, selectedVariant: variantsArray[0].id, selectedSize: variantsArray[0].size });
 			}
