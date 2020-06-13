@@ -26,7 +26,19 @@ class addToCart extends React.Component {
 	}
 
 	showVariantModal(){
-		window.showVariantSelectionPopup(this.props.product_data.product_id, this.state.lastSelected, this.props.product_data.title)
+		if (window.products && window.products.length) {
+			let product = window.products.filter((product) => product.id == product_id);
+			const variants = product.variants.filter((variant) => { return variant.active })
+			if(variants.length) {
+				window.showVariantSelectionPopup(this.props.product_data.product_id, this.state.lastSelected, this.props.product_data.title)
+			} else {
+				let msg = 'Sorry, this product is sold out.'
+				window.displayError(msg);
+			}
+		} else {
+			window.showVariantSelectionPopup(this.props.product_data.product_id, this.state.lastSelected, this.props.product_data.title)
+		}
+
 	}
 
 	getButtonContent(){

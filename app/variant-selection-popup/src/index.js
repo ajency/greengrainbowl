@@ -231,7 +231,7 @@ class variantSelection extends React.Component {
 				setTimeout(() => {
 					this.hideVariantModal();
 				}, 100)
-				let msg = 'No active variants found'
+				let msg = 'Sorry, this product is sold out.'
 				window.displayError(msg);
 			}
 		}
@@ -266,7 +266,7 @@ class variantSelection extends React.Component {
 			setTimeout(() => {
 				this.hideVariantModal();
 			}, 100)
-			let msg = 'No active variants found'
+			let msg = 'Sorry, this product is sold out.'
 			window.displayError(msg);
 		}
 	}
