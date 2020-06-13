@@ -358,6 +358,8 @@ async function updateOrder (item, cart_id, cart_data, stock_location_id) {
 }
 
 function formateOrderLine(item){
+    console.log("formateOrderLine items ==> ", item);
+    
     let order_line_item = {
         variant_id : item.variant_id,
         quantity : item.quantity,
@@ -369,7 +371,7 @@ function formateOrderLine(item){
         size : item.attributes.size,
         product_id : item.product_id,
         slot:item.slot,
-        day:item,
+        day:item.day,
         timestamp : new Date().getTime()
     }
     return order_line_item;
