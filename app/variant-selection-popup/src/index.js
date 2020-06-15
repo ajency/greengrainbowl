@@ -91,9 +91,9 @@ class variantSelection extends React.Component {
 									<span class="d-block">Select Delivery Slot <span class="text-danger">*</span></span>
 								</div>
 								<div class="select-inner-wrap">
-									<select name="slot" id="slot" disable={disableSlot} value={selectedSlot} onChange={(e) => this.setSlots(e)} >
+									<select name="slot" id="slot" value={selectedSlot} onChange={(e) => this.setSlots(e)} >
 										<option value="choose" >Choose a slot</option>
-										{!disableSlot && slotsArray.map((slot) => {
+										{ slotsArray.map((slot) => {
 											return (
 												<option value={slot}>{SLOTS[slot]}</option>
 											)
