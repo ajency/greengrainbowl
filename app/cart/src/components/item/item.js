@@ -26,7 +26,7 @@ class Item extends Component {
 						</div>	
 						<div className="d-flex justify-content-between">
 							<div className="product-size-c font-italic text-capitalize">
-								{this.props.item.attributes.size}{extraContent}
+								Size: {this.props.item.attributes.size}{extraContent}
 							</div>
 							<div className="d-flex align-items-center">
 								<div className="product-quantity d-inline-block">

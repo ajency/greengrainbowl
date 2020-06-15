@@ -64,13 +64,19 @@ class variantSelection extends React.Component {
 					<div className="product-variant text-left text-black">
 						<h3 class="h1 ft6 pr-4">Choose Your Bowl</h3>
 						{this.getItemType()}
+
+						<div class="select-wrapper">
+							<div class="select-wrapper-title">
+								<span class="d-block">Select day *</span>
+							</div>
+						</div>
 						<div className="variant-list mb-4">
 							{this.getVariants()}
 						</div>
 						<div class="d-flex mb-4">
 							<div class="select-wrapper w-50">
 								<div class="select-wrapper-title">
-									<span class="d-block">Select day *</span>
+									<span class="d-block">Select Delivery Day <span class="text-danger">*</span></span>
 								</div>
 								<div class="select-inner-wrap">
 									<select name="days" id="days" onChange={(e) => this.setDay(e)} value={selectedDay}>
@@ -82,7 +88,7 @@ class variantSelection extends React.Component {
 							</div>
 							<div class="select-wrapper w-50">
 								<div class="select-wrapper-title">
-									<span class="d-block">Select slot *</span>
+									<span class="d-block">Select Delivery Slot <span class="text-danger">*</span></span>
 								</div>
 								<div class="select-inner-wrap">
 									<select name="slot" id="slot" disable={disableSlot} value={selectedSlot} onChange={(e) => this.setSlots(e)} >
@@ -127,7 +133,7 @@ class variantSelection extends React.Component {
 				return (
 					<div key={variant.id} className="list-item pt-3 pb-3 border-bottom-lightgrey">
 						<label className="custom-radio-btn mb-0 font-size-16">
-							<span className={"mr-3 d-inline-block mw-70 text-capitalize " + (this.state.selectedVariant == variant.id ? 'text-primary' : '')}>{variant.size}</span> <span className="price-span text-right"><span className="currency-symbol">₹</span>{variant.sale_price}</span>
+							<span className={"mr-3 d-inline-block mw-150 text-capitalize " + (this.state.selectedVariant == variant.id ? 'text-primary' : '')}>{variant.size}</span><span className="price-span text-right"><span className="currency-symbol">₹</span>{variant.sale_price}</span>
 							<input type="radio" data-productid={variant.id} name={"variant-" + this.state.productId} value={variant.size} checked={this.state.selectedSize == variant.size} onChange={(event) => this.handleOptionChange(event)} />
 							<span className="checkmark"></span>
 						</label>

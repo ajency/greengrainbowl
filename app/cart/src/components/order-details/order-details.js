@@ -181,7 +181,7 @@ class OrderDetails extends Component {
                 <div class="product-details d-inline-block">
                     <div class="product-title-c font-weight-light">{item.attributes.title}</div>
                     <div class="d-flex justify-content-between">
-                        <div class="product-size-c text-capitalize">{item.attributes.size} | Qty: {item.quantity}{extraContent}</div>
+                        <div class="product-size-c text-capitalize">Size: {item.attributes.size} | Qty: {item.quantity}{extraContent}</div>
                         <div class="d-flex align-items-center">
                             <div class="product-price font-weight-light text-right pl-3">₹{item.attributes.price_final}</div>
                         </div>
