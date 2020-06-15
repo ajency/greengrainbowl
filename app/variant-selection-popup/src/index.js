@@ -67,7 +67,7 @@ class variantSelection extends React.Component {
 
 						<div class="select-wrapper">
 							<div class="select-wrapper-title">
-								<span class="d-block">Select day *</span>
+								<span class="d-block">Select Size</span>
 							</div>
 						</div>
 						<div className="variant-list mb-4">
@@ -129,9 +129,9 @@ class variantSelection extends React.Component {
 					});
 				}
 			}
-			let variants = variantsArray.map((variant) => {
+			let variants = variantsArray.map((variant, index) => {
 				return (
-					<div key={variant.id} className="list-item pt-3 pb-3 border-bottom-lightgrey">
+					<div key={variant.id} className={"list-item  pb-3 border-bottom-lightgrey" + (index == 0 ? 'pt-1':'pt-3')}>
 						<label className="custom-radio-btn mb-0 font-size-16">
 							<span className={"mr-3 d-inline-block mw-150 text-capitalize " + (this.state.selectedVariant == variant.id ? 'text-primary' : '')}>{variant.size}</span><span className="price-span text-right"><span className="currency-symbol">₹</span>{variant.sale_price}</span>
 							<input type="radio" data-productid={variant.id} name={"variant-" + this.state.productId} value={variant.size} checked={this.state.selectedSize == variant.size} onChange={(event) => this.handleOptionChange(event)} />
