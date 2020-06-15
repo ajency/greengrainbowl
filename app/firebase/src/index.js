@@ -358,6 +358,8 @@ async function updateOrder (item, cart_id, cart_data, stock_location_id) {
 }
 
 function formateOrderLine(item){
+    console.log("formateOrderLine items ==> ", item);
+    
     let order_line_item = {
         variant_id : item.variant_id,
         quantity : item.quantity,
@@ -368,6 +370,8 @@ function formateOrderLine(item){
         veg : item.attributes.veg,
         size : item.attributes.size,
         product_id : item.product_id,
+        slot:item.attributes.slot,
+        day:item.attributes.day,
         timestamp : new Date().getTime()
     }
     return order_line_item;
@@ -502,7 +506,10 @@ async function fetchCart(cart_id){
                     size : item.size,
                     price_mrp : item.mrp,
                     price_final : item.sale_price,
-                    discount_per : 0
+                    discount_per : 0,
+                    slot : item.slot,
+                    day : item.day
+
                 },
                   availability : in_stock,
                   quantity : item.quantity,
@@ -612,6 +619,8 @@ async function addToCart(site_mode, variant_id = null, lat_long = null, cart_id 
                 images : product.image_urls,
                 size : variant.size,
                 mrp : variant.mrp,
+                day:variant.day,
+                slot:variant.slot,
                 sale_price : variant.sale_price,
                 discount_per : 0,
                 description : product.description,
@@ -656,7 +665,7 @@ function getNewCartData (lat_long, formatted_address, site_mode) {
             mrp_total : 0,
             sale_price_total : 0,
             cart_discount : 0,
-            shipping_fee : (site_mode == 'kiosk') ? 0 : 1, // get from config or db
+            shipping_fee : (site_mode == 'kiosk') ? 0 : 0, // get from config or db
             you_pay : (site_mode == 'kiosk') ? 0 : 50, // change accordingly
         },
         order_mode : site_mode,
@@ -854,7 +863,9 @@ async function assignAddressToCart (address_id, fetchDraft, phoneNumber) {
             size : item.size,
             price_mrp : item.mrp,
             price_final : item.sale_price,
-            discount_per : 0
+            discount_per : 0,
+            slot: item.slot,
+            day: item.day
         },
           availability : in_stock,
           quantity : item.quantity,
@@ -1026,6 +1037,8 @@ async function orderDetails(order_id) {
                 price_final : item.sale_price,
                 discount_per : 0
             },
+            slot : item.slot,
+            day: item.day,
             availability : in_stock,
             quantity : item.quantity,
             timestamp : item.timestamp,

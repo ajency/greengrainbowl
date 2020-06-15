@@ -96,13 +96,14 @@ class OrderSummary extends Component {
                     <div>
                         <div className="p-15">
                         <h3 className="mt-4 h1 ft6">Thank You for your order</h3>
-                        <h4 className="font-weight-light mt-4 pb-4">You can check your order status below.</h4>
+                        <h4 className="font-weight-light mt-4 pb-4">You can view your order details <span style={{color:'#4aa751', cursor:"pointer"}} onClick={(e)=> this.handleSummaryRedirect(e)} className>here</span>. 
+                        </h4>
                         </div>  
-                        <div className="map-container">
+                        {/* <div className="map-container">
                             <GoogleMap latlng={this.state.orderSummary.order_data.shipping_address.lat_long}/>
                             <div id="marker"><i className="fas fa-map-marker-alt"></i></div>
-                        </div>  
-                        <div className="p-15 pt-0 pb-0">
+                        </div>   */}
+                        {/* <div className="p-15 pt-0 pb-0">
                             <div className="list-text-block p-3 mb-3 full-width-15 position-relative">
                                 <div className="list-meta mt-0">
                                     <div className="order-number">
@@ -153,7 +154,7 @@ class OrderSummary extends Component {
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> */}
                         <div class="p-15 pt-0 pb-0">
                             <div class="secure-checkout fixed-bottom visible bg-white p-15">
                                <button class="btn btn-primary btn-arrow w-100 p-15 rounded-0 text-left position-relative h5 ft6 mb-0" onClick={(e) => this.handleRedirect(e)}>I Want More, Take Me to shop</button>
@@ -193,6 +194,11 @@ class OrderSummary extends Component {
     handleRedirect(e) {
         e.preventDefault()
         window.location = this._webSiteLink
+    }
+
+    handleSummaryRedirect(e) {
+        e.preventDefault()
+        window.location = this._webSiteLink + "#/order-details/" + this.state.orderSummary.payment_summary.order_id
     }
 }
 

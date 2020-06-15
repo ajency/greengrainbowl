@@ -26,7 +26,19 @@ class addToCart extends React.Component {
 	}
 
 	showVariantModal(){
-		window.showVariantSelectionPopup(this.props.product_data.product_id, this.state.lastSelected, this.props.product_data.title)
+		if (window.products && window.products.length) {
+			let products = window.products.filter((product) => product.id == this.props.product_data.product_id);
+			const variants = products[0].variants.filter((variant) => { return variant.active })
+			if(variants.length) {
+				window.showVariantSelectionPopup(this.props.product_data, this.state.lastSelected, this.props.product_data.title)
+			} else {
+				let msg = 'Sorry, this product is sold out.'
+				window.displayError(msg);
+			}
+		} else {
+			window.showVariantSelectionPopup(this.props.product_data, this.state.lastSelected, this.props.product_data.title)
+		}
+
 	}
 
 	getButtonContent(){
@@ -162,7 +174,7 @@ class addToCart extends React.Component {
 					console.time("updateViewCartCompoent")
 					window.updateViewCartCompoent(res);
 					console.timeEnd("updateViewCartCompoent")
-					window.displaySuccess(res.item.attributes.size + '-' +res.item.attributes.title + " added to cart");
+					window.displaySuccess(res.item.attributes.size + '-' +res.item.attributes.title + '-' +res.item.attributes.day + '-' +res.item.attributes.slot +" added to cart");
 					this.setState({apiCallInProgress : false});
 					window.removeBackDrop();
 				}

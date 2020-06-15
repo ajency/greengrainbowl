@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import Header from '../header/header.js';
 import {Link} from 'react-router-dom';
 import {generalConfig} from '../config'
+const DAYS = { "monday": "Monday", "tuesday": "Tuesday", "wednesday": "Wednesday", "thursday": "Thursday", "friday": 'Friday', 'saturday': "Saturday", "sunday": "Sunday" };
+const SLOTS = { "lunch": "Lunch", "dinner": "Dinner" };
 
 class OrderDetails extends Component {
 
@@ -172,13 +174,14 @@ class OrderDetails extends Component {
 
     getItems = () =>{
         let items =   this.state.orderSummary.order_data.items.map((item) => {
+            const extraContent  = item.day? ` | ${DAYS[item.day]} | ${SLOTS[item.slot]}`:''
             return  <div class="item-container flex-column">
             <div class="d-flex mb-4">
                 <div class="product-cartimage d-inline-block"><img class="border-radius-rounded" alt="" title="" height="50" width="50" src={item.attributes.image}/></div>
                 <div class="product-details d-inline-block">
                     <div class="product-title-c font-weight-light">{item.attributes.title}</div>
                     <div class="d-flex justify-content-between">
-                        <div class="product-size-c text-capitalize">{item.attributes.size} | Qty: {item.quantity}</div>
+                        <div class="product-size-c text-capitalize">Size: {item.attributes.size} | Qty: {item.quantity}{extraContent}</div>
                         <div class="d-flex align-items-center">
                             <div class="product-price font-weight-light text-right pl-3">₹{item.attributes.price_final}</div>
                         </div>
