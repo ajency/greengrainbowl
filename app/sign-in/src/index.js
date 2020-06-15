@@ -134,7 +134,7 @@ class signInModal extends React.Component {
 			    .then( (confirmationResult) => {
 					console.log("SMS sent.");
 					window.addCartLoader();
-					let url =  process.env.REACT_APP_API_END_PT + "/check-user-exist";
+					let url =  "https://asia-east2-project-ggb.cloudfunctions.net/api/rest/v1/check-user-exist";
 					let body = {
 						phone_number : this.state.phoneNumber
 					}
