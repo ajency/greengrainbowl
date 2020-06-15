@@ -80,7 +80,7 @@ class gpsModalPrompt extends React.Component {
 			      {this.showSignInButton()}
 					<div className="position-relative title-wrap pl-0">
 						{/* <button className="btn btn-reset btn-back p-0"><i class="fa fa-arrow-left font-size-20" aria-hidden="true"></i></button> */}
-						<h3 className="mt-4 h1 ft6">Add delivery address</h3>
+						<h3 className="mt-4 h1 ft6">Set delivery location</h3>
 					</div>
 			      <h4 className="font-weight-light mt-4 pb-4">
 			        We currently serve at Panjim, Porvorim & its neighbourhood.
@@ -115,7 +115,7 @@ class gpsModalPrompt extends React.Component {
 	  	if(this.state.showSignInBtn){
 	  		return (
 	  			<div className="list-text-block p-3 mb-2 full-width-15">
-			        <div className="list-meta mt-0">If you have ordered with us before, <a className="text-underline test-primary text-underline cursor-pointer" onClick={()=> this.showSignInScreen()} >Sign in</a> to fetch saved addresses.</div>
+			        <div className="list-meta mt-0">If you have ordered with us before, <a className="text-underline test-primary text-underline cursor-pointer font-weight-bold f-18" onClick={()=> this.showSignInScreen()} >Sign in</a> to fetch saved addresses.</div>
 			    </div>
 	  		);
 	  	}
@@ -204,7 +204,7 @@ class gpsModalPrompt extends React.Component {
 			return (
 				<div>
 					<h4 className="mt-4">Saved Addresses</h4>
-					<ul style={locationStyle} className="pl-0 mt-4">
+					<ul style={locationStyle} className="pl-0 mt-4 address-list">
 						{addresses}
 					</ul>
 				</div>
