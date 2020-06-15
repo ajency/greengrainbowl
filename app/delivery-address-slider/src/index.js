@@ -184,12 +184,19 @@ class gpsModalPrompt extends React.Component {
 	getSavedAddresses(){
 		if(this.state.addresses && this.state.addresses.length && !this.state.locations.length && !this.state.settingUserLocation && !this.state.fetchingGPS){
 			let addresses = this.state.addresses.map((address)=>{
+				let address_extra =''
+				if (address.hasOwnProperty('address')) {
+					address_extra = address.address+', '
+				}
+				if(address.hasOwnProperty('landmark')) {
+					address_extra = address_extra + address.landmark+', '
+				}
 				return (
 					<li key={address.id} className="cursor-pointer address saved-address-item" onClick={() => this.setUserLocations(address.lat_long, address.formatted_address)}>
 						{this.getAddressIcon(address.type)}
 						<div className="address-text">
 							<h5>{address.type}</h5>
-							<span className=" font-weight-light h6">{address.address}, {address.landmark}, {address.city}, {address.state}, {address.pincode}</span>
+							<span className=" font-weight-light h6">{address_extra}{address.formatted_address}</span>
 						</div>
 					</li>
 				)
