@@ -2,7 +2,7 @@ let razorPayConfig = {
     api_key: process.env.REACT_APP_RZR_API_KEY,
     customJs: "https://checkout.razorpay.com/v1/razorpay.js",
     standardJs: "https://checkout.razorpay.com/v1/checkout.js",
-    image: process.env.REACT_APP_CONTENT_LINK + "wp-content/themes/ajency-portfolio/images/logo_new.png",
+    image: process.env.REACT_APP_CONTENT_LINK + "assets/images/logo_new.png",
     callback_url: process.env.REACT_APP_WEBSITE_LINK + "#/order-summary",
     cancel_url: process.env.REACT_APP_WEBSITE_LINK + "#/order-summary"
 };
