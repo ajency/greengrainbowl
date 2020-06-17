@@ -9,7 +9,7 @@ class LogIn extends Component {
 		super(props);
 		this.state = {
 			site_mode : generalConfig.site_mode,
-			number_text : (generalConfig.site_mode == 'kiosk') ? 'Please enter your number' : 'Your Shipping and payment details will be associated with this number',
+			number_text : (generalConfig.site_mode == 'kiosk') ? 'Please enter your number' : 'Your delivery and payment details will be associated with this number',
 			phoneNumber : '',
 			otp : '',
 			confirmationResult : '',

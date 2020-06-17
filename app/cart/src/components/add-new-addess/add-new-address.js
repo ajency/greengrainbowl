@@ -140,6 +140,7 @@ class AddNewAddress extends Component {
                     </div>
                     <div className="list-text-block p-15 mb-4 mt-4">
                         <div className="font-weight-light h5 mb-0">
+                            <span class="font-weight-semibold d-block mb-2">Deliver area</span>
                             {this.state.showLoader ? <div>Address is loading...</div> : this.state.address}
                             {this.state.addressInput ? this.getChangeAddressInput() : this.state.address ? <span className="text-green d-inline-block cursor-pointer" onClick={this.changeAddress}>. Change</span> : null}
                         </div>

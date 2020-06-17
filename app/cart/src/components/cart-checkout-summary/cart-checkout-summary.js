@@ -6,7 +6,7 @@ import Header from '../header/header.js';
 import Item from '../item/item.js';
 import DeliveryAddress from '../delivery-address/delevery-address.js';
 import add from '../../assets/images/add.png';
-import genuinityLogo from '../../assets/images/Genuien.png';
+import genuinityLogo from '../../assets/images/Shield_icon.png';
 import clockLogo from '../../assets/images/Time.png';
 import Payments from '../payment-gateway/payments'
 import CartSummary from '../cart-summary/cart-summary';
@@ -159,8 +159,7 @@ class CartCheckoutSummary extends Component {
 						<div className="p-15 pt-0">
 							<div className="bottom-bar">								
 								<div className="genuinity text-align-center">
-									<img src={genuinityLogo} className="mr-1" alt="100% Secure Payments" title="100% Secure Payments" className="d-inline-block vertical-align-middle" width="20"/>
-									<span className="d-inline-block vertical-align-middle ml-0 mt-2 font-size-15"> We go to great lengths to work with fresh and quality ingredients. Hours of hard work in the kitchen to bring to your doorstep these healthy bowls. We can’t wait for you to try them!</span>
+									<span className="d-inline-block vertical-align-middle ml-0 mt-2 font-size-15"> We go to great lengths to work with fresh and quality ingredients. Hours of hard work i<img src={genuinityLogo} className="mr-1" alt="100% Secure Payments" title="100% Secure Payments" className="" width="20"/> n the kitchen to bring to your doorstep these healthy bowls. We can’t wait for you to try them!</span>
 								</div>
 							</div>
 						</div>

@@ -5,7 +5,7 @@ import Item from '../item/item.js';
 import CartSummary from '../cart-summary/cart-summary.js';
 import DeliveryAddress from '../delivery-address/delevery-address.js';
 import add from '../../assets/images/add.png';
-import genuinityLogo from '../../assets/images/Genuien.png';
+import genuinityLogo from '../../assets/images/Shield_icon.png';
 import clockLogo from '../../assets/images/Time.png';
 import {Redirect, Link} from 'react-router-dom';
 import {generalConfig} from '../config'
@@ -89,7 +89,7 @@ class Cart extends Component {
 							</div>
 						</div> */}
 
-						<div className="p-15 pt-2 pb-2 bg-off-green-1 mb-1 d-flex justify-content-between">
+						{/* <div className="p-15 pt-2 pb-2 bg-off-green-1 mb-1 d-flex justify-content-between">
 							<div className="text-black font-weight-medium">
 								Estimated Time:
 							</div>
@@ -97,6 +97,10 @@ class Cart extends Component {
 								<img src={clockLogo} alt="Estimated time" title="Estimated time" className="d-inline-block vertical-align-middle mr-1"/> 
 								<span className="d-inline-block vertical-align-middle text-black font-weight-medium">{this.state.approxDeliveryTime}</span>
 							</div>
+						</div> */}
+
+						<div className="p-15 pt-0 pb-0">
+							<hr className="sep"></hr>
 						</div>
 
 						<div className="p-15">
@@ -107,8 +111,7 @@ class Cart extends Component {
 						<div className="p-15 pt-0">
 							<div className="bottom-bar">								
 								<div className="genuinity text-align-center">
-									<img src={genuinityLogo} className="mr-1" alt="100% Secure Payments" title="100% Secure Payments" className="d-inline-block vertical-align-middle" width="20"/>
-									<span className="d-inline-block vertical-align-middle ml-0 mt-2 font-size-15"> We go to great lengths to work with fresh and quality ingredients. Hours of hard work in the kitchen to bring to your doorstep these healthy bowls. We can’t wait for you to try them!</span>
+									<span className="d-inline-block vertical-align-middle ml-0 mt-2 font-size-15"><img src={genuinityLogo} className="mr-1" alt="100% Secure Payments" title="100% Secure Payments" className="" width="20"/> We go to great lengths to work with fresh and quality ingredients. Hours of hard work in the kitchen to bring to your doorstep these healthy bowls. We can’t wait for you to try them!</span>
 								</div>
 							</div>
 						</div>
