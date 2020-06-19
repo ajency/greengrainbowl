@@ -193,12 +193,12 @@ class OrderSummary extends Component {
 
     handleRedirect(e) {
         e.preventDefault()
-        window.location = this._webSiteLink
+        window.location = window.location.origin
     }
 
     handleSummaryRedirect(e) {
         e.preventDefault()
-        window.location = this._webSiteLink + "#/order-details/" + this.state.orderSummary.payment_summary.order_id
+        window.location = window.location.origin + "#/order-details/" + this.state.orderSummary.payment_summary.order_id
     }
 }
 
