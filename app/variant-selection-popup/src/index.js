@@ -198,6 +198,7 @@ class variantSelection extends React.Component {
 	}
 
 	hideVariantModal() {
+		window.history.back()
 		document.querySelector('#variation-selection-popup').classList.remove('show-modal');
 		document.querySelectorAll('.product-wrapper')
 			.forEach((domContainer) => {
@@ -317,8 +318,9 @@ window.showVariantSelectionPopup = (product, last_selected, title) => {
 }
 
 function hideVariantSelectionPopup(event) {
-	if (event.target == document.querySelector('#variation-selection-popup'))
+	if (event.target == document.querySelector('#variation-selection-popup')) {
 		VariantSelectionComponent.hideVariantModal();
+	}
 }
 
 window.addEventListener("click", hideVariantSelectionPopup);
