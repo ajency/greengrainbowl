@@ -476,6 +476,9 @@ window.showGpsModalPrompt = (display, addresses = null) => {
 	window.addBackDrop();
 }
 
+window.closeGpsSlider = () => {
+	gpsModalPromptComponent.closeGpsSlider()
+}
 window.updateAddresses = (addresses = null) => {
 	let showNoAddressMsg = false;
 	if(addresses && !addresses.length)
