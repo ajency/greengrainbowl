@@ -445,9 +445,9 @@ class gpsModalPrompt extends React.Component {
 	}
 
 	closeGpsModal(){
-		if(window.location.hash =='#/set-address' || window.location.hash =='#set-address') {
-			window.history.back()
-		}
+		// if(window.location.hash =='#/set-address' || window.location.hash =='#set-address') {
+		// 	window.history.back()
+		// }
 		document.querySelector('#gpsModal').classList.remove('visible');
 		window.removeBackDrop();
 	}

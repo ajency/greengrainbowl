@@ -226,9 +226,9 @@ class addToCart extends React.Component {
 
 	getGeolocation(){
 		return new Promise((resolve, reject) => {
-			setTimeout(() => {
-				window.location.hash = "/set-address"
-			},300)
+			// setTimeout(() => {
+			// 	window.location.hash = "/set-address"
+			// },300)
 		    window.showGpsModalPrompt(true);
 		    let timer = setInterval(()=>{
 		    	if(window.lat_lng){
