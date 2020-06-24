@@ -198,17 +198,19 @@ class variantSelection extends React.Component {
 	}
 
 	hideVariantModal() {
-		window.history.back()
 		document.querySelector('#variation-selection-popup').classList.remove('show-modal');
+		if(window.location.hash == '#/variants' || window.location.hash == '#variants') {
+			window.history.back()
+		}
 		document.querySelectorAll('.product-wrapper')
-			.forEach((domContainer) => {
-				domContainer.classList.remove('transform-none');
-			});
-
+		.forEach((domContainer) => {
+			domContainer.classList.remove('transform-none');
+		});
+		
 		document.querySelectorAll('.product-list-item')
-			.forEach((domContainer) => {
-				domContainer.classList.remove('zindex');
-			});
+		.forEach((domContainer) => {
+			domContainer.classList.remove('zindex');
+		});
 		window.showScroll();
 	}
 
