@@ -248,6 +248,7 @@ class variantSelection extends React.Component {
 
 	setVariants(product, last_selected) {
 		this.setState(({ product: product }));
+		const { selectedDay } = this.state;
 		let variants = [];
 		if (product) {
 			variants = product.variants.filter((variant) => { return variant.active })
@@ -264,11 +265,17 @@ class variantSelection extends React.Component {
 				}
 			}
 			console.log("setVariants  ====>",variantsArray)
+			const daysArray = variants.map((p) => { return p.day }).filter((value, index, self) => self.indexOf(value) === index);
+			if(selectedDay) {
+				if (!daysArray.includes(selectedDay)) {
+					selectedDay =""
+				}
+			}
 			if (!last_selected) {
-				this.setState({ variants: variants, selectedVariant: variantsArray[0].id, selectedSize: variantsArray[0].size });
+				this.setState({ variants: variants, selectedVariant: variantsArray[0].id, selectedSize: variantsArray[0].size, selectedDay });
 			}
 			else {
-				this.setState({ variants: variants, selectedVariant: variantsArray[0].id, selectedSize: variantsArray[0].size});
+				this.setState({ variants: variants, selectedVariant: variantsArray[0].id, selectedSize: variantsArray[0].size, selectedDay});
 			}
 		}
 		else {
@@ -315,6 +322,7 @@ const VariantSelectionComponent = ReactDOM.render(e(variantSelection), domContai
 window.showVariantSelectionPopup = (product, last_selected, title) => {
 	console.log("inside updateViewCartCompoent", product.product_id, last_selected);
 	const selectedDay = product.day? product.day:""
+	
 	VariantSelectionComponent.setState({ variants: [], productId: product.product_id, title: title, selectedDay: selectedDay});
 	VariantSelectionComponent.showVariantModal(product.product_id, last_selected);
 }
