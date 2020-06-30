@@ -259,7 +259,9 @@ document.querySelectorAll('.react-add-to-cart-container')
 
 window.updateaddToCartComponent = (item) => {
 	addToCartComponents.forEach((component) =>{
-		if(component.props.product_data.product_id == item.product_id){
+		const product = window.products.find(p => item.product_id = p.id)
+		const variant = product.variants.find(v => v.id == item.variant_id )
+		if(component.props.product_data.product_id == item.product_id && variant.day == component.props.product_data.day){
 			let items = component.state.items;
 			items.push(item)
 			items.sort((a,b)=>{
@@ -277,8 +279,11 @@ window.updateaddToCartComponent = (item) => {
 
 window.updateItemQuantity = (item, action) => {
 	console.log("updateItemQuantity ==>", item, action);
+	
 	addToCartComponents.forEach((component) =>{
-		if(component.props.product_data.product_id == item.product_id){
+		const product = window.products.find((p) => p.id == item.product_id)
+		const variant = product.variants.find((v) => v.id == item.variant_id)
+		if(component.props.product_data.product_id == item.product_id && component.props.product_data.day == variant.day){
 			if(action == 'add')
 				component.addItems(item)
 			else
@@ -290,7 +295,8 @@ window.updateItemQuantity = (item, action) => {
 window.addToCartFromVariant = (product_id, variant_id , product) => {
 	let found = false;
 	addToCartComponents.forEach((component) =>{
-		if(component.props.product_data.product_id == product_id && !found){
+		const variant = product.variants.find((p) => p.id == variant_id)
+		if(component.props.product_data.product_id == product_id && variant.day == component.props.product_data.day && !found){
 			component.addToCart(variant_id, product);
 			found = true;
 		}
