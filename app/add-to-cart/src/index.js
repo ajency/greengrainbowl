@@ -253,6 +253,7 @@ document.querySelectorAll('.react-add-to-cart-container')
 	.forEach((domContainer, index) => {
 		const product_data = JSON.parse(domContainer.dataset.product_data);
 		addToCartComponents[index] =  ReactDOM.render(e(addToCart, { product_data : product_data }),domContainer);
+		domContainer.classList.remove("btn-hide")
 	});
 
 
