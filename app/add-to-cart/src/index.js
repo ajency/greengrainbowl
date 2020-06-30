@@ -30,12 +30,14 @@ class addToCart extends React.Component {
 			let products = window.products.filter((product) => product.id == this.props.product_data.product_id);
 			const variants = products[0].variants.filter((variant) => { return variant.active })
 			if(variants.length) {
+				window.location.hash = "/variants"
 				window.showVariantSelectionPopup(this.props.product_data, this.state.lastSelected, this.props.product_data.title)
 			} else {
 				let msg = 'Sorry, this product is sold out.'
 				window.displayError(msg);
 			}
 		} else {
+			window.location.hash = "/variants"
 			window.showVariantSelectionPopup(this.props.product_data, this.state.lastSelected, this.props.product_data.title)
 		}
 
@@ -224,6 +226,9 @@ class addToCart extends React.Component {
 
 	getGeolocation(){
 		return new Promise((resolve, reject) => {
+			// setTimeout(() => {
+			// 	window.location.hash = "/set-address"
+			// },300)
 		    window.showGpsModalPrompt(true);
 		    let timer = setInterval(()=>{
 		    	if(window.lat_lng){

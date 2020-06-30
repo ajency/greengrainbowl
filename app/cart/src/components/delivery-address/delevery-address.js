@@ -14,7 +14,7 @@ class DeliveryAddress extends Component {
 					<div className="address-details-inner font-weight-light">
 						<span className="font-weight-semibold">Deliver to </span>
 						<span id="cart-delivery-address"> {this.props.address}</span>
-						<span className="text-green d-inline-block cursor-pointer" onClick={() => this.openChangeLocationModal()}>. Edit</span>
+						<span className="text-green d-inline-block cursor-pointer ml-2" onClick={() => this.openChangeLocationModal()}>Change</span>
 					</div>
 
 					{this.showSummaryContent()}

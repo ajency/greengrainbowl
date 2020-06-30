@@ -445,6 +445,9 @@ class gpsModalPrompt extends React.Component {
 	}
 
 	closeGpsModal(){
+		// if(window.location.hash =='#/set-address' || window.location.hash =='#set-address') {
+		// 	window.history.back()
+		// }
 		document.querySelector('#gpsModal').classList.remove('visible');
 		window.removeBackDrop();
 	}
@@ -473,6 +476,9 @@ window.showGpsModalPrompt = (display, addresses = null) => {
 	window.addBackDrop();
 }
 
+window.closeGpsSlider = () => {
+	gpsModalPromptComponent.closeGpsSlider()
+}
 window.updateAddresses = (addresses = null) => {
 	let showNoAddressMsg = false;
 	if(addresses && !addresses.length)
