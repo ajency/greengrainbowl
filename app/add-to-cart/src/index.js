@@ -92,7 +92,7 @@ class addToCart extends React.Component {
 		else{
 			if(this.state.items.length > 1){
 				window.removeBackDrop();
-				let msg = "Item has multiple variants added. Remove correct item from cart";
+				let msg = "Item has multiple variants added. Please remove correct item from cart";
 				window.displayError(msg);
 			}
 			else{
@@ -253,6 +253,7 @@ document.querySelectorAll('.react-add-to-cart-container')
 	.forEach((domContainer, index) => {
 		const product_data = JSON.parse(domContainer.dataset.product_data);
 		addToCartComponents[index] =  ReactDOM.render(e(addToCart, { product_data : product_data }),domContainer);
+		domContainer.classList.remove("btn-hide")
 	});
 
 
