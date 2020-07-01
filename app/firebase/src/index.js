@@ -710,7 +710,9 @@ async function updateDeliveryLocation(lat_long, formatted_address,  cart_id){
                 {
                     'shipping_address.lat_long' : lat_long,
                     'shipping_address.formatted_address' : formatted_address,
-                    'stock_location_id' : stock_location_id
+                    'stock_location_id' : stock_location_id,
+                    'shipping_address.landmark' : "",
+                    'shipping_address.address' : "",
                 })
     let res = { success : true , message: 'Address updated successfully' }
     return res;
