@@ -203,7 +203,7 @@ class CartCheckoutSummary extends Component {
 			</div>
 		} else {
 			deliveryaddress = <div>
-				<DeliveryAddress showSummaryContent={true} address={this.state.shippingAddress} userDetails={this.state.orderSummary.shipping_address} navigateToAddress={() => this.navigateToAddress()} />
+				<DeliveryAddress showSummaryContent={true} address={this.state.shippingAddress} userDetails={this.state.orderSummary.shipping_address} navigateToAddress={() => this.navigateToAddress()} addressType={"location"} />
 			</div>
 		}
 		return deliveryaddress

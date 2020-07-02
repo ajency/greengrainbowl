@@ -149,7 +149,7 @@ class Cart extends Component {
 			</div>
 		} else {
 			deliveryaddress = <div>
-				<DeliveryAddress address={this.state.cartData.cart.shipping_address.formatted_address}/>
+				<DeliveryAddress address={this.state.cartData.cart.shipping_address.formatted_address} addressType="area"/>
 			</div>
 		}
 		return deliveryaddress

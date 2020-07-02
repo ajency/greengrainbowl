@@ -80,7 +80,7 @@ class gpsModalPrompt extends React.Component {
 			      {this.showSignInButton()}
 					<div className="position-relative title-wrap pl-0">
 						{/* <button className="btn btn-reset btn-back p-0"><i class="fa fa-arrow-left font-size-20" aria-hidden="true"></i></button> */}
-						<h3 className="mt-4 h1 ft6">Set delivery location</h3>
+						<h3 className="mt-4 h1 ft6">Set delivery area</h3>
 					</div>
 			      <h4 className="font-weight-light mt-4 pb-4">
 			        We currently serve at Panjim, Porvorim & its neighbourhood.
