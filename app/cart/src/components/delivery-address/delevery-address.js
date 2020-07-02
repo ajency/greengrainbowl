@@ -8,11 +8,16 @@ class DeliveryAddress extends Component {
 		this.changeShippingAddress = this.changeShippingAddress.bind(this)
 	}
 	render() {
+		const { addressType="" } = this.props
+		let addressTypeLabel ="Deliver to";
+		if(addressType == "area") {
+			addressTypeLabel="Delivery Area"
+		}
 		return (
 			<div className="delivery-address-container p-15 mt-3">
 				<div className="address-details list-text-block p-15 mb-0">
 					<div className="address-details-inner font-weight-light">
-						<span className="font-weight-semibold">Deliver to </span>
+						<span className="font-weight-semibold">{addressTypeLabel}</span>
 						<span id="cart-delivery-address"> {this.props.address}</span>
 						<span className="text-green d-inline-block cursor-pointer ml-2" onClick={() => this.openChangeLocationModal()}>Change</span>
 					</div>
