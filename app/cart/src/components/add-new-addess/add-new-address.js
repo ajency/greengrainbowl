@@ -100,13 +100,13 @@ class AddNewAddress extends Component {
                         console.log("fetch cart response ==>", cart);
                         cart = JSON.parse(JSON.stringify(cart));
                         console.log("fetch cart response ==>", cart.shipping_address);
-                        let latlng = { lat: cart.shipping_address.lat_long[0], lng: cart.shipping_address.lat_long[1] }
+                        let address = cart.formatted_address || "";
+                        let latlng = { lat: cart.shipping_address.lat_long[0], lng: cart.shipping_address.lat_long[1],address}
                         let landmark = cart.shipping_address.landmark || '';
                         let name = cart.shipping_address.name || '';
                         let email = cart.shipping_address.email || '';
                         let building = cart.shipping_address.address || '';
                         let address_type = cart.shipping_address.type || 'Home';
-                        let address = cart.formatted_address || "";
                         this.setState({ latlng: latlng, landmark, name, email, building, address_type, address })
                         this.reverseGeocode(latlng);
                     })
@@ -375,6 +375,7 @@ class AddNewAddress extends Component {
     }
 
     async reverseGeocode(obj) {
+        console.log(obj)
         this.setState({ locError: '' });
         this.setState({ showLoader: true });
         if(!obj.address) {
