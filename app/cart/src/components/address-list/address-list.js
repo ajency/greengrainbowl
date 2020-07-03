@@ -40,7 +40,7 @@ class AddressList extends Component {
                         if(_.isEmpty(userAddresses)) {
                             returnState["showAddressComponent"] = true
                         } else {
-                            const cart_id = window.readFromLocalStorage(generalConfig.site_mode+'-cart_id-'+generalConfig.businessId);
+                            const cartId = window.readFromLocalStorage(generalConfig.site_mode+'-cart_id-'+generalConfig.businessId);
                             const cart = await window.getCartByID(cartId)
                             if(cart.shipping_address.landmark && cart.shipping_address.landmark) {
                                 returnState["addresses"] = userAddresses
