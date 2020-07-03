@@ -106,7 +106,8 @@ class AddNewAddress extends Component {
                         let email = cart.shipping_address.email || '';
                         let building = cart.shipping_address.address || '';
                         let address_type = cart.shipping_address.type || 'Home';
-                        this.setState({ latlng: latlng, landmark, name, email, building, address_type })
+                        let address = cart.formatted_address || "";
+                        this.setState({ latlng: latlng, landmark, name, email, building, address_type, address })
                         this.reverseGeocode(latlng);
                     })
 
@@ -376,7 +377,9 @@ class AddNewAddress extends Component {
     async reverseGeocode(obj) {
         this.setState({ locError: '' });
         this.setState({ showLoader: true });
-        this.setState({ address: null });
+        if(!obj.address) {
+            this.setState({ address: null });
+        }
         let url = this.state.apiEndPoint + "/reverse-geocode";
         let body = {};
 
@@ -406,7 +409,9 @@ class AddNewAddress extends Component {
                         res_address = res.data.results[1]
 
                     }
-                    this.setState({ "address": res_address.formatted_address });
+                    if(!obj.address) {
+                        this.setState({ "address": res_address.formatted_address });
+                    }
                     let city = '', state = '', pincode = '';
                     _.forEach(res_address.address_components, (obj) => {
                         if (_.include(obj.types, 'locality')) {
@@ -420,7 +425,13 @@ class AddNewAddress extends Component {
                         }
 
                     })
-                    this.setState({ address_obj: { formatted_address: res_address.formatted_address, state: state, city: city, pincode: pincode } })
+                    let formatted_address = ''
+                    if(obj.address) {
+                        formatted_address = obj.address
+                    } else {
+                        formatted_address = res_address.formatted_address
+                    }
+                    this.setState({ address_obj: { formatted_address, state: state, city: city, pincode: pincode } })
                     this.setState({ showLoader: false })
 
                 }
