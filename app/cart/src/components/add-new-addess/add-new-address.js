@@ -100,7 +100,7 @@ class AddNewAddress extends Component {
                         console.log("fetch cart response ==>", cart);
                         cart = JSON.parse(JSON.stringify(cart));
                         console.log("fetch cart response ==>", cart.shipping_address);
-                        let address = cart.formatted_address || "";
+                        let address = cart.shipping_address.formatted_address || "";
                         let latlng = { lat: cart.shipping_address.lat_long[0], lng: cart.shipping_address.lat_long[1],address}
                         let landmark = cart.shipping_address.landmark || '';
                         let name = cart.shipping_address.name || '';
