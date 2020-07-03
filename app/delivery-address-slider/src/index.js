@@ -497,3 +497,7 @@ window.updateAddresses = (addresses = null) => {
 	// 	gpsModalPromptComponent.setState({showNoAddressMsg : false});
 	// },4000);
 }
+
+window.updateSavedAddressUI = () => {
+	gpsModalPromptComponent.fetchAddresses()
+}

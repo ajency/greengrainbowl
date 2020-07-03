@@ -335,6 +335,7 @@ class AddNewAddress extends Component {
 
         try {
             window.addAddress({ ...this.state.address_obj, ...data }).then(address => {
+                window.updateSavedAddressUI ()
                 if (this.props.cartRequest) {
                     this.props.assignAndProceed(null, address.id)
                 }
