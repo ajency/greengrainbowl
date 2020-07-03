@@ -192,7 +192,7 @@ class gpsModalPrompt extends React.Component {
 					address_extra = address_extra + address.landmark+', '
 				}
 				return (
-					<li key={address.id} className="cursor-pointer address saved-address-item" onClick={() => this.setUserLocations(address.lat_long, address.formatted_address)}>
+					<li key={address.id} className="cursor-pointer address saved-address-item" onClick={() => this.setUserLocations(address.lat_long, address, true)}>
 						{this.getAddressIcon(address.type)}
 						<div className="address-text">
 							<h5>{address.type}</h5>
@@ -353,14 +353,54 @@ class gpsModalPrompt extends React.Component {
 			})
 	}
 
-	setUserLocations(lat_lng, formatted_address){
+	setSaveAddress(address_id) {
+		let cart_id =  window.readFromLocalStorage(generalConfig.site_mode+'-cart_id-'+generalConfig.businessId);
+		if(cart_id) {
+				if(e) {
+				e.preventDefault();
+				if(!await this.isAddressDeliverable(address_id)) {
+					
+					this.displayError("Selected address is not deliverable :(");
+					return false;
+				}
+				}
+			// let url = generalConfig.apiEndPoint + "/anonymous/cart/create-order"
+			// let data = {
+			//     address_id: address_id,
+			//     cart_id: cart_id
+			// }
+			window.addCartLoader();
+			return window.assignAddressToCart(address_id)
+			.then((res) => {
+				if(res.success) {
+					this.setState({cartSummary:res.cart, redirectToSummary:true,})
+				} else {
+					window.removeCartLoader();
+					if(res.code =='PAYMENT_DONE') {
+						// window.removeFromLocalStorage('cart_id')
+						this.setState({redirectToCart:true})
+					}
+				}
+			}).catch(err => {
+				console.log(err);
+			})
+		} else {
+			this.setState({redirectToCart:true})
+		}
+	}
+
+	setUserLocations(lat_lng, address, savedAddress=null){
 		try{
 			this.setSliderLoader();
 			this.setState({settingUserLocation : true});
 			let cart_id = window.brewCartId(this.state.siteMode, this.state.businessId);
+			let formatted_address = address
+			if(savedAddress) {
+				formatted_address = address.formatted_address
+			}
 			window.getCartByID(cart_id).then((res)=>{
 				if(res){
-					window.updateDeliveryLocation(lat_lng, formatted_address, cart_id).then((res)=>{
+					window.updateDeliveryLocation(lat_lng, address, cart_id, savedAddress).then((res)=>{
 						this.removeSliderLoader();
 						this.updateLocationUI(lat_lng, formatted_address);
 						this.setState({ fetchingGPS : false, searchText : '', settingUserLocation : false});
