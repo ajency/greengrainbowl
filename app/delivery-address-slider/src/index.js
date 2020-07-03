@@ -353,42 +353,6 @@ class gpsModalPrompt extends React.Component {
 			})
 	}
 
-	setSaveAddress(address_id) {
-		let cart_id =  window.readFromLocalStorage(generalConfig.site_mode+'-cart_id-'+generalConfig.businessId);
-		if(cart_id) {
-				if(e) {
-				e.preventDefault();
-				if(!await this.isAddressDeliverable(address_id)) {
-					
-					this.displayError("Selected address is not deliverable :(");
-					return false;
-				}
-				}
-			// let url = generalConfig.apiEndPoint + "/anonymous/cart/create-order"
-			// let data = {
-			//     address_id: address_id,
-			//     cart_id: cart_id
-			// }
-			window.addCartLoader();
-			return window.assignAddressToCart(address_id)
-			.then((res) => {
-				if(res.success) {
-					this.setState({cartSummary:res.cart, redirectToSummary:true,})
-				} else {
-					window.removeCartLoader();
-					if(res.code =='PAYMENT_DONE') {
-						// window.removeFromLocalStorage('cart_id')
-						this.setState({redirectToCart:true})
-					}
-				}
-			}).catch(err => {
-				console.log(err);
-			})
-		} else {
-			this.setState({redirectToCart:true})
-		}
-	}
-
 	setUserLocations(lat_lng, address, savedAddress=null){
 		try{
 			this.setSliderLoader();
