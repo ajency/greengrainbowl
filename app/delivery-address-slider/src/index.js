@@ -433,6 +433,7 @@ class gpsModalPrompt extends React.Component {
 	fetchAddresses(){
 		try{
 			window.getAddresses().then((res)=>{
+				console.log("fetched addresses", res);
 				this.setState({ addresses : res });
 			})
 		}
@@ -499,5 +500,6 @@ window.updateAddresses = (addresses = null) => {
 }
 
 window.updateSavedAddressUI = () => {
+	console.log("called updateSavedAddressUI");
 	gpsModalPromptComponent.fetchAddresses()
 }
