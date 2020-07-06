@@ -77,35 +77,36 @@ class gpsModalPrompt extends React.Component {
 			      </h3>
 			  </div>
 			  <div className="slide-in-content">
-			      {this.showSignInButton()}
-					<div className="position-relative title-wrap pl-0">
-						{/* <button className="btn btn-reset btn-back p-0"><i class="fa fa-arrow-left font-size-20" aria-hidden="true"></i></button> */}
-						<h3 className="mt-4 h1 ft6">Set delivery area</h3>
-					</div>
-			      <h4 className="font-weight-light mt-4 pb-4">
-			        We currently serve at Panjim, Porvorim & its neighbourhood.
-			      </h4>
-			      <div className="mb-3 pt-4">
-			       		{this.showFetchLocationUsingGps()}
-			      </div>
-			      <div className="gps-error-msg">
+				<div className="position-relative title-wrap pl-0">
+					{/* <button className="btn btn-reset btn-back p-0"><i class="fa fa-arrow-left font-size-20" aria-hidden="true"></i></button> */}
+					<h3 className="mt-0 h1 ft6 mb-4">Set delivery area</h3>
+				</div>
+				<div className="test-center">
+					{this.showLocationSearch()}
+				</div>
+				<div className="gps-error-msg">
+					{this.checkLocationErrorMsg()}
+				</div>
+				<ul style={locationStyle} className="pl-0 h5 mb-0 add-list">
+					{this.getAutoCompleteLocations()}
+				</ul>
+				<div className="mb-3 pt-0">
+					{this.showFetchLocationUsingGps()}
+				</div>
+				<div className="gps-error-msg">
 					{this.checkGpsErrorMsg()}
-				  </div>
+				</div>
+				
+				{this.showSignInButton()}
+					
+				<h5 className="font-weight-light mt-4 pb-2">
+					We currently serve at Panjim, Porvorim & its neighbourhood.
+				</h5>
+			      
+				{this.getSavedAddresses()}
 
-					<div className="test-center">
-			      		{this.showLocationSearch()}
-					</div>
-			      	<div className="gps-error-msg">
-						{this.checkLocationErrorMsg()}
-					</div>
+				{this.getNoSavedAddressesMsg()}
 
-			      	<ul style={locationStyle} className="pl-0 h5 mb-0 add-list">
-						{this.getAutoCompleteLocations()}
-					</ul>
-
-					{this.getSavedAddresses()}
-
-					{this.getNoSavedAddressesMsg()}
 			  </div>
 			</div>
 		);
@@ -143,11 +144,10 @@ class gpsModalPrompt extends React.Component {
 		if(!this.state.settingUserLocation && !this.state.fetchingGPS)
 			return (
 					<div>
-						<div className="text-center h4 mb-0 font-weight-light">-OR-</div>
 						<div className="position-relative mb-3 mt-3 text-center">
-			        		<input onFocus={this.scrollTop} type="text" className="text-grey border-green-2 w-100 rounded-0 p-3 h5 mb-0 outline-0" name="search" placeholder="Search Location" value={this.state.searchText} onChange={e => {this.autoCompleteLocation(e.target.value)}} autoComplete="off"/>
+			        		<input onFocus={this.scrollTop} type="text" className="text-grey border-border-grey w-100 rounded-0 pt-3 pb-3 pl-0 pr-0 h5 mb-0 outline-0" name="search" placeholder="Enter area, street name..." value={this.state.searchText} onChange={e => {this.autoCompleteLocation(e.target.value)}} autoComplete="off"/>
 							{/* <i class="sprite sprite-search position-absolute-right20"></i> */}
-							<i class="fa fa-search position-absolute-right20 text-primary"></i>
+							<i class="fa fa-search position-absolute-right0"></i>
 			      		</div>
 			      	</div>
 			)
@@ -165,7 +165,8 @@ class gpsModalPrompt extends React.Component {
 			)
 		else if(!this.state.settingUserLocation)
 			return (
-				 <button onClick={() => this.getLocation()} type="button" className="btn-reset btn-location text-grey border-green-2  w-100 p-3 text-left h5 mb-0 position-relative">Use Current Location <i class="sprite sprite-location position-absolute-right20"></i></button>
+				 <button onClick={() => this.getLocation()} type="button" className="btn-reset btn-location w-100 p-3 text-left h5 mb-0 position-relative pl-4 pr-0">
+				 <span className="d-block mb-1">Use Current Location</span><span className="d-block gps-tag text-grey">Using GPS</span><i class="sprite sprite-location "></i></button>
 			)
 	}
 
