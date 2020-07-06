@@ -257,9 +257,13 @@ document.querySelectorAll('.react-add-to-cart-container')
 	});
 
 
-window.updateaddToCartComponent = (item) => {
+window.updateaddToCartComponent = async (item) => {
+	const products = await window.fetchProducts()
+
 	addToCartComponents.forEach((component) =>{
-		if(component.props.product_data.product_id == item.product_id){
+		const product = products.find(p => item.product_id = p.id)
+		const variant = product.variants.find(v => v.id == item.variant_id )
+		if(component.props.product_data.product_id == item.product_id && variant.day == component.props.product_data.day){
 			let items = component.state.items;
 			items.push(item)
 			items.sort((a,b)=>{
@@ -277,10 +281,8 @@ window.updateaddToCartComponent = (item) => {
 
 window.updateItemQuantity = async (item, action) => {
 	console.log("updateItemQuantity ==>", item, action);
-	const products = await window.fetchProducts()
 	addToCartComponents.forEach((component) =>{
-
-		const product = products.find((p) => p.id == item.product_id)
+		const product = window.products.find((p) => p.id == item.product_id)
 		const variant = product.variants.find((v) => v.id == item.variant_id)
 		if(component.props.product_data.product_id == item.product_id && component.props.product_data.day == variant.day){
 			if(action == 'add')
