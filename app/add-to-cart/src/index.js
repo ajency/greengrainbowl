@@ -92,7 +92,7 @@ class addToCart extends React.Component {
 		else{
 			if(this.state.items.length > 1){
 				window.removeBackDrop();
-				let msg = "Item has multiple variants added. Remove correct item from cart";
+				let msg = "Item has multiple variants added. Please remove correct item from cart";
 				window.displayError(msg);
 			}
 			else{
