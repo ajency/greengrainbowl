@@ -685,7 +685,8 @@ function getNewCartData (lat_long, formatted_address, site_mode) {
     return cart_data;
 }
 
-async function updateDeliveryLocation(lat_long, address,  cart_id, savedAddress= null){
+async function updateDeliveryLocation(lat_long, address,  cart_id, savedAddress= false){
+    console.log("updateDeliveryLocation=>",savedAddress)
     let cart_data = await getCartByID(cart_id), locations;
     let landmark = ""
     let addressFlat = ""
