@@ -65,14 +65,17 @@ class viewCart extends React.Component {
 		let cart_id = window.readFromLocalStorage(this.state.siteMode+'-cart_id-'+this.state.businessId);
 		console.log("inside fetch cart",cart_id)
 		if(cart_id){
-			window.getCartByID(cart_id).then((cart_data)=>{
-				this.setState({cart : cart_data})
-				if(cart_data && cart_data.items) {
-					cart_data.items.forEach((item)=>{
-						window.updateaddToCartComponent(item);
-					})
-				}
-			})
+			setTimeout(() =>{
+
+				window.getCartByID(cart_id).then((cart_data)=>{
+					this.setState({cart : cart_data})
+					if(cart_data && cart_data.items) {
+						cart_data.items.forEach((item)=>{
+							window.updateaddToCartComponent(item);
+						})
+					}
+				})
+			},3500)
 		}
 	}
 }
