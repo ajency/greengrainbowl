@@ -1071,3 +1071,27 @@ function brewCartId(site_mode, business_id) {
         return null
     }
 }
+
+async function fetchProducts() {
+    if(window.products) {
+        if(window.products.length) {
+          return  window.products
+        } else {
+            const product_ref = await db.collection('products').get();
+            let all_products = product_ref.docs.map(doc => {
+                let obj = doc.data();
+                obj.id = doc.id;
+                return obj;
+            });
+            return all_products;
+        }
+    } else {
+        const product_ref = await db.collection('products').get();
+        let all_products = product_ref.docs.map(doc => {
+            let obj = doc.data();
+            obj.id = doc.id;
+            return obj;
+        });
+        return all_products;
+    }
+}
