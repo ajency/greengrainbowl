@@ -257,7 +257,7 @@ document.querySelectorAll('.react-add-to-cart-container')
 	});
 
 
-window.updateaddToCartComponent = (item) => {
+window.updateaddToCartComponent = async (item) => {
 	const products = await window.fetchProducts()
 
 	addToCartComponents.forEach((component) =>{
