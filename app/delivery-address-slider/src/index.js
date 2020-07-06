@@ -193,7 +193,7 @@ class gpsModalPrompt extends React.Component {
 					address_extra = address_extra + address.landmark+', '
 				}
 				return (
-					<li key={address.id} className="cursor-pointer address saved-address-item" onClick={() => this.setUserLocations(address.lat_long, address.formatted_address)}>
+					<li key={address.id} className="cursor-pointer address saved-address-item" onClick={() => this.setUserLocations(address.lat_long, address, true)}>
 						{this.getAddressIcon(address.type)}
 						<div className="address-text">
 							<h5>{address.type}</h5>
@@ -354,14 +354,18 @@ class gpsModalPrompt extends React.Component {
 			})
 	}
 
-	setUserLocations(lat_lng, formatted_address){
+	setUserLocations(lat_lng, address, savedAddress=null){
 		try{
 			this.setSliderLoader();
 			this.setState({settingUserLocation : true});
 			let cart_id = window.brewCartId(this.state.siteMode, this.state.businessId);
+			let formatted_address = address
+			if(savedAddress) {
+				formatted_address = address.formatted_address
+			}
 			window.getCartByID(cart_id).then((res)=>{
 				if(res){
-					window.updateDeliveryLocation(lat_lng, formatted_address, cart_id).then((res)=>{
+					window.updateDeliveryLocation(lat_lng, address, cart_id, savedAddress).then((res)=>{
 						this.removeSliderLoader();
 						this.updateLocationUI(lat_lng, formatted_address);
 						this.setState({ fetchingGPS : false, searchText : '', settingUserLocation : false});
@@ -430,6 +434,7 @@ class gpsModalPrompt extends React.Component {
 	fetchAddresses(){
 		try{
 			window.getAddresses().then((res)=>{
+				console.log("fetched addresses", res);
 				this.setState({ addresses : res });
 			})
 		}
@@ -493,4 +498,9 @@ window.updateAddresses = (addresses = null) => {
 	// setTimeout(() => {
 	// 	gpsModalPromptComponent.setState({showNoAddressMsg : false});
 	// },4000);
+}
+
+window.updateSavedAddressUI = () => {
+	console.log("called updateSavedAddressUI");
+	gpsModalPromptComponent.fetchAddresses()
 }

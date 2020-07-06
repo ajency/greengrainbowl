@@ -42,7 +42,7 @@ class AddressList extends Component {
                         } else {
                             const cartId = window.readFromLocalStorage(generalConfig.site_mode+'-cart_id-'+generalConfig.businessId);
                             const cart = await window.getCartByID(cartId)
-                            if(cart.shipping_address.landmark && cart.shipping_address.landmark) {
+                            if(cart.shipping_address.landmark) {
                                 returnState["addresses"] = userAddresses
                                 returnState["fetchComplete"] = true
                             } else {

@@ -685,15 +685,28 @@ function getNewCartData (lat_long, formatted_address, site_mode) {
     return cart_data;
 }
 
-async function updateDeliveryLocation(lat_long, formatted_address,  cart_id){
+async function updateDeliveryLocation(lat_long, address,  cart_id, savedAddress= null){
     let cart_data = await getCartByID(cart_id), locations;
-
+    let landmark = ""
+    let addressFlat = ""
+    let formatted_address = address
+    let addressId=""
     if(window.stockLocations.length){
         locations = window.stockLocations;
     }
     else{
         locations = await getAllStockLocations();
     }
+
+    if(savedAddress) {
+        landmark = address.landmark
+        formatted_address = address.formatted_address
+        addressId = address.id
+        if(address.address) {
+            addressFlat = address.address
+        }
+    }
+
 
     console.log("update delivery address all locations", locations, lat_long);
     let stock_location_id = '';
@@ -711,8 +724,9 @@ async function updateDeliveryLocation(lat_long, formatted_address,  cart_id){
                     'shipping_address.lat_long' : lat_long,
                     'shipping_address.formatted_address' : formatted_address,
                     'stock_location_id' : stock_location_id,
-                    'shipping_address.landmark' : "",
-                    'shipping_address.address' : "",
+                    'shipping_address.landmark' : landmark,
+                    'shipping_address.address' : addressFlat,
+                    'shipping_address.id' : addressId
                 })
     let res = { success : true , message: 'Address updated successfully' }
     return res;
