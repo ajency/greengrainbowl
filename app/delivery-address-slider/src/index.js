@@ -332,12 +332,12 @@ class gpsModalPrompt extends React.Component {
 				if(res.data.status === "OK"){
 					this.setState({settingUserLocation : false, gpsError : ''});
 					if(loc)
-						this.setUserLocations([res.data.result.geometry.location.lat,res.data.result.geometry.location.lng], res.data.result.formatted_address);
+						this.setUserLocations([res.data.result.geometry.location.lat,res.data.result.geometry.location.lng], res.data.result.formatted_address,false);
 					else if(latlng)
 						if(res.data.results>=4) {
-							this.setUserLocations(latlng, res.data.results[1].formatted_address);
+							this.setUserLocations(latlng, res.data.results[1].formatted_address,false);
 						} else {
-							this.setUserLocations(latlng, res.data.results[1].formatted_address);
+							this.setUserLocations(latlng, res.data.results[1].formatted_address,false);
 						}
 				}
 				else{
@@ -449,7 +449,7 @@ class gpsModalPrompt extends React.Component {
 			let default_address = addresses.find((address) => {return address.address.default});
 			console.log("check default address ==>", default_address);
 			if(default_address){
-				this.setUserLocations(default_address.address.lat_long, default_address.address.formatted_address);
+				this.setUserLocations(default_address.address.lat_long, default_address.address.formatted_address,false);
 			}
 		}
 	}
