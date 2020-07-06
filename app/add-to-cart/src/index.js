@@ -275,10 +275,14 @@ window.updateaddToCartComponent = (item) => {
 	})
 }
 
-window.updateItemQuantity = (item, action) => {
+window.updateItemQuantity = async (item, action) => {
 	console.log("updateItemQuantity ==>", item, action);
+	const products = await window.fetchProducts()
 	addToCartComponents.forEach((component) =>{
-		if(component.props.product_data.product_id == item.product_id){
+
+		const product = products.find((p) => p.id == item.product_id)
+		const variant = product.variants.find((v) => v.id == item.variant_id)
+		if(component.props.product_data.product_id == item.product_id && component.props.product_data.day == variant.day){
 			if(action == 'add')
 				component.addItems(item)
 			else
