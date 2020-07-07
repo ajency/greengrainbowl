@@ -659,6 +659,20 @@ async function addToCart(site_mode, variant_id = null, lat_long = null, cart_id 
 
 
 function getNewCartData (lat_long, formatted_address, site_mode) {
+    let landmark = "";
+    let flatNo = "";
+    let addressId = "";
+    if(!!window.readFromLocalStorage("saved_landmark")) {
+        landmark = window.readFromLocalStorage("saved_landmark")
+    }
+
+    if(!!window.readFromLocalStorage("flatNo")) {
+        flatNo = window.readFromLocalStorage("flatNo")
+    }
+
+    if(!!window.readFromLocalStorage("saved_address_id")) {
+        addressId = window.readFromLocalStorage("saved_address_id")
+    }
     let cart_data = {
         user_id : firebase.auth().currentUser.uid,
         summary : {
@@ -672,6 +686,9 @@ function getNewCartData (lat_long, formatted_address, site_mode) {
         order_type : 'cart',
         cart_count : 0,
         shipping_address : {
+            landmark: landmark,
+            address: flatNo,
+            address: addressId,
             lat_long : lat_long,
             formatted_address : formatted_address
         },
