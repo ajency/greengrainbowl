@@ -874,6 +874,14 @@ async function assignAddressToCart (address_id, fetchDraft, phoneNumber) {
     } else {
         let address = userAddresses.filter((address) => {return address.id == address_id})[0]
         shipping_address = address
+        window.writeInLocalStorage('saved_landmark', address.landmark);
+        window.writeInLocalStorage('saved_address', address.address);
+        window.writeInLocalStorage('saved_address_id', address.id);
+        window.writeInLocalStorage('saved_name', address.name);
+        window.writeInLocalStorage('saved_email', address.email);
+        window.writeInLocalStorage('saved_nos', address.phone);
+        window.writeInLocalStorage('formatted_address', address.formatted_address);
+        window.writeInLocalStorage('lat_lng', `${address.lat_lng[0]},${address.lat_lng[1]}`);
     }
 
 
