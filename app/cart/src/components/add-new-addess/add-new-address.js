@@ -126,38 +126,40 @@ class AddNewAddress extends Component {
 
     render() {
         return (
-            <div className="address-container">
-                <Header />
-                <div className="map-container">
-                    <GoogleMap handleCenter={this.handleCenter} latlng={this.state.latlng} />
-                    <div id="marker"><i className="fas fa-map-marker-alt"></i></div>
-                    <div id="marker"><i class="fas fa-map-marker-alt"></i></div>
-                </div>
-                <div className="p-15">
-                    <div className="position-relative title-wrap pl-0">
-                        {/* <button className="btn btn-reset btn-back p-0"><i class="fa fa-arrow-left font-size-20" aria-hidden="true"></i></button> */}
-                        <h3 className="mt-4 h1 ft6">Set a delivery address</h3>
+            <>
+                <div className="address-container">
+                    <Header />
+                    <div className="map-container">
+                        <GoogleMap handleCenter={this.handleCenter} latlng={this.state.latlng} />
+                        <div id="marker"><i className="fas fa-map-marker-alt"></i></div>
+                        <div id="marker"><i class="fas fa-map-marker-alt"></i></div>
                     </div>
-                    <div className="list-text-block p-15 mb-4 mt-4">
-                        <div className="font-weight-light h5 mb-0">
-                            <span class="font-weight-semibold d-block mb-2">Delivery area</span>
-                            {this.state.showLoader ? <div>Address is loading...</div> : this.state.address}
-                            {this.state.addressInput ? this.getChangeAddressInput() : this.state.address ? <span className="text-green d-inline-block cursor-pointer" onClick={this.changeAddress}>. Change</span> : null}
+                    <div className="p-15">
+                        <div className="position-relative title-wrap pl-0">
+                            {/* <button className="btn btn-reset btn-back p-0"><i class="fa fa-arrow-left font-size-20" aria-hidden="true"></i></button> */}
+                            <h3 className="mt-4 h1 ft6">Set a delivery address</h3>
                         </div>
+                        <div className="list-text-block p-15 mb-4 mt-4">
+                            <div className="font-weight-light h5 mb-0">
+                                <span class="font-weight-semibold d-block mb-2">Delivery area</span>
+                                {this.state.showLoader ? <div>Address is loading...</div> : this.state.address}
+                                {this.state.addressInput ? this.getChangeAddressInput() : this.state.address ? <span className="text-green d-inline-block cursor-pointer" onClick={this.changeAddress}>. Change</span> : null}
+                            </div>
+                        </div>
+                        <form className="add-address-form">
+                            <div>
+                                {this.getAddressTypeRadio()}
+                            </div>
+                        </form>
                     </div>
-                    <form className="add-address-form">
-                        <div>
-                            {this.getAddressTypeRadio()}
-                        </div>
-                        <div className="secure-checkout fixed-bottom visible bg-white p-15">
-                            <button className="btn btn-primary btn-arrow-icon w-100 p-15 rounded-0 text-left position-relative h5 ft6 mb-0 d-flex align-items-center justify-content-between text-capitalize" onClick={this.handleSubmit}>
-                                <span className="zindex-1">{this.state.btnLable}</span>
-                                <i class="text-white fa fa-arrow-right font-size-20" aria-hidden="true"></i>
-                            </button>
-                        </div>
-                    </form>
                 </div>
-            </div>
+                <div className="secure-checkout fixed-bottom visible bg-white p-15">
+                    <button className="btn btn-primary btn-arrow-icon w-100 p-15 rounded-0 text-left position-relative h5 ft6 mb-0 d-flex align-items-center justify-content-between text-capitalize" onClick={this.handleSubmit}>
+                        <span className="zindex-1">{this.state.btnLable}</span>
+                        <i class="text-white fa fa-arrow-right font-size-20" aria-hidden="true"></i>
+                    </button>
+                </div>
+            </>
         );
     }
 
