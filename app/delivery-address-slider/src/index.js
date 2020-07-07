@@ -362,6 +362,15 @@ class gpsModalPrompt extends React.Component {
 			let formatted_address = address
 			if(savedAddress) {
 				formatted_address = address.formatted_address
+				window.writeInLocalStorage('saved_address_id', address.id);
+				if(address.landmark)
+					window.writeInLocalStorage('saved_landmark', address.landmark);
+				if(address.address)
+					window.writeInLocalStorage('saved_address', address.address);
+			}  else {
+				window.writeInLocalStorage('saved_landmark', "");
+				window.writeInLocalStorage('saved_address', "");
+				window.writeInLocalStorage('saved_address_id', "");
 			}
 			window.getCartByID(cart_id).then((res)=>{
 				if(res){
@@ -388,7 +397,7 @@ class gpsModalPrompt extends React.Component {
 		}	
 	}
 
-	updateLocationUI(lat_lng, formatted_address){
+	updateLocationUI(lat_lng, formatted_address, ){
 		window.writeInLocalStorage('lat_lng', lat_lng[0] + ',' +lat_lng[1]);
 		window.writeInLocalStorage('formatted_address', formatted_address);
 		window.lat_lng = lat_lng;
