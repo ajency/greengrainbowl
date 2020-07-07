@@ -662,16 +662,26 @@ function getNewCartData (lat_long, formatted_address, site_mode) {
     let landmark = "";
     let flatNo = "";
     let addressId = "";
+    let name = "";
+    let email = "";
+    let phone = "";
     if(!!window.readFromLocalStorage("saved_landmark")) {
         landmark = window.readFromLocalStorage("saved_landmark")
     }
-
     if(!!window.readFromLocalStorage("flatNo")) {
         flatNo = window.readFromLocalStorage("flatNo")
     }
-
     if(!!window.readFromLocalStorage("saved_address_id")) {
         addressId = window.readFromLocalStorage("saved_address_id")
+    }
+    if(!!window.readFromLocalStorage('saved_name')) {
+        name = window.readFromLocalStorage('saved_name');
+    }
+    if(!!window.readFromLocalStorage('saved_email')) {
+        email = window.readFromLocalStorage('saved_email');
+    }
+    if(!!window.readFromLocalStorage('saved_nos')) {
+        phone = window.readFromLocalStorage('saved_nos');
     }
     let cart_data = {
         user_id : firebase.auth().currentUser.uid,
@@ -686,6 +696,9 @@ function getNewCartData (lat_long, formatted_address, site_mode) {
         order_type : 'cart',
         cart_count : 0,
         shipping_address : {
+            name:name,
+            phone:phone,
+            email:email,
             landmark: landmark,
             address: flatNo,
             address: addressId,
