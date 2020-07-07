@@ -362,6 +362,9 @@ class gpsModalPrompt extends React.Component {
 			if(savedAddress) {
 				formatted_address = address.formatted_address
 				window.writeInLocalStorage('saved_address_id', address.id);
+				window.writeInLocalStorage('saved_name', address.name);
+				window.writeInLocalStorage('saved_email', address.email);
+				window.writeInLocalStorage('saved_nos', address.phone);
 				if(address.landmark)
 					window.writeInLocalStorage('saved_landmark', address.landmark);
 				if(address.address)
