@@ -357,12 +357,12 @@ class gpsModalPrompt extends React.Component {
 				if(res.data.status === "OK"){
 					this.setState({settingUserLocation : false, gpsError : ''});
 					if(loc)
-						this.setUserLocations([res.data.result.geometry.location.lat,res.data.result.geometry.location.lng], res.data.result.formatted_address);
+						this.setUserLocations([res.data.result.geometry.location.lat,res.data.result.geometry.location.lng], res.data.result.formatted_address,false);
 					else if(latlng)
 						if(res.data.results>=4) {
-							this.setUserLocations(latlng, res.data.results[1].formatted_address);
+							this.setUserLocations(latlng, res.data.results[1].formatted_address,false);
 						} else {
-							this.setUserLocations(latlng, res.data.results[1].formatted_address);
+							this.setUserLocations(latlng, res.data.results[1].formatted_address,false);
 						}
 				}
 				else{
@@ -387,6 +387,18 @@ class gpsModalPrompt extends React.Component {
 			let formatted_address = address
 			if(savedAddress) {
 				formatted_address = address.formatted_address
+				window.writeInLocalStorage('saved_address_id', address.id);
+				window.writeInLocalStorage('saved_name', address.name);
+				window.writeInLocalStorage('saved_email', address.email);
+				window.writeInLocalStorage('saved_nos', address.phone);
+				if(address.landmark)
+					window.writeInLocalStorage('saved_landmark', address.landmark);
+				if(address.address)
+					window.writeInLocalStorage('saved_address', address.address);
+			}  else {
+				window.writeInLocalStorage('saved_landmark', "");
+				window.writeInLocalStorage('saved_address', "");
+				window.writeInLocalStorage('saved_address_id', "");
 			}
 			window.getCartByID(cart_id).then((res)=>{
 				if(res){
@@ -413,7 +425,7 @@ class gpsModalPrompt extends React.Component {
 		}	
 	}
 
-	updateLocationUI(lat_lng, formatted_address){
+	updateLocationUI(lat_lng, formatted_address, ){
 		window.writeInLocalStorage('lat_lng', lat_lng[0] + ',' +lat_lng[1]);
 		window.writeInLocalStorage('formatted_address', formatted_address);
 		window.lat_lng = lat_lng;
@@ -474,7 +486,7 @@ class gpsModalPrompt extends React.Component {
 			let default_address = addresses.find((address) => {return address.address.default});
 			console.log("check default address ==>", default_address);
 			if(default_address){
-				this.setUserLocations(default_address.address.lat_long, default_address.address.formatted_address);
+				this.setUserLocations(default_address.address.lat_long, default_address.address.formatted_address,false);
 			}
 		}
 	}

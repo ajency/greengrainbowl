@@ -659,6 +659,30 @@ async function addToCart(site_mode, variant_id = null, lat_long = null, cart_id 
 
 
 function getNewCartData (lat_long, formatted_address, site_mode) {
+    let landmark = "";
+    let flatNo = "";
+    let addressId = "";
+    let name = "";
+    let email = "";
+    let phone = "";
+    if(!!window.readFromLocalStorage("saved_landmark")) {
+        landmark = window.readFromLocalStorage("saved_landmark")
+    }
+    if(!!window.readFromLocalStorage("flatNo")) {
+        flatNo = window.readFromLocalStorage("flatNo")
+    }
+    if(!!window.readFromLocalStorage("saved_address_id")) {
+        addressId = window.readFromLocalStorage("saved_address_id")
+    }
+    if(!!window.readFromLocalStorage('saved_name')) {
+        name = window.readFromLocalStorage('saved_name');
+    }
+    if(!!window.readFromLocalStorage('saved_email')) {
+        email = window.readFromLocalStorage('saved_email');
+    }
+    if(!!window.readFromLocalStorage('saved_nos')) {
+        phone = window.readFromLocalStorage('saved_nos');
+    }
     let cart_data = {
         user_id : firebase.auth().currentUser.uid,
         summary : {
@@ -672,6 +696,12 @@ function getNewCartData (lat_long, formatted_address, site_mode) {
         order_type : 'cart',
         cart_count : 0,
         shipping_address : {
+            name:name,
+            phone:phone,
+            email:email,
+            landmark: landmark,
+            address: flatNo,
+            address: addressId,
             lat_long : lat_long,
             formatted_address : formatted_address
         },
@@ -685,7 +715,8 @@ function getNewCartData (lat_long, formatted_address, site_mode) {
     return cart_data;
 }
 
-async function updateDeliveryLocation(lat_long, address,  cart_id, savedAddress= null){
+async function updateDeliveryLocation(lat_long, address,  cart_id, savedAddress= false){
+    console.log("updateDeliveryLocation=>",savedAddress)
     let cart_data = await getCartByID(cart_id), locations;
     let landmark = ""
     let addressFlat = ""

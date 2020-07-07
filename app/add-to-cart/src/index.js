@@ -92,7 +92,7 @@ class addToCart extends React.Component {
 		else{
 			if(this.state.items.length > 1){
 				window.removeBackDrop();
-				let msg = "Item has multiple variants added. Remove correct item from cart";
+				let msg = "Item has multiple variants added. Please remove correct item from cart";
 				window.displayError(msg);
 			}
 			else{
@@ -261,7 +261,7 @@ window.updateaddToCartComponent = async (item) => {
 	const products = await window.fetchProducts()
 
 	addToCartComponents.forEach((component) =>{
-		const product = products.find(p => item.product_id = p.id)
+		const product = window.products.find(p => item.product_id = p.id)
 		const variant = product.variants.find(v => v.id == item.variant_id )
 		if(component.props.product_data.product_id == item.product_id && variant.day == component.props.product_data.day){
 			let items = component.state.items;
@@ -281,6 +281,7 @@ window.updateaddToCartComponent = async (item) => {
 
 window.updateItemQuantity = async (item, action) => {
 	console.log("updateItemQuantity ==>", item, action);
+	
 	addToCartComponents.forEach((component) =>{
 		const product = window.products.find((p) => p.id == item.product_id)
 		const variant = product.variants.find((v) => v.id == item.variant_id)
@@ -296,7 +297,8 @@ window.updateItemQuantity = async (item, action) => {
 window.addToCartFromVariant = (product_id, variant_id , product) => {
 	let found = false;
 	addToCartComponents.forEach((component) =>{
-		if(component.props.product_data.product_id == product_id && !found){
+		const variant = product.variants.find((p) => p.id == variant_id)
+		if(component.props.product_data.product_id == product_id && variant.day == component.props.product_data.day && !found){
 			component.addToCart(variant_id, product);
 			found = true;
 		}
