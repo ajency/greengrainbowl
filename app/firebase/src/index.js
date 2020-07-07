@@ -668,8 +668,8 @@ function getNewCartData (lat_long, formatted_address, site_mode) {
     if(!!window.readFromLocalStorage("saved_landmark")) {
         landmark = window.readFromLocalStorage("saved_landmark")
     }
-    if(!!window.readFromLocalStorage("flatNo")) {
-        flatNo = window.readFromLocalStorage("flatNo")
+    if(!!window.readFromLocalStorage("saved_address")) {
+        flatNo = window.readFromLocalStorage("saved_address")
     }
     if(!!window.readFromLocalStorage("saved_address_id")) {
         addressId = window.readFromLocalStorage("saved_address_id")
