@@ -76,7 +76,7 @@ class gpsModalPrompt extends React.Component {
 			          <span aria-hidden="true"><i class="sprite sprite-remove"></i></span>
 			      </h3>
 			  </div>
-			  <div className="slide-in-content">
+			  <div className="slide-in-content set-area">
 				<div className="position-relative title-wrap pl-0">
 					{/* <button className="btn btn-reset btn-back p-0"><i class="fa fa-arrow-left font-size-20" aria-hidden="true"></i></button> */}
 					<h3 className="mt-0 h1 ft6 mb-4">Set delivery area</h3>
@@ -99,17 +99,42 @@ class gpsModalPrompt extends React.Component {
 				
 				{this.showSignInButton()}
 					
-				<h5 className="font-weight-light mt-4 pb-2">
-					We currently serve at Panjim, Porvorim & its neighbourhood.
-				</h5>
+				{this.serveTextLoggedIn()}
 			      
 				{this.getSavedAddresses()}
 
 				{this.getNoSavedAddressesMsg()}
 
 			  </div>
+			  
+			  {this.serveTextLoggedOut()}
+
 			</div>
 		);
+	}
+
+	serveTextLoggedOut() {
+		if(this.state.showSignInBtn){
+			return (
+				<div className="pl-3 pr-3">
+					<h5 className="font-weight-light mt-4 pb-2">
+						We currently serve at Panjim, Porvorim & its neighbourhood.
+					</h5>
+				</div>
+			);
+		}
+	}
+
+	serveTextLoggedIn() {
+		if(!this.state.showSignInBtn){
+			return (
+				<div className="pl-3 pr-3">
+					<h5 className="font-weight-light mt-4 pb-2">
+						We currently serve at Panjim, Porvorim & its neighbourhood.
+					</h5>
+				</div>
+			);
+		}
 	}
 
 	showSignInButton() {
