@@ -46,7 +46,7 @@ class AddressList extends Component {
                                 returnState["addresses"] = userAddresses
                                 returnState["fetchComplete"] = true
                             } else {
-                                returnState["showAddressComponent"] = false //true
+                                returnState["showAddressComponent"] = true
                                 returnState["showSkip"] =true
                             }
                         }
