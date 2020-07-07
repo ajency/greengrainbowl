@@ -701,7 +701,7 @@ function getNewCartData (lat_long, formatted_address, site_mode) {
             email:email,
             landmark: landmark,
             address: flatNo,
-            address: addressId,
+            id: addressId,
             lat_long : lat_long,
             formatted_address : formatted_address
         },
