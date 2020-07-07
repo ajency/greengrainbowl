@@ -335,6 +335,15 @@ class AddNewAddress extends Component {
 
         try {
             window.addAddress({ ...this.state.address_obj, ...data }).then(address => {
+                window.writeInLocalStorage('saved_landmark', data.landmark);
+				window.writeInLocalStorage('saved_address', data.address);
+				window.writeInLocalStorage('saved_address_id', address.id);
+				window.writeInLocalStorage('saved_name', address.name);
+				window.writeInLocalStorage('saved_email', address.email);
+                window.writeInLocalStorage('saved_nos', address.phone);
+                window.writeInLocalStorage('formatted_address', address.formatted_address);
+                window.writeInLocalStorage('lat_lng', `${this.state.latlng.lat},${this.state.latlng.lng}`);
+                
                 window.updateSavedAddressUI()
                 if (this.props.cartRequest) {
                     this.props.assignAndProceed(null, address.id)
