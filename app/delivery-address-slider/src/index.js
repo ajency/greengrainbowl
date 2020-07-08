@@ -63,7 +63,7 @@ class gpsModalPrompt extends React.Component {
 
 	render() {
 		return (
-		    <div className="slide-in" id="gpsModal">
+		    <div className="slide-in no-scroll" id="gpsModal">
 			  <div className="slide-in-header header-container d-flex align-items-center">
 			      <div className="app-name d-flex align-items-center">			
 			          <img src={logo} className="app-log" alt="Green Grain Bowl" title="Green Grain Bowl"/>
@@ -99,7 +99,7 @@ class gpsModalPrompt extends React.Component {
 				
 				{this.showSignInButton()}
 					
-				{this.serveTextLoggedIn()}
+				{/* {this.serveTextLoggedIn()} */}
 			      
 				{this.getSavedAddresses()}
 
@@ -109,22 +109,20 @@ class gpsModalPrompt extends React.Component {
 			  
 			  {this.serveTextLoggedOut()}
 
-			  {this.serveTextLoggedInNoAddress()}
+			  {/* {this.serveTextLoggedInNoAddress()} */}
 
 			</div>
 		);
 	}
 
 	serveTextLoggedOut() {
-		if(this.state.showSignInBtn){
-			return (
-				<div className="pl-3 pr-3">
-					<h5 className="font-weight-light mt-4 pb-2">
-						We currently serve at Panjim, Porvorim & its neighbourhood.
-					</h5>
-				</div>
-			);
-		}
+		return (
+			<div className="pl-3 pr-3">
+				<h5 className="font-weight-light mt-4 pb-2">
+					We currently serve at Panjim, Porvorim & its neighbourhood.
+				</h5>
+			</div>
+		);
 	}
 
 	serveTextLoggedInNoAddress() {
