@@ -109,6 +109,8 @@ class gpsModalPrompt extends React.Component {
 			  
 			  {this.serveTextLoggedOut()}
 
+			  {this.serveTextLoggedInNoAddress()}
+
 			</div>
 		);
 	}
@@ -125,8 +127,20 @@ class gpsModalPrompt extends React.Component {
 		}
 	}
 
+	serveTextLoggedInNoAddress() {
+		if(!this.state.showSignInBtn && this.state.showNoAddressMsg ){
+			return (
+				<div className="pl-3 pr-3">
+					<h5 className="font-weight-light mt-4 pb-2">
+						We currently serve at Panjim, Porvorim & its neighbourhood.
+					</h5>
+				</div>
+			);
+		}
+	}
+
 	serveTextLoggedIn() {
-		if(!this.state.showSignInBtn){
+		if(!this.state.showSignInBtn && !this.state.showNoAddressMsg){
 			return (
 				<div className="pl-3 pr-3">
 					<h5 className="font-weight-light mt-4 pb-2">
