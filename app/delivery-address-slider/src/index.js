@@ -520,11 +520,14 @@ const gpsModalPromptComponent = ReactDOM.render(e(gpsModalPrompt), domContainer)
 window.showGpsModalPrompt = (display, addresses = null) => {
 	gpsModalPromptComponent.setState({showNoAddressMsg : false, locations : [], locError : '', gpsError : '', fetchingGPS : false, searchText : '', settingUserLocation : false});
 	document.querySelector('#gpsModal').classList.add('visible');
-	window.addBackDrop();
+	setTimeout(() => {
+		window.addBackDrop();
+	},200)
 }
 
 window.closeGpsSlider = () => {
 	gpsModalPromptComponent.closeGpsSlider()
+	showScroll();
 }
 window.updateAddresses = (addresses = null) => {
 	let showNoAddressMsg = false;

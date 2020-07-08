@@ -253,7 +253,7 @@ document.querySelectorAll('.react-add-to-cart-container')
 	.forEach((domContainer, index) => {
 		const product_data = JSON.parse(domContainer.dataset.product_data);
 		addToCartComponents[index] =  ReactDOM.render(e(addToCart, { product_data : product_data }),domContainer);
-		domContainer.classList.remove("btn-hide");
+		domContainer.classList.remove("btn-hide")
 	});
 
 
@@ -261,9 +261,7 @@ window.updateaddToCartComponent = async (item) => {
 	const products = await window.fetchProducts()
 
 	addToCartComponents.forEach((component) =>{
-		const product = window.products.find(p => item.product_id = p.id)
-		const variant = product.variants.find(v => v.id == item.variant_id )
-		if(component.props.product_data.product_id == item.product_id && variant.day == component.props.product_data.day){
+		if(component.props.product_data.product_id == item.product_id && item.day == component.props.product_data.day){
 			let items = component.state.items;
 			items.push(item)
 			items.sort((a,b)=>{
@@ -281,7 +279,7 @@ window.updateaddToCartComponent = async (item) => {
 
 window.updateItemQuantity = async (item, action) => {
 	console.log("updateItemQuantity ==>", item, action);
-	
+
 	addToCartComponents.forEach((component) =>{
 		const product = window.products.find((p) => p.id == item.product_id)
 		const variant = product.variants.find((v) => v.id == item.variant_id)
