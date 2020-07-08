@@ -100,13 +100,14 @@ class AddNewAddress extends Component {
                         console.log("fetch cart response ==>", cart);
                         cart = JSON.parse(JSON.stringify(cart));
                         console.log("fetch cart response ==>", cart.shipping_address);
-                        let latlng = { lat: cart.shipping_address.lat_long[0], lng: cart.shipping_address.lat_long[1] }
+                        let address = cart.shipping_address.formatted_address || "";
+                        let latlng = { lat: cart.shipping_address.lat_long[0], lng: cart.shipping_address.lat_long[1],address}
                         let landmark = cart.shipping_address.landmark || '';
                         let name = cart.shipping_address.name || '';
                         let email = cart.shipping_address.email || '';
                         let building = cart.shipping_address.address || '';
                         let address_type = cart.shipping_address.type || 'Home';
-                        this.setState({ latlng: latlng, landmark, name, email, building, address_type })
+                        this.setState({ latlng: latlng, landmark, name, email, building, address_type, address })
                         this.reverseGeocode(latlng);
                     })
 
@@ -126,38 +127,40 @@ class AddNewAddress extends Component {
 
     render() {
         return (
-            <div className="address-container">
-                <Header />
-                <div className="map-container">
-                    <GoogleMap handleCenter={this.handleCenter} latlng={this.state.latlng} />
-                    <div id="marker"><i className="fas fa-map-marker-alt"></i></div>
-                    <div id="marker"><i class="fas fa-map-marker-alt"></i></div>
-                </div>
-                <div className="p-15">
-                    <div className="position-relative title-wrap pl-0">
-                        {/* <button className="btn btn-reset btn-back p-0"><i class="fa fa-arrow-left font-size-20" aria-hidden="true"></i></button> */}
-                        <h3 className="mt-4 h1 ft6">Set a delivery address</h3>
+            <>
+                <div className="address-container">
+                    <Header />
+                    <div className="map-container">
+                        <GoogleMap handleCenter={this.handleCenter} latlng={this.state.latlng} />
+                        <div id="marker"><i className="fas fa-map-marker-alt"></i></div>
+                        <div id="marker"><i class="fas fa-map-marker-alt"></i></div>
                     </div>
-                    <div className="list-text-block p-15 mb-4 mt-4">
-                        <div className="font-weight-light h5 mb-0">
-                            <span class="font-weight-semibold d-block mb-2">Delivery area</span>
-                            {this.state.showLoader ? <div>Address is loading...</div> : this.state.address}
-                            {this.state.addressInput ? this.getChangeAddressInput() : this.state.address ? <span className="text-green d-inline-block cursor-pointer" onClick={this.changeAddress}>. Change</span> : null}
+                    <div className="p-15">
+                        <div className="position-relative title-wrap pl-0">
+                            {/* <button className="btn btn-reset btn-back p-0"><i class="fa fa-arrow-left font-size-20" aria-hidden="true"></i></button> */}
+                            <h3 className="mt-4 h1 ft6">Set a delivery address</h3>
                         </div>
+                        <div className="list-text-block p-15 mb-4 mt-4">
+                            <div className="font-weight-light h5 mb-0">
+                                <span class="font-weight-semibold d-block mb-2">Delivery area</span>
+                                {this.state.showLoader ? <div>Address is loading...</div> : this.state.address}
+                                {this.state.addressInput ? this.getChangeAddressInput() : this.state.address ? <span className="text-green d-inline-block cursor-pointer" onClick={this.changeAddress}>. Change</span> : null}
+                            </div>
+                        </div>
+                        <form className="add-address-form">
+                            <div>
+                                {this.getAddressTypeRadio()}
+                            </div>
+                        </form>
                     </div>
-                    <form className="add-address-form">
-                        <div>
-                            {this.getAddressTypeRadio()}
-                        </div>
-                        <div className="secure-checkout fixed-bottom visible bg-white p-15">
-                            <button className="btn btn-primary btn-arrow-icon w-100 p-15 rounded-0 text-left position-relative h5 ft6 mb-0 d-flex align-items-center justify-content-between text-capitalize" onClick={this.handleSubmit}>
-                                <span className="zindex-1">{this.state.btnLable}</span>
-                                <i class="text-white fa fa-arrow-right font-size-20" aria-hidden="true"></i>
-                            </button>
-                        </div>
-                    </form>
                 </div>
-            </div>
+                <div className="secure-checkout fixed-bottom visible bg-white p-15">
+                    <button className="btn btn-primary btn-arrow-icon w-100 p-15 rounded-0 text-left position-relative h5 ft6 mb-0 d-flex align-items-center justify-content-between text-capitalize" onClick={this.handleSubmit}>
+                        <span className="zindex-1">{this.state.btnLable}</span>
+                        <i class="text-white fa fa-arrow-right font-size-20" aria-hidden="true"></i>
+                    </button>
+                </div>
+            </>
         );
     }
 
@@ -334,6 +337,16 @@ class AddNewAddress extends Component {
 
         try {
             window.addAddress({ ...this.state.address_obj, ...data }).then(address => {
+                window.writeInLocalStorage('saved_landmark', data.landmark);
+				window.writeInLocalStorage('saved_address', data.address);
+				window.writeInLocalStorage('saved_address_id', address.id);
+				window.writeInLocalStorage('saved_name', address.name);
+				window.writeInLocalStorage('saved_email', address.email);
+                window.writeInLocalStorage('saved_nos', address.phone);
+                window.writeInLocalStorage('formatted_address', address.formatted_address);
+                window.writeInLocalStorage('lat_lng', `${this.state.latlng.lat},${this.state.latlng.lng}`);
+                
+                window.updateSavedAddressUI()
                 if (this.props.cartRequest) {
                     this.props.assignAndProceed(null, address.id)
                 }
@@ -374,9 +387,12 @@ class AddNewAddress extends Component {
     }
 
     async reverseGeocode(obj) {
+        console.log(obj)
         this.setState({ locError: '' });
         this.setState({ showLoader: true });
-        this.setState({ address: null });
+        if(!obj.address) {
+            this.setState({ address: null });
+        }
         let url = this.state.apiEndPoint + "/reverse-geocode";
         let body = {};
 
@@ -403,10 +419,12 @@ class AddNewAddress extends Component {
                         this.setState({ 'latlng': { lat: res.data.result.geometry.location.lat, lng: res.data.result.geometry.location.lng } });
                         this.setState({ 'locations': [], 'addressInput': false });
                     } else if (obj.lat && obj.lng) {
-                        res_address = res.data.results[0]
+                        res_address = res.data.results[1]
 
                     }
-                    this.setState({ "address": res_address.formatted_address });
+                    if(!obj.address) {
+                        this.setState({ "address": res_address.formatted_address });
+                    }
                     let city = '', state = '', pincode = '';
                     _.forEach(res_address.address_components, (obj) => {
                         if (_.include(obj.types, 'locality')) {
@@ -420,7 +438,13 @@ class AddNewAddress extends Component {
                         }
 
                     })
-                    this.setState({ address_obj: { formatted_address: res_address.formatted_address, state: state, city: city, pincode: pincode } })
+                    let formatted_address = ''
+                    if(obj.address) {
+                        formatted_address = obj.address
+                    } else {
+                        formatted_address = res_address.formatted_address
+                    }
+                    this.setState({ address_obj: { formatted_address, state: state, city: city, pincode: pincode } })
                     this.setState({ showLoader: false })
 
                 }

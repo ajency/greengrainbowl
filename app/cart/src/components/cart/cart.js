@@ -201,7 +201,7 @@ class Cart extends Component {
 						const cart = await window.getCartByID(cartId)
 						if(cart!=null) {
 							if(cart.shipping_address) {
-								if(cart.shipping_address.landmark && cart.shipping_address.address && cart.shipping_address.name && cart.shipping_address.email ) { 
+								if(cart.shipping_address.landmark && cart.shipping_address.name && cart.shipping_address.email ) { 
 									window.addCartLoader();
 									window.assignAddressToCart(null, true)
 									.then((res) => {
@@ -219,6 +219,8 @@ class Cart extends Component {
 										this.props.history.push('/cart/select-address');
 									})
 								} else {
+									this.props.history.push('/cart/select-address');
+									return;
 									if(window.userDetails){
 										window.addCartLoader()
 										if(window.userDetails.hasOwnProperty('default_address_id')) {

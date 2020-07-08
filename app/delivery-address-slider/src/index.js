@@ -76,39 +76,65 @@ class gpsModalPrompt extends React.Component {
 			          <span aria-hidden="true"><i class="sprite sprite-remove"></i></span>
 			      </h3>
 			  </div>
-			  <div className="slide-in-content">
-			      {this.showSignInButton()}
-					<div className="position-relative title-wrap pl-0">
-						{/* <button className="btn btn-reset btn-back p-0"><i class="fa fa-arrow-left font-size-20" aria-hidden="true"></i></button> */}
-						<h3 className="mt-4 h1 ft6">Set delivery area</h3>
-					</div>
-			      <h4 className="font-weight-light mt-4 pb-4">
-			        We currently serve at Panjim, Porvorim & its neighbourhood.
-			      </h4>
-			      <div className="mb-3 pt-4">
-			       		{this.showFetchLocationUsingGps()}
-			      </div>
-			      <div className="gps-error-msg">
+			  <div className="slide-in-content set-area">
+				<div className="position-relative title-wrap pl-0">
+					{/* <button className="btn btn-reset btn-back p-0"><i class="fa fa-arrow-left font-size-20" aria-hidden="true"></i></button> */}
+					<h3 className="mt-0 h1 ft6 mb-4">Set delivery area</h3>
+				</div>
+				<div className="test-center">
+					{this.showLocationSearch()}
+				</div>
+				<div className="gps-error-msg">
+					{this.checkLocationErrorMsg()}
+				</div>
+				<ul style={locationStyle} className="pl-0 h5 mb-0 add-list">
+					{this.getAutoCompleteLocations()}
+				</ul>
+				<div className="mb-3 pt-0">
+					{this.showFetchLocationUsingGps()}
+				</div>
+				<div className="gps-error-msg">
 					{this.checkGpsErrorMsg()}
-				  </div>
+				</div>
+				
+				{this.showSignInButton()}
+					
+				{this.serveTextLoggedIn()}
+			      
+				{this.getSavedAddresses()}
 
-					<div className="test-center">
-			      		{this.showLocationSearch()}
-					</div>
-			      	<div className="gps-error-msg">
-						{this.checkLocationErrorMsg()}
-					</div>
+				{this.getNoSavedAddressesMsg()}
 
-			      	<ul style={locationStyle} className="pl-0 h5 mb-0 add-list">
-						{this.getAutoCompleteLocations()}
-					</ul>
-
-					{this.getSavedAddresses()}
-
-					{this.getNoSavedAddressesMsg()}
 			  </div>
+			  
+			  {this.serveTextLoggedOut()}
+
 			</div>
 		);
+	}
+
+	serveTextLoggedOut() {
+		if(this.state.showSignInBtn){
+			return (
+				<div className="pl-3 pr-3">
+					<h5 className="font-weight-light mt-4 pb-2">
+						We currently serve at Panjim, Porvorim & its neighbourhood.
+					</h5>
+				</div>
+			);
+		}
+	}
+
+	serveTextLoggedIn() {
+		if(!this.state.showSignInBtn){
+			return (
+				<div className="pl-3 pr-3">
+					<h5 className="font-weight-light mt-4 pb-2">
+						We currently serve at Panjim, Porvorim & its neighbourhood.
+					</h5>
+				</div>
+			);
+		}
 	}
 
 	showSignInButton() {
@@ -143,11 +169,10 @@ class gpsModalPrompt extends React.Component {
 		if(!this.state.settingUserLocation && !this.state.fetchingGPS)
 			return (
 					<div>
-						<div className="text-center h4 mb-0 font-weight-light">-OR-</div>
 						<div className="position-relative mb-3 mt-3 text-center">
-			        		<input onFocus={this.scrollTop} type="text" className="text-grey border-green-2 w-100 rounded-0 p-3 h5 mb-0 outline-0" name="search" placeholder="Search Location" value={this.state.searchText} onChange={e => {this.autoCompleteLocation(e.target.value)}} autoComplete="off"/>
+			        		<input onFocus={this.scrollTop} type="text" className="text-grey border-border-grey w-100 rounded-0 pt-3 pb-3 pl-0 pr-0 h5 mb-0 outline-0" name="search" placeholder="Enter area, street name..." value={this.state.searchText} onChange={e => {this.autoCompleteLocation(e.target.value)}} autoComplete="off"/>
 							{/* <i class="sprite sprite-search position-absolute-right20"></i> */}
-							<i class="fa fa-search position-absolute-right20 text-primary"></i>
+							<i class="fa fa-search position-absolute-right0"></i>
 			      		</div>
 			      	</div>
 			)
@@ -165,7 +190,8 @@ class gpsModalPrompt extends React.Component {
 			)
 		else if(!this.state.settingUserLocation)
 			return (
-				 <button onClick={() => this.getLocation()} type="button" className="btn-reset btn-location text-grey border-green-2  w-100 p-3 text-left h5 mb-0 position-relative">Use Current Location <i class="sprite sprite-location position-absolute-right20"></i></button>
+				 <button onClick={() => this.getLocation()} type="button" className="btn-reset btn-location w-100 p-3 text-left h5 mb-0 position-relative pl-4 pr-0">
+				 <span className="d-block mb-1">Use Current Location</span><span className="d-block gps-tag text-grey">Using GPS</span><i class="sprite sprite-location "></i></button>
 			)
 	}
 
@@ -192,7 +218,7 @@ class gpsModalPrompt extends React.Component {
 					address_extra = address_extra + address.landmark+', '
 				}
 				return (
-					<li key={address.id} className="cursor-pointer address saved-address-item" onClick={() => this.setUserLocations(address.lat_long, address.formatted_address)}>
+					<li key={address.id} className="cursor-pointer address saved-address-item" onClick={() => this.setUserLocations(address.lat_long, address, true)}>
 						{this.getAddressIcon(address.type)}
 						<div className="address-text">
 							<h5>{address.type}</h5>
@@ -331,9 +357,13 @@ class gpsModalPrompt extends React.Component {
 				if(res.data.status === "OK"){
 					this.setState({settingUserLocation : false, gpsError : ''});
 					if(loc)
-						this.setUserLocations([res.data.result.geometry.location.lat,res.data.result.geometry.location.lng], res.data.result.name+', '+res.data.result.formatted_address);
+						this.setUserLocations([res.data.result.geometry.location.lat,res.data.result.geometry.location.lng], res.data.result.formatted_address,false);
 					else if(latlng)
-						this.setUserLocations(latlng, res.data.results[0].formatted_address);
+						if(res.data.results>=4) {
+							this.setUserLocations(latlng, res.data.results[1].formatted_address,false);
+						} else {
+							this.setUserLocations(latlng, res.data.results[1].formatted_address,false);
+						}
 				}
 				else{
 					this.removeSliderLoader();
@@ -349,14 +379,30 @@ class gpsModalPrompt extends React.Component {
 			})
 	}
 
-	setUserLocations(lat_lng, formatted_address){
+	setUserLocations(lat_lng, address, savedAddress=null){
 		try{
 			this.setSliderLoader();
 			this.setState({settingUserLocation : true});
 			let cart_id = window.brewCartId(this.state.siteMode, this.state.businessId);
+			let formatted_address = address
+			if(savedAddress) {
+				formatted_address = address.formatted_address
+				window.writeInLocalStorage('saved_address_id', address.id);
+				window.writeInLocalStorage('saved_name', address.name);
+				window.writeInLocalStorage('saved_email', address.email);
+				window.writeInLocalStorage('saved_nos', address.phone);
+				if(address.landmark)
+					window.writeInLocalStorage('saved_landmark', address.landmark);
+				if(address.address)
+					window.writeInLocalStorage('saved_address', address.address);
+			}  else {
+				window.writeInLocalStorage('saved_landmark', "");
+				window.writeInLocalStorage('saved_address', "");
+				window.writeInLocalStorage('saved_address_id', "");
+			}
 			window.getCartByID(cart_id).then((res)=>{
 				if(res){
-					window.updateDeliveryLocation(lat_lng, formatted_address, cart_id).then((res)=>{
+					window.updateDeliveryLocation(lat_lng, address, cart_id, savedAddress).then((res)=>{
 						this.removeSliderLoader();
 						this.updateLocationUI(lat_lng, formatted_address);
 						this.setState({ fetchingGPS : false, searchText : '', settingUserLocation : false});
@@ -379,7 +425,7 @@ class gpsModalPrompt extends React.Component {
 		}	
 	}
 
-	updateLocationUI(lat_lng, formatted_address){
+	updateLocationUI(lat_lng, formatted_address, ){
 		window.writeInLocalStorage('lat_lng', lat_lng[0] + ',' +lat_lng[1]);
 		window.writeInLocalStorage('formatted_address', formatted_address);
 		window.lat_lng = lat_lng;
@@ -425,6 +471,7 @@ class gpsModalPrompt extends React.Component {
 	fetchAddresses(){
 		try{
 			window.getAddresses().then((res)=>{
+				console.log("fetched addresses", res);
 				this.setState({ addresses : res });
 			})
 		}
@@ -439,7 +486,7 @@ class gpsModalPrompt extends React.Component {
 			let default_address = addresses.find((address) => {return address.address.default});
 			console.log("check default address ==>", default_address);
 			if(default_address){
-				this.setUserLocations(default_address.address.lat_long, default_address.address.formatted_address);
+				this.setUserLocations(default_address.address.lat_long, default_address.address.formatted_address,false);
 			}
 		}
 	}
@@ -473,11 +520,14 @@ const gpsModalPromptComponent = ReactDOM.render(e(gpsModalPrompt), domContainer)
 window.showGpsModalPrompt = (display, addresses = null) => {
 	gpsModalPromptComponent.setState({showNoAddressMsg : false, locations : [], locError : '', gpsError : '', fetchingGPS : false, searchText : '', settingUserLocation : false});
 	document.querySelector('#gpsModal').classList.add('visible');
-	window.addBackDrop();
+	setTimeout(() => {
+		window.addBackDrop();
+	},500)
 }
 
 window.closeGpsSlider = () => {
 	gpsModalPromptComponent.closeGpsSlider()
+	showScroll();
 }
 window.updateAddresses = (addresses = null) => {
 	let showNoAddressMsg = false;
@@ -488,4 +538,9 @@ window.updateAddresses = (addresses = null) => {
 	// setTimeout(() => {
 	// 	gpsModalPromptComponent.setState({showNoAddressMsg : false});
 	// },4000);
+}
+
+window.updateSavedAddressUI = () => {
+	console.log("called updateSavedAddressUI");
+	gpsModalPromptComponent.fetchAddresses()
 }

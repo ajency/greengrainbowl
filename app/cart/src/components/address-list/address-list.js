@@ -20,7 +20,8 @@ class AddressList extends Component {
             cart_id:'',
             redirectToCart:false,
             showAddressComponent: false,
-            approxDeliveryTime:generalConfig.preparationTime
+            approxDeliveryTime:generalConfig.preparationTime,
+            showSkip:false
         }
     }
 
@@ -35,11 +36,19 @@ class AddressList extends Component {
                 if(window.firebase.auth().currentUser) {
                     try {
                         const  userAddresses =  await window.getAddresses();
+                       
                         if(_.isEmpty(userAddresses)) {
                             returnState["showAddressComponent"] = true
                         } else {
-                            returnState["addresses"] = userAddresses
-                            returnState["fetchComplete"] = true
+                            const cartId = window.readFromLocalStorage(generalConfig.site_mode+'-cart_id-'+generalConfig.businessId);
+                            const cart = await window.getCartByID(cartId)
+                            if(cart.shipping_address.landmark) {
+                                returnState["addresses"] = userAddresses
+                                returnState["fetchComplete"] = true
+                            } else {
+                                returnState["showAddressComponent"] = true
+                                returnState["showSkip"] =true
+                            }
                         }
                         
                     } catch (error) {

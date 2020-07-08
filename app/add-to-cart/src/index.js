@@ -92,7 +92,7 @@ class addToCart extends React.Component {
 		else{
 			if(this.state.items.length > 1){
 				window.removeBackDrop();
-				let msg = "Item has multiple variants added. Remove correct item from cart";
+				let msg = "Item has multiple variants added. Please remove correct item from cart";
 				window.displayError(msg);
 			}
 			else{
@@ -253,13 +253,13 @@ document.querySelectorAll('.react-add-to-cart-container')
 	.forEach((domContainer, index) => {
 		const product_data = JSON.parse(domContainer.dataset.product_data);
 		addToCartComponents[index] =  ReactDOM.render(e(addToCart, { product_data : product_data }),domContainer);
-		domContainer.classList.remove("btn-hide");
+		domContainer.classList.remove("btn-hide")
 	});
 
 
 window.updateaddToCartComponent = (item) => {
 	addToCartComponents.forEach((component) =>{
-		if(component.props.product_data.product_id == item.product_id){
+		if(component.props.product_data.product_id == item.product_id && item.day == component.props.product_data.day){
 			let items = component.state.items;
 			items.push(item)
 			items.sort((a,b)=>{
@@ -277,8 +277,11 @@ window.updateaddToCartComponent = (item) => {
 
 window.updateItemQuantity = (item, action) => {
 	console.log("updateItemQuantity ==>", item, action);
+
 	addToCartComponents.forEach((component) =>{
-		if(component.props.product_data.product_id == item.product_id){
+		const product = window.products.find((p) => p.id == item.product_id)
+		const variant = product.variants.find((v) => v.id == item.variant_id)
+		if(component.props.product_data.product_id == item.product_id && component.props.product_data.day == variant.day){
 			if(action == 'add')
 				component.addItems(item)
 			else
@@ -290,7 +293,8 @@ window.updateItemQuantity = (item, action) => {
 window.addToCartFromVariant = (product_id, variant_id , product) => {
 	let found = false;
 	addToCartComponents.forEach((component) =>{
-		if(component.props.product_data.product_id == product_id && !found){
+		const variant = product.variants.find((p) => p.id == variant_id)
+		if(component.props.product_data.product_id == product_id && variant.day == component.props.product_data.day && !found){
 			component.addToCart(variant_id, product);
 			found = true;
 		}

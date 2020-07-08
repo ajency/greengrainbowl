@@ -659,6 +659,30 @@ async function addToCart(site_mode, variant_id = null, lat_long = null, cart_id 
 
 
 function getNewCartData (lat_long, formatted_address, site_mode) {
+    let landmark = "";
+    let flatNo = "";
+    let addressId = "";
+    let name = "";
+    let email = "";
+    let phone = "";
+    if(!!window.readFromLocalStorage("saved_landmark")) {
+        landmark = window.readFromLocalStorage("saved_landmark")
+    }
+    if(!!window.readFromLocalStorage("saved_address")) {
+        flatNo = window.readFromLocalStorage("saved_address")
+    }
+    if(!!window.readFromLocalStorage("saved_address_id")) {
+        addressId = window.readFromLocalStorage("saved_address_id")
+    }
+    if(!!window.readFromLocalStorage('saved_name')) {
+        name = window.readFromLocalStorage('saved_name');
+    }
+    if(!!window.readFromLocalStorage('saved_email')) {
+        email = window.readFromLocalStorage('saved_email');
+    }
+    if(!!window.readFromLocalStorage('saved_nos')) {
+        phone = window.readFromLocalStorage('saved_nos');
+    }
     let cart_data = {
         user_id : firebase.auth().currentUser.uid,
         summary : {
@@ -672,6 +696,12 @@ function getNewCartData (lat_long, formatted_address, site_mode) {
         order_type : 'cart',
         cart_count : 0,
         shipping_address : {
+            name:name,
+            phone:phone,
+            email:email,
+            landmark: landmark,
+            address: flatNo,
+            id: addressId,
             lat_long : lat_long,
             formatted_address : formatted_address
         },
@@ -685,15 +715,29 @@ function getNewCartData (lat_long, formatted_address, site_mode) {
     return cart_data;
 }
 
-async function updateDeliveryLocation(lat_long, formatted_address,  cart_id){
+async function updateDeliveryLocation(lat_long, address,  cart_id, savedAddress= false){
+    console.log("updateDeliveryLocation=>",savedAddress)
     let cart_data = await getCartByID(cart_id), locations;
-
+    let landmark = ""
+    let addressFlat = ""
+    let formatted_address = address
+    let addressId=""
     if(window.stockLocations.length){
         locations = window.stockLocations;
     }
     else{
         locations = await getAllStockLocations();
     }
+
+    if(savedAddress) {
+        landmark = address.landmark
+        formatted_address = address.formatted_address
+        addressId = address.id
+        if(address.address) {
+            addressFlat = address.address
+        }
+    }
+
 
     console.log("update delivery address all locations", locations, lat_long);
     let stock_location_id = '';
@@ -711,8 +755,9 @@ async function updateDeliveryLocation(lat_long, formatted_address,  cart_id){
                     'shipping_address.lat_long' : lat_long,
                     'shipping_address.formatted_address' : formatted_address,
                     'stock_location_id' : stock_location_id,
-                    'shipping_address.landmark' : "",
-                    'shipping_address.address' : "",
+                    'shipping_address.landmark' : landmark,
+                    'shipping_address.address' : addressFlat,
+                    'shipping_address.id' : addressId
                 })
     let res = { success : true , message: 'Address updated successfully' }
     return res;
@@ -829,6 +874,14 @@ async function assignAddressToCart (address_id, fetchDraft, phoneNumber) {
     } else {
         let address = userAddresses.filter((address) => {return address.id == address_id})[0]
         shipping_address = address
+        window.writeInLocalStorage('saved_landmark', address.landmark);
+        window.writeInLocalStorage('saved_address', address.address);
+        window.writeInLocalStorage('saved_address_id', address.id);
+        window.writeInLocalStorage('saved_name', address.name);
+        window.writeInLocalStorage('saved_email', address.email);
+        window.writeInLocalStorage('saved_nos', address.phone);
+        window.writeInLocalStorage('formatted_address', address.formatted_address);
+        window.writeInLocalStorage('lat_lng', `${address.lat_long[0]},${address.lat_long[1]}`);
     }
 
 
