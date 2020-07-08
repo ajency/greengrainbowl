@@ -164,6 +164,7 @@ class VerifyMobile extends Component {
                     let cart_id = window.brewCartId(this.state.site_mode,this.state.businessId);
                     window.createCartForVerifiedUser(window.readFromLocalStorage(this.state.site_mode+'-cart_id-'+this.state.businessId), this.state.site_mode,this.state.businessId);
                     window.writeInLocalStorage(this.state.site_mode+'-cart_id-'+this.state.businessId, cart_id);
+                    window.updateSavedAddressUI()
                     await this.updateUserDetails(idToken);
                     if(this.state.site_mode == 'kiosk'){
                         if(cart_id) {
