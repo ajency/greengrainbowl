@@ -881,7 +881,7 @@ async function assignAddressToCart (address_id, fetchDraft, phoneNumber) {
         window.writeInLocalStorage('saved_email', address.email);
         window.writeInLocalStorage('saved_nos', address.phone);
         window.writeInLocalStorage('formatted_address', address.formatted_address);
-        window.writeInLocalStorage('lat_lng', `${address.lat_lng[0]},${address.lat_lng[1]}`);
+        window.writeInLocalStorage('lat_lng', `${address.lat_long[0]},${address.lat_long[1]}`);
     }
 
 
