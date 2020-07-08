@@ -522,7 +522,7 @@ window.showGpsModalPrompt = (display, addresses = null) => {
 	document.querySelector('#gpsModal').classList.add('visible');
 	setTimeout(() => {
 		window.addBackDrop();
-	},2000)
+	},200)
 }
 
 window.closeGpsSlider = () => {
