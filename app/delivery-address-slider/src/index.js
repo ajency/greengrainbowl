@@ -107,7 +107,11 @@ class gpsModalPrompt extends React.Component {
 				</div>
 
 				<div className="secure-checkout fixed-bottom visible bg-white p-15">
-					{this.serveText()}
+					<div className="">
+						<h5 className="font-weight-light mt-4 pb-2">
+						We currently serve at Panjim, Porvorim, Socorro, Sangolda, Miramar, Donapaula, Bambolim & its neighbourhood.
+						</h5>
+					</div>
 				</div>
 			  </div>
 
@@ -116,15 +120,13 @@ class gpsModalPrompt extends React.Component {
 	}
 
 	serveText() {
-		if(this.state.showSignInBtn){
-			return (
-				<div className="">
-					<h5 className="font-weight-light mt-4 pb-2">
-					We currently serve at Panjim, Porvorim, Socorro, Sangolda, Miramar, Donapaula, Bambolim & its neighbourhood.
-					</h5>
-				</div>
-			);
-		}
+		return (
+			<div className="">
+				<h5 className="font-weight-light mt-4 pb-2">
+				We currently serve at Panjim, Porvorim, Socorro, Sangolda, Miramar, Donapaula, Bambolim & its neighbourhood.
+				</h5>
+			</div>
+		);
 	}
 
 	showSignInButton() {
