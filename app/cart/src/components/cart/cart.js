@@ -138,6 +138,21 @@ class Cart extends Component {
 
 	getDeliveryAddressSection(){
 		let deliveryaddress = '';
+		let deliveryAddr = "";
+		let mapLink = ""
+		if (this.state.cartData.cart.shipping_address.hasOwnProperty('address')) {
+			if(this.state.cartData.cart.shipping_address.address)
+			deliveryAddr = this.state.cartData.cart.shipping_address.address + ', '
+		}
+		if (this.state.cartData.cart.shipping_address.hasOwnProperty('landmark')) {
+			if(this.state.cartData.cart.shipping_address.landmark)
+			deliveryAddr = deliveryAddr + this.state.cartData.cart.shipping_address.landmark 
+		}
+
+		if(this.state.cartData.cart.shipping_address.lat_long) {
+			let  latLong = this.state.cartData.cart.shipping_address.lat_long.join()
+			mapLink = "https://www.google.com/maps/?q="+ latLong;
+		}
 		if(this.state.site_mode == 'kiosk'){
 			deliveryaddress = <div className="delivery-address-container p-15">
 				<div className="address-details list-text-block p-15 mb-0">
@@ -149,7 +164,7 @@ class Cart extends Component {
 			</div>
 		} else {
 			deliveryaddress = <div>
-				<DeliveryAddress address={this.state.cartData.cart.shipping_address.formatted_address} addressType="area"/>
+				<DeliveryAddress mapLink={mapLink} deliveryAddress={deliveryAddr} deliveryArea={this.state.cartData.cart.shipping_address.formatted_address} addressType="area"/>
 			</div>
 		}
 		return deliveryaddress

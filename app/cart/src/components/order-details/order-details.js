@@ -16,7 +16,8 @@ class OrderDetails extends Component {
             loader:true,
             addressLabel:'',
             shippingAddress:'',
-            orderSummary:''
+            orderSummary:'',
+            mapLink:''
         }
     }
 
@@ -53,16 +54,14 @@ class OrderDetails extends Component {
                             this.setState({shippingAddress: " "+this.state.pickupPoint})
                         } else {
                             let shipping_address='';
-                            if (res.order_data.shipping_address.address) {
-                                shipping_address = res.order_data.shipping_address.address+', '
+                            let mapLink =''
+                            shipping_address =  res.order_data.shipping_address.formatted_address;
+                            if(res.order_data.shipping_address.lat_long) {
+                                let  latLong = res.order_data.shipping_address.lat_long.join()
+                                mapLink = "https://www.google.com/maps/?q="+ latLong;
                             }
-
-                            if(res.order_data.shipping_address.landmark) {
-                                shipping_address = shipping_address + res.order_data.shipping_address.landmark+', '
-                            }
-                            shipping_address = shipping_address + res.order_data.shipping_address.formatted_address;
-                            this.setState({addressLabel: "Deliver to: "})
-                            this.setState({shippingAddress: shipping_address})
+                            this.setState({shippingAddress: shipping_address, addressLabel: "Deliver area: ", mapLink})
+                            
                         }
 
 
@@ -103,6 +102,18 @@ class OrderDetails extends Component {
             if(order_data.status == "failed") {
                 return this.getFailedMarkup()
             } else {
+                let deliveryAddr= ""
+                let {orderSummary} = this.state
+                if (orderSummary.shipping_address.hasOwnProperty('address')) {
+                    if(orderSummary.shipping_address.address)
+                    deliveryAddr = orderSummary.shipping_address.address + ', '
+                }
+                if (orderSummary.shipping_address.hasOwnProperty('landmark')) {
+                    if(orderSummary.shipping_address.landmark)
+                    deliveryAddr = deliveryAddr + orderSummary.shipping_address.landmark 
+                }
+
+               
                 return (
                     <div className="">
                         <div class="cart-heading p-15 pt-0 pb-0">
@@ -120,10 +131,17 @@ class OrderDetails extends Component {
                         <div>
                             <div className="delivery-address-container p-15">
                                 <div className="address-details list-text-block p-15 mb-0">
+                                    <div className="address-details-inner font-weight-light mb-1">
+                                        <span className="font-weight-semibold">Delivery address</span>
+                                        <span id="cart-delivery-address"> {deliveryAddr}</span>
+                                        
+                                    </div>
                                     <div className="address-details-inner font-weight-light">
                                         <span className="font-weight-semibold">{this.state.addressLabel}</span>
                                         <span id="cart-delivery-address">{this.state.shippingAddress}</span>
+                                        <span style={{color:'#4aa751', cursor:"pointer", marginLeft:3}} onClick={(e)=> this.openMap(e)} className>see on map</span>
                                     </div>
+                                    
                                     <div>
                                         <div className="address-details-inner font-weight-light mt-3 pt-3 border-grey-top">
                                             <div className="">
@@ -274,6 +292,10 @@ class OrderDetails extends Component {
            </div>
        );
     }
+    openMap(e) {
+		e.preventDefault()
+		window.open(this.state.mapLink)
+	}
 }
 
 export default OrderDetails;
