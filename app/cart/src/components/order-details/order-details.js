@@ -104,13 +104,13 @@ class OrderDetails extends Component {
             } else {
                 let deliveryAddr= ""
                 let {orderSummary} = this.state
-                if (orderSummary.shipping_address.hasOwnProperty('address')) {
-                    if(orderSummary.shipping_address.address)
-                    deliveryAddr = orderSummary.shipping_address.address + ', '
+                if (order_data.shipping_address.hasOwnProperty('address')) {
+                    if(order_data.shipping_address.address)
+                    deliveryAddr = order_data.shipping_address.address + ', '
                 }
-                if (orderSummary.shipping_address.hasOwnProperty('landmark')) {
-                    if(orderSummary.shipping_address.landmark)
-                    deliveryAddr = deliveryAddr + orderSummary.shipping_address.landmark 
+                if (order_data.shipping_address.hasOwnProperty('landmark')) {
+                    if(order_data.shipping_address.landmark)
+                    deliveryAddr = deliveryAddr + order_data.shipping_address.landmark 
                 }
 
                
