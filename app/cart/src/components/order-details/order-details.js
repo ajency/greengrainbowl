@@ -57,7 +57,7 @@ class OrderDetails extends Component {
                             let mapLink =''
                             shipping_address =  res.order_data.shipping_address.formatted_address;
                             if(res.order_data.shipping_address.lat_long) {
-                                let  latLong = res.order_data.shipping_address.lat_long.join()
+                                let  latLong = res.order_data.shipping_address.lat_long.lat + "," + res.order_data.shipping_address.lat_long.lng
                                 mapLink = "https://www.google.com/maps/?q="+ latLong;
                             }
                             this.setState({shippingAddress: shipping_address, addressLabel: "Deliver area: ", mapLink})
