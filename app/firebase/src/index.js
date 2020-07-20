@@ -321,7 +321,7 @@ async function updateOrder (item, cart_id, cart_data, stock_location_id) {
 
         cart_data.summary.mrp_total          += item.attributes.mrp * item.quantity;
         cart_data.summary.sale_price_total   += item.attributes.sale_price * item.quantity;
-        cart_data.summary.you_pay            = cart_data.summary.sale_price_total + cart_data.summary.shipping_fee;
+        cart_data.summary.you_pay            =(cart_data.summary.sale_price_total -  cart_data.summary.cart_discount) + cart_data.summary.shipping_fee;
         cart_data.cart_count                 += item.quantity;
         cart_data.stock_location_id          =  stock_location_id;
 
@@ -446,7 +446,7 @@ async function removeItemFromCart(variant_id, cart_id, quantity){
             cart_data.cart_count = Number(cart_data.cart_count)-quantity;
             cart_data.items[index].quantity = new_quantity
         }
-        cart_data.summary.you_pay = cart_data.summary.sale_price_total + cart_data.summary.shipping_fee;
+        cart_data.summary.you_pay = (cart_data.summary.sale_price_total - cart_data.summary.cart_discount) + cart_data.summary.shipping_fee;
         if(cart_data.hasOwnProperty('order_id')) {
             cart_data.order_id = ''
         }
