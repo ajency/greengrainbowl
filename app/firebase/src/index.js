@@ -347,14 +347,24 @@ async function updateOrder (item, cart_id, cart_data, stock_location_id) {
         if(cart_data.hasOwnProperty('order_id')) {
             cart_data.order_id = ''
         }
-        console.time("db carts update")
-        await db.collection('carts').doc(cart_id).set(cart_data);
-        console.timeEnd("db carts update")
-        console.time("cart sync")
-        sycnCartData(cart_id);
-        console.timeEnd("cart sync")
-        
-        return cart_data;
+
+        try {
+            
+            console.time("db carts update")
+            await db.collection('carts').doc(cart_id).set(cart_data);
+            console.timeEnd("db carts update")
+            if(cart_data.summary.cart_discount) {
+                const resP = await axios.post("http://demo4855911.mockable.io/apply-coupon");
+                console.time("cart sync")
+                sycnCartData(cart_id);
+                console.timeEnd("cart sync")
+                return resP.data.cart_data
+            }
+            return cart_data;
+        } catch (error) {
+            console.log(error)
+            return cart_data;
+        }
 }
 
 function formateOrderLine(item){
@@ -437,6 +447,8 @@ async function removeItemFromCart(variant_id, cart_id, quantity){
             cart_data.cart_count -= item_data.quantity;
             if(cart_data.cart_count == 0){
                 cart_data.shipping_fee = 0;
+                cart_data.applied_coupon = {}
+                cart_data.summary.cart_discount = 0
             }
             cart_data.items.splice(index, 1);
         } else {
@@ -451,10 +463,15 @@ async function removeItemFromCart(variant_id, cart_id, quantity){
             cart_data.order_id = ''
         }
         await db.collection("carts").doc(cart_id).set(cart_data);
+        let summaryRes = cart_data.summary
+        if(cart_data.summary.cart_discount) {
+            const resP = await axios.post("http://demo4855911.mockable.io/apply-coupon");
+            summaryRes = resP.data.cart_data.summary;
+        }
         let response = {
             "message": "Successfully updated the cart",
             "cart_count": cart_data.cart_count,
-            "summary": cart_data.summary,
+            "summary": summaryRes,
             success : true
         }
         return response;
@@ -635,7 +652,7 @@ async function addToCart(site_mode, variant_id = null, lat_long = null, cart_id 
         let order_data = await window.updateOrder(item,  window.brewCartId(site_mode, allConfig.businessConfig.businessId), cart_data, stock_location_id)
         console.timeEnd("updateOrder")
 
-        console.log("update order data");
+        console.log("update order data", order_data);
 
         let res = {
             success: true, 
