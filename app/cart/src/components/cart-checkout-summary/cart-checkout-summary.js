@@ -12,6 +12,7 @@ import Payments from '../payment-gateway/payments'
 import CartSummary from '../cart-summary/cart-summary';
 import { generalConfig } from "../config";
 import logo from '../../assets/images/app-logo.png';
+import { reject } from 'underscore';
 
 
 
@@ -98,31 +99,31 @@ class CartCheckoutSummary extends Component {
 
 	refreshPage = () => {
 		let shipping_address_extra = ''
-		return new Promise((resolve,reject) => {
+		return new Promise((resolve, reject) => {
 
 			window.assignAddressToCart(null, true)
-						.then((res) => {
-							console.log(res)
-							if (res.code == 'PAYMENT_DONE') {
-								// window.removeFromLocalStorage('cart_id')
-								this.props.history.push('/cart');
-							}
-							this.setState({ orderSummary: res.cart, dataLoading: false, fetchCartComplete: true });
-							if (res.cart.shipping_address.hasOwnProperty('address')) {
-								shipping_address_extra = res.cart.shipping_address.address + ', '
-							}
-							if (res.cart.shipping_address.hasOwnProperty('landmark')) {
-								shipping_address_extra = shipping_address_extra + res.cart.shipping_address.landmark + ', '
-							}
-							shipping_address_extra = shipping_address_extra + res.cart.shipping_address.formatted_address
-							this.setState({ shippingAddress: shipping_address_extra })
-							resolve(true)
-						}).catch(err => {
-							console.log(err)
-							resolve(true)
-							this.setState({ dataLoading: false })
-	
-						})
+				.then((res) => {
+					console.log(res)
+					if (res.code == 'PAYMENT_DONE') {
+						// window.removeFromLocalStorage('cart_id')
+						this.props.history.push('/cart');
+					}
+					this.setState({ orderSummary: res.cart, dataLoading: false, fetchCartComplete: true });
+					if (res.cart.shipping_address.hasOwnProperty('address')) {
+						shipping_address_extra = res.cart.shipping_address.address + ', '
+					}
+					if (res.cart.shipping_address.hasOwnProperty('landmark')) {
+						shipping_address_extra = shipping_address_extra + res.cart.shipping_address.landmark + ', '
+					}
+					shipping_address_extra = shipping_address_extra + res.cart.shipping_address.formatted_address
+					this.setState({ shippingAddress: shipping_address_extra })
+					resolve(true)
+				}).catch(err => {
+					console.log(err)
+					resolve(true)
+					this.setState({ dataLoading: false })
+
+				})
 		})
 	}
 
@@ -189,7 +190,7 @@ class CartCheckoutSummary extends Component {
 
 							<div className="p-15">
 								<label className="cart-summary-label font-weight-medium">Billing Details</label>
-								<CartSummary ref={this.CartSummary} summary={this.state.orderSummary.summary} callFrom={"CartSummary"} applyCoupon={this.applyCoupon}/>
+								<CartSummary ref={this.CartSummary} summary={this.state.orderSummary.summary} callFrom={"CartSummary"} applyCoupon={this.applyCoupon} />
 							</div>
 
 							<div className="p-15 pt-0">
@@ -216,22 +217,6 @@ class CartCheckoutSummary extends Component {
 			</div>
 		);
 	}
-
-	applyCoupon = (coupon) => {
-		window.addCartLoader()
-		axios.post("http://demo4855911.mockable.io/apply-coupon").then((res) => {
-			this.refreshPage().then(() => {
-				this.CartSummary.current.displayToast(`Applying coupon ${coupon}`,"success")
-				window.removeCartLoader();
-			}).catch(e  => {
-				console.log(e)
-			})
-		}).catch((e)=>{
-				console.log(e)
-				this.refs.CartSummary.displayToast(`Failed to apply coupon ${coupon}`,"error")
-		})
-	}
-
 	getDeliveryAddressSection() {
 		let deliveryaddress = '';
 		if (this.state.site_mode == 'kiosk') {
@@ -471,6 +456,60 @@ class CartCheckoutSummary extends Component {
 			this.setState({ "errors": errors });
 			return false;
 		}
+	}
+
+
+	applyCoupon = (coupon) => {
+		window.addCartLoader()
+		window.applyCoupon(coupon, this.state.orderSummary).then((res) => {
+			if (res.success) {
+				// this.refreshPage().then(() => {
+					this.setState({orderSummary: res.data.cart})
+					this.CartSummary.current.clearCoupon()
+					this.CartSummary.current.displayToast(`${res.message}`, "success")
+					window.removeCartLoader();
+				// }).catch(e => {
+					// console.log(e)
+				// })
+			} else {
+				this.CartSummary.current.displayToast(`${res.message}`, "error")
+				this.CartSummary.current.clearCoupon()
+				window.removeCartLoader();
+			}
+		}).catch((e) => {
+			console.log(e)
+			this.CartSummary.current.clearCoupon()
+			window.removeCartLoader();
+			this.refs.CartSummary.displayToast(`Failed to apply coupon ${coupon}`, "error")
+		})
+	}
+
+	removeCoupon = () => {
+		window.removeCoupon(this.state.orderSummary).then((res) => {
+			if (res.success) {
+				// this.refreshPage().then(() => {
+					this.setState({orderSummary: res.data.cart})
+					this.CartSummary.current.displayToast(`${res.message}`, "success")
+					window.removeCartLoader();
+				// }).catch(e => {
+					// console.log(e)
+				// })
+			} else {
+				this.CartSummary.current.displayToast(`${res.message}`, "error")
+				window.removeCartLoader();
+			}
+		}).catch((e) => {
+			console.log(e)
+			this.CartSummary.current.clearCoupon()
+			window.removeCartLoader();
+			this.refs.CartSummary.displayToast(`Failed to remove coupon`, "error")
+		})
+	}
+
+	checkIfCartIsValid() {
+		new Promise((resolve, reject) => {
+			window.checkCouponValidity()
+		})
 	}
 
 

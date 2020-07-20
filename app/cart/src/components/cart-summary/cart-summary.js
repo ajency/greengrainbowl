@@ -79,6 +79,10 @@ class CartSummary extends Component {
 		}
 	}
 
+	clearCoupon() {
+		this.setState({coupon:""})
+	}
+
 
 
 
