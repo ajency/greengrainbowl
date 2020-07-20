@@ -20,6 +20,7 @@ class CartCheckoutSummary extends Component {
 	_isMounted = false;
 	constructor(props) {
 		super(props);
+		this.CartSummary = React.createRef();
 		this.checkNameExists = this.checkNameExists.bind(this);
 		this.state = {
 			site_mode: generalConfig.site_mode,
@@ -95,6 +96,36 @@ class CartCheckoutSummary extends Component {
 
 	}
 
+	refreshPage = () => {
+		let shipping_address_extra = ''
+		return new Promise((resolve,reject) => {
+
+			window.assignAddressToCart(null, true)
+						.then((res) => {
+							console.log(res)
+							if (res.code == 'PAYMENT_DONE') {
+								// window.removeFromLocalStorage('cart_id')
+								this.props.history.push('/cart');
+							}
+							this.setState({ orderSummary: res.cart, dataLoading: false, fetchCartComplete: true });
+							if (res.cart.shipping_address.hasOwnProperty('address')) {
+								shipping_address_extra = res.cart.shipping_address.address + ', '
+							}
+							if (res.cart.shipping_address.hasOwnProperty('landmark')) {
+								shipping_address_extra = shipping_address_extra + res.cart.shipping_address.landmark + ', '
+							}
+							shipping_address_extra = shipping_address_extra + res.cart.shipping_address.formatted_address
+							this.setState({ shippingAddress: shipping_address_extra })
+							resolve(true)
+						}).catch(err => {
+							console.log(err)
+							resolve(true)
+							this.setState({ dataLoading: false })
+	
+						})
+		})
+	}
+
 	componentWillUnmount() {
 		this._isMounted = false
 	}
@@ -158,7 +189,7 @@ class CartCheckoutSummary extends Component {
 
 							<div className="p-15">
 								<label className="cart-summary-label font-weight-medium">Billing Details</label>
-								<CartSummary summary={this.state.orderSummary.summary} />
+								<CartSummary ref={this.CartSummary} summary={this.state.orderSummary.summary} callFrom={"CartSummary"} applyCoupon={this.applyCoupon}/>
 							</div>
 
 							<div className="p-15 pt-0">
@@ -184,6 +215,21 @@ class CartCheckoutSummary extends Component {
 				{cartContainer}
 			</div>
 		);
+	}
+
+	applyCoupon = (coupon) => {
+		window.addCartLoader()
+		axios.post("http://demo4855911.mockable.io/apply-coupon").then((res) => {
+			this.refreshPage().then(() => {
+				this.CartSummary.current.displayToast(`Applying coupon ${coupon}`,"success")
+				window.removeCartLoader();
+			}).catch(e  => {
+				console.log(e)
+			})
+		}).catch((e)=>{
+				console.log(e)
+				this.refs.CartSummary.displayToast(`Failed to apply coupon ${coupon}`,"error")
+		})
 	}
 
 	getDeliveryAddressSection() {
