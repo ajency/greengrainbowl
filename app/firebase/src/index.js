@@ -692,6 +692,7 @@ function getNewCartData (lat_long, formatted_address, site_mode) {
             shipping_fee : (site_mode == 'kiosk') ? 0 : 0, // get from config or db
             you_pay : (site_mode == 'kiosk') ? 0 : 50, // change accordingly
         },
+        applied_coupon: {},
         order_mode : site_mode,
         order_type : 'cart',
         cart_count : 0,
