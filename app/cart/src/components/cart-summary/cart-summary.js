@@ -7,7 +7,7 @@ class CartSummary extends Component {
 		this.state = {
 			coupon: '',
 			showPopup: false,
-			msgContent:''
+			msgContent: ''
 		}
 	}
 	render() {
@@ -31,14 +31,22 @@ class CartSummary extends Component {
 	}
 
 	getCouponDiscount() {
-		const { coupon,showPopup = false, msgContent } = this.state;
+		const { coupon, showPopup = false, msgContent } = this.state;
+		const { couponDetails } = this.props
 		if (this.props.summary.cart_discount) {
 			return <>
+				<div className="summary-item">
+					<div>
+						<label className="">Applied {couponDetails.code}</label>
+						<button type="button" onClick={e => this.removeCoupon()}>X</button>
+					</div>
+
+				</div>
 				<div className="summary-item">
 					<div><label className="">Coupon Discount</label></div>
 					<div className="text-success">-₹{this.props.summary.cart_discount}</div>
 				</div>
-					
+
 				{showPopup && msgContent}
 			</>
 
@@ -50,12 +58,12 @@ class CartSummary extends Component {
 						<input type="text" name="coupon_applied" value={ coupon } onChange={e => this.setCoupon(e.target.value)} />
 						<div> <button onClick={this.applyCoupon()}>Apply</button></div>
 					</div> */}
-					<input type="text" value={ coupon } onChange={e => {this.setCoupon(e.target.value)}} />
+					<input type="text" value={coupon} onChange={e => { this.setCoupon(e.target.value) }} />
 					<button type="button" onClick={e => this.applyCoupon()}> Apply</button>
 					{showPopup && msgContent}
 				</div>
 
-			} 
+			}
 
 		}
 	}
@@ -72,15 +80,19 @@ class CartSummary extends Component {
 
 			this.props.applyCoupon(coupon)
 			console.log(`Applying coupon ${coupon}`)
-			
+
 		} else {
 			console.log(`Applying error`)
-			this.displayToast("Applying error","error")
+			this.displayToast("Please enter valid coupon code.", "error")
 		}
 	}
 
+	removeCoupon() {
+		this.props.removeCoupon()
+	}
+
 	clearCoupon() {
-		this.setState({coupon:""})
+		this.setState({ coupon: "" })
 	}
 
 
@@ -94,7 +106,7 @@ class CartSummary extends Component {
 					<svg class="bi bi-check-circle-fill" width="20px" height="20px" viewBox="0 0 16 16" fill="#4aa74f" xmlns="http://www.w3.org/2000/svg">
 						<path fill-rule="evenodd" d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z" />
 					</svg>
-					{msg }
+					{msg}
 				</span>
 				<button class="btn-reset close-img" onclick={this.removeToast()}>
 					<i class="sprite sprite-close_btn"></i>
@@ -103,22 +115,22 @@ class CartSummary extends Component {
 		}
 		else {
 			element = <div class="animated fadeInUp failure toast d-flex justify-content-center position-relative mt-lg-5">
-				<span class="alert-danger p-15 pt-lg-2 pb-lg-2 w-100 position-relative text-capitalize">{ msg }
-				</span><button class="btn-reset close-img"  onclick={this.removeToast()}>
+				<span class="alert-danger p-15 pt-lg-2 pb-lg-2 w-100 position-relative text-capitalize">{msg}
+				</span><button class="btn-reset close-img" onclick={this.removeToast()}>
 					<i class="sprite sprite-close_btn"></i>
 				</button>
 			</div>
 		}
 
-		 this.setState({showPopup:true, msgContent: element})
+		this.setState({ showPopup: true, msgContent: element })
 
 		setTimeout(() => {
-			this.setState({showPopup:false, msgContent: ""})
+			this.setState({ showPopup: false, msgContent: "" })
 		}, 3000)
 	}
 
 	removeToast() {
-		this.setState({showPopup:false, msgContent: ""})
+		this.setState({ showPopup: false, msgContent: "" })
 	}
 
 	getShippingFee() {

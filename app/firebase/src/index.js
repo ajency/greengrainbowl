@@ -360,6 +360,9 @@ async function updateOrder(item, cart_id, cart_data, stock_location_id) {
             console.timeEnd("cart sync")
             return resP.data.cart
         }
+        console.time("cart sync")
+        sycnCartData(cart_id);
+        console.timeEnd("cart sync")
         return cart_data;
     } catch (error) {
         console.log(error)

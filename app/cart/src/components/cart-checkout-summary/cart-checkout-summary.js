@@ -190,7 +190,14 @@ class CartCheckoutSummary extends Component {
 
 							<div className="p-15">
 								<label className="cart-summary-label font-weight-medium">Billing Details</label>
-								<CartSummary ref={this.CartSummary} summary={this.state.orderSummary.summary} callFrom={"CartSummary"} applyCoupon={this.applyCoupon} />
+								<CartSummary
+									ref={this.CartSummary}
+									summary={this.state.orderSummary.summary}
+									callFrom={"CartSummary"}
+									applyCoupon={this.applyCoupon}
+									couponDetails={this.state.orderSummary.applied_coupon}
+									removeCoupon={this.removeCoupon}
+								/>
 							</div>
 
 							<div className="p-15 pt-0">
@@ -464,12 +471,12 @@ class CartCheckoutSummary extends Component {
 		window.applyCoupon(coupon, this.state.orderSummary).then((res) => {
 			if (res.success) {
 				// this.refreshPage().then(() => {
-					this.setState({orderSummary: res.data.cart})
-					this.CartSummary.current.clearCoupon()
-					this.CartSummary.current.displayToast(`${res.message}`, "success")
-					window.removeCartLoader();
+				this.setState({ orderSummary: res.data.cart })
+				this.CartSummary.current.clearCoupon()
+				this.CartSummary.current.displayToast(`${res.message}`, "success")
+				window.removeCartLoader();
 				// }).catch(e => {
-					// console.log(e)
+				// console.log(e)
 				// })
 			} else {
 				this.CartSummary.current.displayToast(`${res.message}`, "error")
@@ -485,14 +492,15 @@ class CartCheckoutSummary extends Component {
 	}
 
 	removeCoupon = () => {
+		window.addCartLoader()
 		window.removeCoupon(this.state.orderSummary).then((res) => {
 			if (res.success) {
 				// this.refreshPage().then(() => {
-					this.setState({orderSummary: res.data.cart})
-					this.CartSummary.current.displayToast(`${res.message}`, "success")
-					window.removeCartLoader();
+				this.setState({ orderSummary: res.data.cart })
+				this.CartSummary.current.displayToast(`${res.message}`, "success")
+				window.removeCartLoader();
 				// }).catch(e => {
-					// console.log(e)
+				// console.log(e)
 				// })
 			} else {
 				this.CartSummary.current.displayToast(`${res.message}`, "error")
