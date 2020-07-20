@@ -226,6 +226,7 @@ class OrderDetails extends Component {
                 </div>
                 <div className="font-weight-light">₹{order_data.summary.sale_price_total} </div>
             </div>
+            {order_data.summary.cart_discount && this.discountHtml()}
             {order_data.order_mode == 'online' && this.deliveryHtml()}
             <div className="summary-item border-grey-50 border-0-left border-0-right mt-1 pt-2 pb-2">
                 <div>
@@ -273,6 +274,22 @@ class OrderDetails extends Component {
                </div>
            </div>
        );
+    }
+
+    discountHtml = () => {
+        const order_data = this.state.orderSummary.order_data;
+        return <>
+            <div className="summary-item">
+                <div>
+                    <label className="">Applied {order_data.applied_coupon.code}</label>
+                </div>
+
+            </div>
+            <div className="summary-item">
+                <div><label className="">Coupon Discount</label></div>
+                <div className="text-success">-₹{order_data.summary.cart_discount}</div>
+            </div>
+        </>
     }
 }
 
