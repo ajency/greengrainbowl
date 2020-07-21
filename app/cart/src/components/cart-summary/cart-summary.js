@@ -12,7 +12,7 @@ class CartSummary extends Component {
 	}
 	render() {
 		return (
-			<div className="cart-summary-container">
+			<div className="cart-summary-container position-relative">
 				<div className="summary-item">
 					<div><label className="font-weight-light">Total Item Price</label></div>
 					<div className="font-weight-light">₹{this.props.summary.sale_price_total} </div>
@@ -34,32 +34,40 @@ class CartSummary extends Component {
 		const { coupon, showPopup = false, msgContent } = this.state;
 		const { couponDetails } = this.props
 		if (this.props.summary.cart_discount) {
-			return <>
-				<div className="summary-item">
+			return <div className="pb-52">
+				<div className="summary-item align-items-end">
 					<div>
-						<label className="">Applied {couponDetails.code}</label>
-						{this.props.callFrom && <button type="button" onClick={e => this.removeCoupon()}>X</button>}
+						<div>
+							<label className="mb-0">Coupon Discount</label>
+						</div>
+						<div>
+							<label className="font-weight-medium font-italic mb-0 font-size-13">{couponDetails.code}</label>
+							{this.props.callFrom &&
+							<button className="p-0 ml-2 btn-remove-coupon" type="button" onClick={e => this.removeCoupon()}>
+								<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-x-circle-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+									<path fill="red" fill-rule="evenodd" d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-4.146-3.146a.5.5 0 0 0-.708-.708L8 7.293 4.854 4.146a.5.5 0 1 0-.708.708L7.293 8l-3.147 3.146a.5.5 0 0 0 .708.708L8 8.707l3.146 3.147a.5.5 0 0 0 .708-.708L8.707 8l3.147-3.146z" />
+								</svg>
+							</button>}
+						</div>
 					</div>
-
-				</div>
-				<div className="summary-item">
-					<div><label className="">Coupon Discount</label></div>
 					<div className="text-success">-₹{this.props.summary.cart_discount}</div>
 				</div>
 
 				{showPopup && msgContent}
-			</>
+			</div>
 
 		} else {
 			if (this.props.callFrom) {
-				return <div className="">
-					{/* <div><label className="">Apply Coupon</label></div>
-					<div className="summary-items">
-						<input type="text" name="coupon_applied" value={ coupon } onChange={e => this.setCoupon(e.target.value)} />
-						<div> <button onClick={this.applyCoupon()}>Apply</button></div>
-					</div> */}
-					<input type="text" value={coupon} onChange={e => { this.setCoupon(e.target.value) }} />
-					<button type="button" onClick={e => this.applyCoupon()}> Apply</button>
+				return <div className="pb-52">
+					<div className="apply-coupon-wrapper">
+						{/* <div><label className="">Apply Coupon</label></div>
+						<div className="summary-items">
+							<input type="text" name="coupon_applied" value={ coupon } onChange={e => this.setCoupon(e.target.value)} />
+							<div> <button onClick={this.applyCoupon()}>Apply</button></div>
+						</div> */}
+						<input type="text" placeholder="Coupon Code" class="coupon-inp-box border-green ft6 h5 p-3 plceholder-text rounded-0 w-100 mb-0" value={coupon} onChange={e => { this.setCoupon(e.target.value) }} />
+						<button type="button" placeholder="Coupon Code" class="coupon-apply-btn cursor-pointer f-18 font-weight-bold test-primary text-underline" onClick={e => this.applyCoupon()}>Apply</button>
+					</div>
 					{showPopup && msgContent}
 				</div>
 
@@ -101,7 +109,7 @@ class CartSummary extends Component {
 	displayToast(msg, type) {
 		let element;
 		if (type == 'success') {
-			element = <div class="animated fadeInUp success toast d-flex justify-content-center sb-shadow mt-lg-5 position-relative">
+			element = <div class="animated fadeIn success toast d-flex justify-content-center sb-shadow position-absolute w-100 mw-100">
 				<span class="p-15 pt-lg-2 pb-lg-2 w-100 position-relative text-lg-center text-capitalize">
 					<svg class="bi bi-check-circle-fill" width="20px" height="20px" viewBox="0 0 16 16" fill="#4aa74f" xmlns="http://www.w3.org/2000/svg">
 						<path fill-rule="evenodd" d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z" />
@@ -114,7 +122,7 @@ class CartSummary extends Component {
 			</div>
 		}
 		else {
-			element = <div class="animated fadeInUp failure toast d-flex justify-content-center position-relative mt-lg-5">
+			element = <div class="animated fadeIn failure toast d-flex justify-content-center w-100 mw-100 position-absolute">
 				<span class="alert-danger p-15 pt-lg-2 pb-lg-2 w-100 position-relative text-capitalize">{msg}
 				</span><button class="btn-reset close-img" onclick={this.removeToast()}>
 					<i class="sprite sprite-close_btn"></i>

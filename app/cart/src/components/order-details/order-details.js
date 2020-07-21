@@ -279,14 +279,11 @@ class OrderDetails extends Component {
     discountHtml = () => {
         const order_data = this.state.orderSummary.order_data;
         return <>
-            <div className="summary-item">
+            <div className="summary-item align-items-end">
                 <div>
-                    <label className="">Applied {order_data.applied_coupon.code}</label>
+                    <label className="mb-0">Coupon Discount</label>
+                    <label className="d-block font-weight-medium font-italic mb-0 font-size-13">{order_data.applied_coupon.code}</label>
                 </div>
-
-            </div>
-            <div className="summary-item">
-                <div><label className="">Coupon Discount</label></div>
                 <div className="text-success">-₹{order_data.summary.cart_discount}</div>
             </div>
         </>
