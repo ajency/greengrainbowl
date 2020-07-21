@@ -4,3 +4,23 @@
 	padding-top: .25rem;
 	padding-bottom: .25rem;
 }
+
+.apply-coupon-wrapper {
+    position: relative;
+	margin: 0px 0 10px;
+	
+	.coupon-inp-box {
+		padding-right: 75px !important;
+	}
+	.coupon-apply-btn {
+		border: 0;
+		box-shadow: none;
+		background-color: transparent;
+		position: absolute;
+		top: 50%;
+		right: 10px;
+		transform: translateY(-50%);
+		text-decoration: none !important;
+		outline: 0;
+	}
+}

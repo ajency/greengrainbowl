@@ -283,7 +283,6 @@ class OrderDetails extends Component {
                 <div>
                     <label className="">Applied {order_data.applied_coupon.code}</label>
                 </div>
-
             </div>
             <div className="summary-item">
                 <div><label className="">Coupon Discount</label></div>
