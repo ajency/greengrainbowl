@@ -1155,17 +1155,21 @@ function brewCartId(site_mode, business_id) {
 
 async function getHeaders() {
     const tokenID = await window.firebase.auth().currentUser.getIdToken()
-    const UID = window.firebase.auth().getUid()
+    const UID = window.firebase.auth().getUid();
+    const cartID = window.readFromLocalStorage(cartIdLabel)
     return {
         Authorization : 'Bearer '+ tokenID,
-        UID: UID
+        UID: UID,
+        CARTID: cartID
     }
 }
+const URL ="http://localhost:5000/project-ggb-dev/asia-east2/api/rest/v1/admin/recalculate-coupon"
 function recalculateCart(cartData) {
     return new Promise(async (resolve, reject) => {
         try {
             const headers = await getHeaders()
-            const resp = await axios.post("http://demo4855911.mockable.io/apply-coupon", {}, {headers: headers});
+            const resp = await axios.post(URL, {cartData:cartData}, {headers: headers});
+            
             resolve(resp.data)
         } catch (error) {
             resolve({data: {cart :cartData}})
@@ -1178,7 +1182,7 @@ function applyCoupon(couponCode, cartData) {
     return new Promise(async (resolve, reject) => {
         try {
             const headers = await getHeaders()
-            const resp = await axios.post("http://demo4855911.mockable.io/apply-coupon", {operation:"add", couponCode:couponCode },{headers: headers});
+            const resp = await axios.post(URL, {operation:"add", couponCode:couponCode, cartData:cartData },{headers: headers});
             resolve(resp.data)
         } catch (error) {
             resolve(cartData)
@@ -1191,7 +1195,7 @@ function removeCoupon(cartData) {
     return new Promise(async (resolve, reject) => {
         try {
             const headers = await getHeaders()
-            const resp = await axios.post("http://demo4855911.mockable.io/apply-coupon", {operation:"remove", cartData:cartData},{headers: headers});
+            const resp = await axios.post(URL, {operation:"remove", cartData:cartData},{headers: headers});
             resolve(resp.data)
         } catch (error) {
             resolve(cartData)
