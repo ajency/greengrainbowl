@@ -67,7 +67,7 @@ class Razorpay extends Component {
         if(e) {
             e.preventDefault();
         }
-        if(!this.props.checkNameExists()) {
+        if(!this.props.validateCart()) {
             return false;
         }
         window.addCartLoader();
