@@ -1163,12 +1163,12 @@ async function getHeaders() {
         CARTID: cartID
     }
 }
-const URL ="http://localhost:5000/project-ggb-dev/asia-east2/api/rest/v1/admin/recalculate-coupon"
+
 function recalculateCart(cartData) {
     return new Promise(async (resolve, reject) => {
         try {
             const headers = await getHeaders()
-            const resp = await axios.post(URL, {cartData:cartData}, {headers: headers});
+            const resp = await axios.post(allConfig.apiEndPoint, {cartData:cartData}, {headers: headers});
             
             resolve(resp.data)
         } catch (error) {
@@ -1182,10 +1182,10 @@ function applyCoupon(couponCode, cartData) {
     return new Promise(async (resolve, reject) => {
         try {
             const headers = await getHeaders()
-            const resp = await axios.post(URL, {operation:"add", couponCode:couponCode, cartData:cartData },{headers: headers});
+            const resp = await axios.post(allConfig.apiEndPoint, {operation:"add", couponCode:couponCode, cartData:cartData },{headers: headers});
             resolve(resp.data)
         } catch (error) {
-            resolve(cartData)
+            reject({success:false, message:"Something went wrong."})
             console.log(error)
         }
     })
@@ -1195,10 +1195,10 @@ function removeCoupon(cartData) {
     return new Promise(async (resolve, reject) => {
         try {
             const headers = await getHeaders()
-            const resp = await axios.post(URL, {operation:"remove", cartData:cartData},{headers: headers});
+            const resp = await axios.post(allConfig.apiEndPoint, {operation:"remove", cartData:cartData},{headers: headers});
             resolve(resp.data)
         } catch (error) {
-            resolve(cartData)
+            reject({success:false, message:"Something went wrong."})
             console.log(error)
         }
     })
