@@ -1169,7 +1169,9 @@ function recalculateCart(cartData) {
         try {
             const headers = await getHeaders()
             const resp = await axios.post(allConfig.apiEndPoint, {cartData:cartData}, {headers: headers});
-            
+            cartData.applied_coupon = resp.data.cart.applied_coupon
+            cartData.summary = resp.data.cart.summary
+            resp.data.cart = cartData
             resolve(resp.data)
         } catch (error) {
             resolve({data: {cart :cartData}})
@@ -1183,6 +1185,9 @@ function applyCoupon(couponCode, cartData) {
         try {
             const headers = await getHeaders()
             const resp = await axios.post(allConfig.apiEndPoint, {operation:"add", couponCode:couponCode, cartData:cartData },{headers: headers});
+            cartData.applied_coupon = resp.data.data.cart.applied_coupon
+            cartData.summary = resp.data.data.cart.summary
+            resp.data.data.cart = cartData
             resolve(resp.data)
         } catch (error) {
             reject({success:false, message:"Something went wrong."})
@@ -1196,6 +1201,9 @@ function removeCoupon(cartData) {
         try {
             const headers = await getHeaders()
             const resp = await axios.post(allConfig.apiEndPoint, {operation:"remove", cartData:cartData},{headers: headers});
+            cartData.applied_coupon = resp.data.data.cart.applied_coupon
+            cartData.summary = resp.data.data.cart.summary
+            resp.data.data.cart = cartData
             resolve(resp.data)
         } catch (error) {
             reject({success:false, message:"Something went wrong."})
