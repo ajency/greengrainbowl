@@ -1168,7 +1168,7 @@ function recalculateCart(cartData) {
     return new Promise(async (resolve, reject) => {
         try {
             const headers = await getHeaders()
-            const resp = await axios.post("http://localhost:5000/project-ggb-dev/asia-east2/api/rest/v1/admin/recalculate-coupon", {cartData:cartData}, {headers: headers});
+            const resp = await axios.post("https://asia-east2-project-ggb-dev.cloudfunctions.net/api/rest/v1/admin/recalculate-coupon", {cartData:cartData}, {headers: headers});
             cartData.applied_coupon = resp.data.cart.applied_coupon
             cartData.summary = resp.data.cart.summary
             resp.data.cart = cartData
@@ -1184,7 +1184,7 @@ function applyCoupon(couponCode, cartData) {
     return new Promise(async (resolve, reject) => {
         try {
             const headers = await getHeaders()
-            const resp = await axios.post("http://localhost:5000/project-ggb-dev/asia-east2/api/rest/v1/admin/recalculate-coupon", {operation:"add", couponCode:couponCode, cartData:cartData },{headers: headers});
+            const resp = await axios.post("https://asia-east2-project-ggb-dev.cloudfunctions.net/api/rest/v1/admin/recalculate-coupon", {operation:"add", couponCode:couponCode, cartData:cartData },{headers: headers});
             cartData.applied_coupon = resp.data.data.cart.applied_coupon
             cartData.summary = resp.data.data.cart.summary
             resp.data.data.cart = cartData
@@ -1200,7 +1200,7 @@ function removeCoupon(cartData) {
     return new Promise(async (resolve, reject) => {
         try {
             const headers = await getHeaders()
-            const resp = await axios.post("http://localhost:5000/project-ggb-dev/asia-east2/api/rest/v1/admin/recalculate-coupon", {operation:"remove", cartData:cartData},{headers: headers});
+            const resp = await axios.post("https://asia-east2-project-ggb-dev.cloudfunctions.net/api/rest/v1/admin/recalculate-coupon", {operation:"remove", cartData:cartData},{headers: headers});
             cartData.applied_coupon = resp.data.data.cart.applied_coupon
             cartData.summary = resp.data.data.cart.summary
             resp.data.data.cart = cartData
