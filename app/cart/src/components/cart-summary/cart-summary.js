@@ -38,7 +38,7 @@ class CartSummary extends Component {
 				<div className="summary-item">
 					<div>
 						<label className="">Applied {couponDetails.code}</label>
-						<button type="button" onClick={e => this.removeCoupon()}>X</button>
+						{this.props.callFrom && <button type="button" onClick={e => this.removeCoupon()}>X</button>}
 					</div>
 
 				</div>

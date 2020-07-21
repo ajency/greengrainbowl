@@ -22,7 +22,6 @@ class CartCheckoutSummary extends Component {
 	constructor(props) {
 		super(props);
 		this.CartSummary = React.createRef();
-		this.checkNameExists = this.checkNameExists.bind(this);
 		this.state = {
 			site_mode: generalConfig.site_mode,
 			pickupPoint: generalConfig.pickupPoint,
@@ -210,7 +209,7 @@ class CartCheckoutSummary extends Component {
 						</div>
 						<div className="p-15 pt-0 pb-0">
 							<div className="secure-checkout fixed-bottom visible bg-white p-15">
-								<Payments checkNameExists={this.checkNameExists} pgname="razorpay" pgconfig={{ pgtype: "standard", classes: "btn btn-primary btn-arrow w-100 p-15 rounded-0 text-left position-relative h5 ft6 mb-0" }} order={{ id: window.readFromLocalStorage(generalConfig.site_mode + '-cart_id-' + generalConfig.businessId), amount: this.state.amount }} user_details={{ user_details: this.state.orderSummary.user_details }} />
+								<Payments validateCart={this.validateCart} pgname="razorpay" pgconfig={{ pgtype: "standard", classes: "btn btn-primary btn-arrow w-100 p-15 rounded-0 text-left position-relative h5 ft6 mb-0" }} order={{ id: window.readFromLocalStorage(generalConfig.site_mode + '-cart_id-' + generalConfig.businessId), amount: this.state.amount }} user_details={{ user_details: this.state.orderSummary.user_details }} />
 							</div>
 						</div>
 					</div>
@@ -454,9 +453,15 @@ class CartCheckoutSummary extends Component {
 		this.setState({ orderSummary: cart_data });
 	}
 
-	checkNameExists() {
+	validateCart = async () => {
 		if (this.state.orderSummary.shipping_address.name) {
-			return true;
+			const response = await this.checkIfCartIsValid()
+			if(response) {
+				return true;
+			} else {
+				window.removeCartLoader()
+				return false
+			}
 		} else {
 			let errors = this.state.errors;
 			errors.accountInfo = 'Please enter account details';
@@ -516,7 +521,14 @@ class CartCheckoutSummary extends Component {
 
 	checkIfCartIsValid() {
 		new Promise((resolve, reject) => {
-			window.checkCouponValidity()
+			window.recalculateCart(this.state.orderSummary).then((res) => {
+				if(!res.success) {
+					this.refs.CartSummary.displayToast(`Applied coupon is invalid, please remove or apply new coupon code.`, "error")
+					resolve(false)
+				} else {
+					resolve(true)
+				}
+			})
 		})
 	}
 

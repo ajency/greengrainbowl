@@ -1153,10 +1153,19 @@ function brewCartId(site_mode, business_id) {
     }
 }
 
+async function getHeaders() {
+    const tokenID = await window.firebase.auth().currentUser.getIdToken()
+    const UID = window.firebase.auth().getUid()
+    return {
+        Authorization : 'Bearer '+ tokenID,
+        UID: UID
+    }
+}
 function recalculateCart(cartData) {
     return new Promise(async (resolve, reject) => {
         try {
-            const resp = await axios.post("http://demo4855911.mockable.io/apply-coupon", {});
+            const headers = await getHeaders()
+            const resp = await axios.post("http://demo4855911.mockable.io/apply-coupon", {}, {headers: headers});
             resolve(resp.data)
         } catch (error) {
             resolve({data: {cart :cartData}})
@@ -1168,7 +1177,8 @@ function recalculateCart(cartData) {
 function applyCoupon(couponCode, cartData) {
     return new Promise(async (resolve, reject) => {
         try {
-            const resp = await axios.post("http://demo4855911.mockable.io/apply-coupon", {operation:"add", couponCode:couponCode });
+            const headers = await getHeaders()
+            const resp = await axios.post("http://demo4855911.mockable.io/apply-coupon", {operation:"add", couponCode:couponCode },{headers: headers});
             resolve(resp.data)
         } catch (error) {
             resolve(cartData)
@@ -1180,7 +1190,8 @@ function applyCoupon(couponCode, cartData) {
 function removeCoupon(cartData) {
     return new Promise(async (resolve, reject) => {
         try {
-            const resp = await axios.post("http://demo4855911.mockable.io/apply-coupon", {operation:"remove", cartData:cartData});
+            const headers = await getHeaders()
+            const resp = await axios.post("http://demo4855911.mockable.io/apply-coupon", {operation:"remove", cartData:cartData},{headers: headers});
             resolve(resp.data)
         } catch (error) {
             resolve(cartData)
