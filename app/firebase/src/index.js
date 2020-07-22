@@ -1156,23 +1156,24 @@ function brewCartId(site_mode, business_id) {
 async function getHeaders() {
     const tokenID = await window.firebase.auth().currentUser.getIdToken()
     const UID = window.firebase.auth().getUid();
-    const cartID = window.readFromLocalStorage(cartIdLabel)
+   
     return {
         Authorization : 'Bearer '+ tokenID,
-        UID: UID,
-        CARTID: cartID
     }
 }
 //TODO optinimize functions, generalize server call
 function recalculateCart(cartData) {
+    const cartId = window.readFromLocalStorage(cartIdLabel)
     return new Promise(async (resolve, reject) => {
         try {
             const headers = await getHeaders()
-            const resp = await axios.post(`${allConfig.apiEndPoint}/cart/recalculate`, {operation:"modify"}, {headers: headers});
-            cartData.applied_coupon = resp.data.cart.applied_coupon
-            cartData.summary = resp.data.cart.summary
-            resp.data.cart = cartData
-            resolve(resp.data)
+            const resp = await axios.post(`${allConfig.apiEndPoint}/cart/recalculate`, {operation:"modify_cart", cartId}, {headers: headers});
+            if(resp.data.success) {
+                cartData.applied_coupon =  resp.data.data.cart.applied_coupon
+                cartData.summary =  resp.data.data.cart.summary
+                resp.data.data.cart = cartData
+            }
+            resolve( resp.data)
         } catch (error) {
             resolve({data: {cart :cartData}})
             console.log(error)
@@ -1181,13 +1182,16 @@ function recalculateCart(cartData) {
 }
 
 function applyCoupon(couponCode, cartData) {
+    const cartId = window.readFromLocalStorage(cartIdLabel)
     return new Promise(async (resolve, reject) => {
         try {
             const headers = await getHeaders()
-            const resp = await axios.post(`${allConfig.apiEndPoint}/cart/recalculate`, {operation:"add", couponCode:couponCode},{headers: headers});
-            cartData.applied_coupon = resp.data.cart.applied_coupon
-            cartData.summary = resp.data.cart.summary
-            resp.data.cart = cartData
+            const resp = await axios.post(`${allConfig.apiEndPoint}/cart/recalculate`, {operation:"add", couponCode:couponCode, cartId},{headers: headers});
+            if(resp.data.success) {
+                cartData.applied_coupon =  resp.data.data.cart.applied_coupon
+                cartData.summary = resp.data.data.cart.summary
+                resp.data.data.cart = cartData
+            }
             resolve(resp.data)
         } catch (error) {
             reject({success:false, message:"Something went wrong."})
@@ -1197,14 +1201,17 @@ function applyCoupon(couponCode, cartData) {
 }
 
 function removeCoupon(cartData) {
+    const cartId = window.readFromLocalStorage(cartIdLabel)
     return new Promise(async (resolve, reject) => {
         try {
             const headers = await getHeaders()
-            const resp = await axios.post(`${allConfig.apiEndPoint}/cart/recalculate`, {operation:"remove"},{headers: headers});
-            cartData.applied_coupon = resp.data.cart.applied_coupon
-            cartData.summary = resp.data.cart.summary
-            resp.data.cart = cartData
-            resolve(resp.data)
+            const resp = await axios.post(`${allConfig.apiEndPoint}/cart/recalculate`, {operation:"remove", cartId},{headers: headers});
+            if( resp.data.success) {
+                cartData.applied_coupon =  resp.data.data.cart.applied_coupon
+                cartData.summary =  resp.data.data.cart.summary
+                resp.data.data.cart = cartData
+            }
+            resolve( resp.data)
         } catch (error) {
             reject({success:false, message:"Something went wrong."})
             console.log(error)

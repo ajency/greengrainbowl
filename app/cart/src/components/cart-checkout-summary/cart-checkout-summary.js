@@ -492,7 +492,7 @@ class CartCheckoutSummary extends Component {
 			console.log(e)
 			this.CartSummary.current.clearCoupon()
 			window.removeCartLoader();
-			this.CartSummary.displayToast(`Failed to apply coupon ${coupon}`, "error")
+			this.CartSummary.current.displayToast(`Failed to apply coupon ${coupon}`, "error")
 		})
 	}
 
@@ -515,7 +515,7 @@ class CartCheckoutSummary extends Component {
 			console.log(e)
 			this.CartSummary.current.clearCoupon()
 			window.removeCartLoader();
-			this.CartSummary.displayToast(`Failed to remove coupon`, "error")
+			this.CartSummary.current.displayToast(`Failed to remove coupon`, "error")
 		})
 	}
 
@@ -523,7 +523,7 @@ class CartCheckoutSummary extends Component {
 		new Promise((resolve, reject) => {
 			window.recalculateCart(this.state.orderSummary).then((res) => {
 				if(!res.success) {
-					this.CartSummary.displayToast(`Applied coupon is invalid, please remove or apply new coupon code.`, "error")
+					this.CartSummary.current.displayToast(`Applied coupon is invalid, please remove or apply new coupon code.`, "error")
 					resolve(false)
 				} else {
 					resolve(true)
