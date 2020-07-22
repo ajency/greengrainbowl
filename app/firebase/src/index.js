@@ -1155,17 +1155,23 @@ function brewCartId(site_mode, business_id) {
 
 async function getHeaders() {
     const tokenID = await window.firebase.auth().currentUser.getIdToken()
-    const UID = window.firebase.auth().getUid()
+    const UID = window.firebase.auth().getUid();
+    const cartID = window.readFromLocalStorage(cartIdLabel)
     return {
         Authorization : 'Bearer '+ tokenID,
-        UID: UID
+        UID: UID,
+        CARTID: cartID
     }
 }
+//TODO optinimize functions, generalize server call
 function recalculateCart(cartData) {
     return new Promise(async (resolve, reject) => {
         try {
             const headers = await getHeaders()
-            const resp = await axios.post("http://demo4855911.mockable.io/apply-coupon", {}, {headers: headers});
+            const resp = await axios.post(`${allConfig.apiEndPoint}/cart/recalculate`, {operation:"modify"}, {headers: headers});
+            cartData.applied_coupon = resp.data.cart.applied_coupon
+            cartData.summary = resp.data.cart.summary
+            resp.data.cart = cartData
             resolve(resp.data)
         } catch (error) {
             resolve({data: {cart :cartData}})
@@ -1178,10 +1184,13 @@ function applyCoupon(couponCode, cartData) {
     return new Promise(async (resolve, reject) => {
         try {
             const headers = await getHeaders()
-            const resp = await axios.post("http://demo4855911.mockable.io/apply-coupon", {operation:"add", couponCode:couponCode },{headers: headers});
+            const resp = await axios.post(`${allConfig.apiEndPoint}/cart/recalculate`, {operation:"add", couponCode:couponCode},{headers: headers});
+            cartData.applied_coupon = resp.data.cart.applied_coupon
+            cartData.summary = resp.data.cart.summary
+            resp.data.cart = cartData
             resolve(resp.data)
         } catch (error) {
-            resolve(cartData)
+            reject({success:false, message:"Something went wrong."})
             console.log(error)
         }
     })
@@ -1191,10 +1200,13 @@ function removeCoupon(cartData) {
     return new Promise(async (resolve, reject) => {
         try {
             const headers = await getHeaders()
-            const resp = await axios.post("http://demo4855911.mockable.io/apply-coupon", {operation:"remove", cartData:cartData},{headers: headers});
+            const resp = await axios.post(`${allConfig.apiEndPoint}/cart/recalculate`, {operation:"remove"},{headers: headers});
+            cartData.applied_coupon = resp.data.cart.applied_coupon
+            cartData.summary = resp.data.cart.summary
+            resp.data.cart = cartData
             resolve(resp.data)
         } catch (error) {
-            resolve(cartData)
+            reject({success:false, message:"Something went wrong."})
             console.log(error)
         }
     })
