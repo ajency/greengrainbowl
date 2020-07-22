@@ -42,3 +42,33 @@
 .mw-100 {
 	max-width: 100% !important;
 }
+
+.modal-fullscreen {
+	position: fixed !important;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	background:rgba(0,0,0,0.45);
+	z-index: 99999;
+	align-items: center;
+    justify-content: center;
+    display: flex;
+    width: 100%;
+}
+
+.modal-content-block {
+	background-color: '#ffffff';
+    padding: 20px 15px;
+    max-width: 80%;
+    margin: 0 auto;
+    border-radius: 6px;
+	width: 100%;
+	position: relative;
+}
+
+.outline-0-btn {
+	outline: 0 !important;
+	background-color: transparent;
+	border: 0;
+}
