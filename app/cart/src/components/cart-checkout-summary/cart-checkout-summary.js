@@ -523,7 +523,7 @@ class CartCheckoutSummary extends Component {
 		new Promise((resolve, reject) => {
 			window.recalculateCart(this.state.orderSummary).then((res) => {
 				if(!res.success) {
-					this.CartSummary.current.displayToast(`Applied coupon is invalid, please remove or apply new coupon code.`, "error")
+					this.CartSummary.current.displayToast(`${res.message}`, "error")
 					resolve(false)
 				} else {
 					resolve(true)
