@@ -455,13 +455,13 @@ class CartCheckoutSummary extends Component {
 
 	validateCart = async () => {
 		if (this.state.orderSummary.shipping_address.name) {
-			const response = await this.checkIfCartIsValid()
-			if(response) {
+			// const response = await this.checkIfCartIsValid()
+			// if(response) {
 				return true;
-			} else {
-				window.removeCartLoader()
-				return false
-			}
+			// } else {
+			// 	window.removeCartLoader()
+			// 	return false
+			// }
 		} else {
 			let errors = this.state.errors;
 			errors.accountInfo = 'Please enter account details';
