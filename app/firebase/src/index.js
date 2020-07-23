@@ -354,7 +354,7 @@ async function updateOrder(item, cart_id, cart_data, stock_location_id) {
         await db.collection('carts').doc(cart_id).set(cart_data);
         console.timeEnd("db carts update")
         if (cart_data.summary.cart_discount) {
-            let resP = await window.recalculateCart(cart_data)
+            let resP =  await window.cartOperation({operation:"modify_cart", cartId:cart_id},cart_data)
             console.time("cart sync")
             sycnCartData(cart_id);
             console.timeEnd("cart sync")
@@ -468,7 +468,7 @@ async function removeItemFromCart(variant_id, cart_id, quantity) {
         await db.collection("carts").doc(cart_id).set(cart_data);
         let summaryRes = cart_data.summary
         if (cart_data.summary.cart_discount) {
-            let resP = await window.recalculateCart(cart_data)
+            let resP = await window.cartOperation({operation:"modify_cart", cartId:cart_id},cart_data)
             summaryRes = resP.data.cart.summary;
         }
         let response = {
@@ -1162,12 +1162,16 @@ async function getHeaders() {
     }
 }
 //TODO optinimize functions, generalize server call
-function recalculateCart(cartData) {
-    const cartId = window.readFromLocalStorage(cartIdLabel)
+
+function cartOperation(requestData, cartData) {
+    if(!requestData.hasOwnProperty("cartId")) {
+        const cartId = window.readFromLocalStorage(cartIdLabel)
+        requestData["cartId"] = cartId
+    }
     return new Promise(async (resolve, reject) => {
         try {
             const headers = await getHeaders()
-            const resp = await axios.post(`${allConfig.apiEndPoint}/cart/recalculate`, {operation:"modify_cart", cartId}, {headers: headers});
+            const resp = await axios.post(`${allConfig.apiEndPoint}/cart/recalculate`, requestData, {headers: headers});
             if(resp.data.success) {
                 cartData.applied_coupon =  resp.data.data.cart.applied_coupon
                 cartData.summary =  resp.data.data.cart.summary
@@ -1175,45 +1179,20 @@ function recalculateCart(cartData) {
             }
             resolve( resp.data)
         } catch (error) {
-            resolve({data: {cart :cartData}})
-            console.log(error)
-        }
-    })
-}
-
-function applyCoupon(couponCode, cartData) {
-    const cartId = window.readFromLocalStorage(cartIdLabel)
-    return new Promise(async (resolve, reject) => {
-        try {
-            const headers = await getHeaders()
-            const resp = await axios.post(`${allConfig.apiEndPoint}/cart/recalculate`, {operation:"add", couponCode:couponCode, cartId},{headers: headers});
-            if(resp.data.success) {
-                cartData.applied_coupon =  resp.data.data.cart.applied_coupon
-                cartData.summary = resp.data.data.cart.summary
-                resp.data.data.cart = cartData
+            switch(requestData.operation) {
+                case "add" :
+                case "remove" :
+                    reject({success:false, message:"Something went wrong."})
+                break;
+                case "modify_cart": 
+                    resolve({data: {cart :cartData}})
+                break;
+                case "validate_coupon":
+                    resolve({ sucess:true,data: {cart :cartData}})
+                break;
+                default:
+                    break;
             }
-            resolve(resp.data)
-        } catch (error) {
-            reject({success:false, message:"Something went wrong."})
-            console.log(error)
-        }
-    })
-}
-
-function removeCoupon(cartData) {
-    const cartId = window.readFromLocalStorage(cartIdLabel)
-    return new Promise(async (resolve, reject) => {
-        try {
-            const headers = await getHeaders()
-            const resp = await axios.post(`${allConfig.apiEndPoint}/cart/recalculate`, {operation:"remove", cartId},{headers: headers});
-            if( resp.data.success) {
-                cartData.applied_coupon =  resp.data.data.cart.applied_coupon
-                cartData.summary =  resp.data.data.cart.summary
-                resp.data.data.cart = cartData
-            }
-            resolve( resp.data)
-        } catch (error) {
-            reject({success:false, message:"Something went wrong."})
             console.log(error)
         }
     })

@@ -473,7 +473,7 @@ class CartCheckoutSummary extends Component {
 
 	applyCoupon = (coupon) => {
 		window.addCartLoader()
-		window.applyCoupon(coupon, this.state.orderSummary).then((res) => {
+		window.cartOperation({operation:"add",couponCode:coupon},this.state.orderSummary).then((res) => {
 			if (res.success) {
 				// this.refreshPage().then(() => {
 				this.setState({ orderSummary: res.data.cart })
@@ -498,7 +498,7 @@ class CartCheckoutSummary extends Component {
 
 	removeCoupon = () => {
 		window.addCartLoader()
-		window.removeCoupon(this.state.orderSummary).then((res) => {
+		window.cartOperation({operation:"remove"},this.state.orderSummary).then((res) => {
 			if (res.success) {
 				// this.refreshPage().then(() => {
 				this.setState({ orderSummary: res.data.cart })
