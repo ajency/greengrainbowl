@@ -521,7 +521,7 @@ class CartCheckoutSummary extends Component {
 
 	checkIfCartIsValid() {
 		new Promise((resolve, reject) => {
-			window.recalculateCart(this.state.orderSummary).then((res) => {
+			window.cartOperation({operation:"validate_cart"},this.state.orderSummary).then((res) => {
 				if(!res.success) {
 					this.CartSummary.current.displayToast(`${res.message}`, "error")
 					resolve(false)
