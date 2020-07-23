@@ -1172,10 +1172,12 @@ function cartOperation(requestData, cartData) {
         try {
             const headers = await getHeaders()
             const resp = await axios.post(`${allConfig.apiEndPoint}/cart/recalculate`, requestData, {headers: headers});
-            if(resp.data.success) {
-                cartData.applied_coupon =  resp.data.data.cart.applied_coupon
-                cartData.summary =  resp.data.data.cart.summary
-                resp.data.data.cart = cartData
+            if(requestData.operation != "validate_cart") {
+                if(resp.data.success) {
+                    cartData.applied_coupon =  resp.data.data.cart.applied_coupon
+                    cartData.summary =  resp.data.data.cart.summary
+                    resp.data.data.cart = cartData
+                } 
             }
             resolve( resp.data)
         } catch (error) {
