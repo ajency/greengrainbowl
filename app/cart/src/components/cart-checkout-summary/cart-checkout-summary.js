@@ -454,15 +454,17 @@ class CartCheckoutSummary extends Component {
 	}
 
 	validateCart = async () => {
+		window.addCartLoader()
 		if (this.state.orderSummary.shipping_address.name) {
-			// const response = await this.checkIfCartIsValid()
-			// if(response) {
+			const response = await this.checkIfCartIsValid()
+			if(response) {
 				return true;
-			// } else {
-			// 	window.removeCartLoader()
-			// 	return false
-			// }
+			} else {
+				window.removeCartLoader()
+				return false
+			}
 		} else {
+			window.removeCartLoader()
 			let errors = this.state.errors;
 			errors.accountInfo = 'Please enter account details';
 			this.setState({ "errors": errors });
@@ -520,13 +522,13 @@ class CartCheckoutSummary extends Component {
 	}
 
 	checkIfCartIsValid() {
-		new Promise((resolve, reject) => {
+		return new Promise((resolve, reject) => {
 			window.cartOperation({operation:"validate_cart"},this.state.orderSummary).then((res) => {
-				if(!res.success) {
+				if(res.success) {
+					resolve(true)
+				} else {
 					this.CartSummary.current.displayToast(`${res.message}`, "error")
 					resolve(false)
-				} else {
-					resolve(true)
 				}
 			})
 		})

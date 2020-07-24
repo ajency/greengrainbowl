@@ -91,6 +91,7 @@ class Razorpay extends Component {
 
             return true;
         }) .catch((err) => {
+            console.log(err)
             window.displayError("Something went wrong. Please try in sometime");
             window.removeCartLoader();
             return false;
