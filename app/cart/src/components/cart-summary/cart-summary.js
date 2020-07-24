@@ -59,15 +59,15 @@ class CartSummary extends Component {
 		} else {
 			if (this.props.callFrom) {
 				return <div className="pb-52">
-					<div className="apply-coupon-wrapper">
-						{/* <div><label className="">Apply Coupon</label></div>
+					{/* <div className="apply-coupon-wrapper">
+						<div><label className="">Apply Coupon</label></div>
 						<div className="summary-items">
 							<input type="text" name="coupon_applied" value={ coupon } onChange={e => this.setCoupon(e.target.value)} />
 							<div> <button onClick={this.applyCoupon()}>Apply</button></div>
-						</div> */}
+						</div> 
 						<input type="text" placeholder="Coupon Code" class="coupon-inp-box border-green ft6 h5 p-3 plceholder-text rounded-0 w-100 mb-0" value={coupon} onChange={e => { this.setCoupon(e.target.value) }} />
 						<button type="button" placeholder="Coupon Code" class="coupon-apply-btn cursor-pointer f-18 font-weight-bold test-primary text-underline" onClick={e => this.applyCoupon()}>Apply</button>
-					</div>
+					</div> */}
 					{showPopup && msgContent}
 				</div>
 

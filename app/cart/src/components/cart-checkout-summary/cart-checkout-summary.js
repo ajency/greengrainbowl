@@ -186,7 +186,12 @@ class CartCheckoutSummary extends Component {
 							<div className="p-15 pt-0 pb-0">
 								<hr className="sep m-0"></hr>
 							</div>
-
+							<div className="p-15">
+								<button className="btn btn-primary btn-arrow-icon w-100 p-15 rounded-0 text-left position-relative h5 ft6 mb-0 d-flex align-items-center justify-content-between text-uppercase overflow-hidden btn-white" onClick={e => this.showCouponScreen()}>
+									<span className="zindex-1">Apply Referral Coupon</span>
+									<i class="text-white fa fa-arrow-right font-size-20" aria-hidden="true"></i>
+								</button>
+							</div>
 							<div className="p-15">
 								<label className="cart-summary-label font-weight-medium">Billing Details</label>
 								<CartSummary
@@ -457,7 +462,7 @@ class CartCheckoutSummary extends Component {
 		window.addCartLoader()
 		if (this.state.orderSummary.shipping_address.name) {
 			const response = await this.checkIfCartIsValid()
-			if(response) {
+			if (response) {
 				return true;
 			} else {
 				window.removeCartLoader()
@@ -475,7 +480,7 @@ class CartCheckoutSummary extends Component {
 
 	applyCoupon = (coupon) => {
 		window.addCartLoader()
-		window.cartOperation({operation:"add",couponCode:coupon},this.state.orderSummary).then((res) => {
+		window.cartOperation({ operation: "add", couponCode: coupon }, this.state.orderSummary).then((res) => {
 			if (res.success) {
 				// this.refreshPage().then(() => {
 				this.setState({ orderSummary: res.data.cart })
@@ -500,7 +505,7 @@ class CartCheckoutSummary extends Component {
 
 	removeCoupon = () => {
 		window.addCartLoader()
-		window.cartOperation({operation:"remove"},this.state.orderSummary).then((res) => {
+		window.cartOperation({ operation: "remove" }, this.state.orderSummary).then((res) => {
 			if (res.success) {
 				// this.refreshPage().then(() => {
 				this.setState({ orderSummary: res.data.cart })
@@ -523,8 +528,8 @@ class CartCheckoutSummary extends Component {
 
 	checkIfCartIsValid() {
 		return new Promise((resolve, reject) => {
-			window.cartOperation({operation:"validate_cart"},this.state.orderSummary).then((res) => {
-				if(res.success) {
+			window.cartOperation({ operation: "validate_cart" }, this.state.orderSummary).then((res) => {
+				if (res.success) {
 					resolve(true)
 				} else {
 					this.CartSummary.current.displayToast(`${res.message}`, "error")
@@ -532,6 +537,11 @@ class CartCheckoutSummary extends Component {
 				}
 			})
 		})
+	}
+
+	showCouponScreen = () => {
+		console.log('/cart/cart-summary/coupons')
+		this.props.history.push('/cart/cart-summary/coupons');
 	}
 
 
