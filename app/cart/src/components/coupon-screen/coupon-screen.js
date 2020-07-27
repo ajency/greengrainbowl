@@ -67,15 +67,21 @@ class CouponScreen extends Component {
     //         console.log(`Applying error`)
     //         this.displayToast("Please enter valid coupon code.", "error")
     //     }
+    //#c4c9c4
     // }
 
 
     getResCard = () => {
         const { msgContent } = this.state;
-        return <div>
+        return <div class="msg-box-wrapper list-text-block">
             <div dangerouslySetInnerHTML={{ __html: msgContent }} />
             <div>
-                <button onClick={e => this.setState({ showPopup: false })}>close</button>
+                <button className="msg-close-btn" onClick={e => this.setState({ showPopup: false })}>
+                    <svg width="16px" height="16px" viewBox="0 0 16 16" class="bi bi-x" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" fill="#ffffff" d="M11.854 4.146a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708-.708l7-7a.5.5 0 0 1 .708 0z" />
+                        <path fill-rule="evenodd" fill="#ffffff" d="M4.146 4.146a.5.5 0 0 0 0 .708l7 7a.5.5 0 0 0 .708-.708l-7-7a.5.5 0 0 0-.708 0z" />
+                    </svg>
+                </button>
             </div>
         </div>
     }

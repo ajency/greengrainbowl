@@ -102,12 +102,38 @@
     p {
         font-size: 13px;
         color: #f00;
+        margin: 0;
     }
 }
 
 .msg-success {
     p {
         font-size: 13px;
-        color: #47a748;
+        color: #212529;
+        font-weight: 500;
+        margin: 0;
+        span {
+            font-size: 24px;
+            font-weight: 700;
+            color: #47a748;
+        }
     }
-}    
+}  
+
+.msg-box-wrapper {
+    position: relative;
+}
+
+.msg-close-btn {
+    border: 0;
+    background: #c4c9c4;
+    box-shadow: none;
+    line-height: 0;
+    padding: 3px;
+    border-radius: 56px;
+    position: absolute;
+    top: -8px;
+    right: -5px;
+    cursor: pointer;
+    outline: 0 !important;
+}
