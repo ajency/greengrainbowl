@@ -9,6 +9,7 @@ class CartSummary extends Component {
 			showPopup: false,
 			msgContent: ''
 		}
+		this.popupTimeOut = ""
 	}
 	render() {
 		return (
@@ -143,7 +144,7 @@ class CartSummary extends Component {
 					</div>
 					<div class="font-size-13 mt-3 text-align-center">{msg}</div>
 					<div class="mt-4 text-align-center">
-						<button class="background-white border-0 font-weight-medium text-primary outline-0-btn">okay</button>
+						<button class="background-white border-0 font-weight-medium text-primary outline-0-btn" onClick={e => this.removeToast()}>Okay</button>
 					</div>
 				</div>
 			</div>
@@ -159,7 +160,7 @@ class CartSummary extends Component {
 					</div>
 					<div class="font-size-13 mt-3 text-align-center">{msg}</div>
 					<div class="mt-4 text-align-center">
-						<button class="background-white border-0 font-weight-medium text-primary outline-0-btn">okay</button>
+						<button class="background-white border-0 font-weight-medium text-primary outline-0-btn" onClick={e => this.removeToast()}>Okay</button>
 					</div>
 				</div>
 			</div>	
@@ -167,12 +168,16 @@ class CartSummary extends Component {
 
 		this.setState({ showPopup: true, msgContent: element })
 
-		setTimeout(() => {
-			this.setState({ showPopup: false, msgContent: "" })
-		}, 3000)
+		this.popupTimeOut = setTimeout(() => {
+			 this.setState({ showPopup: false, msgContent: "" })
+		}, 4000)
 	}
 
-	removeToast() {
+	removeToast = () =>  {
+		console.log(this.popupTimeOut)
+		if(this.popupTimeOut) {
+			clearTimeout(this.popupTimeOut)
+		}
 		this.setState({ showPopup: false, msgContent: "" })
 	}
 
