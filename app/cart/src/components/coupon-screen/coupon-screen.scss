@@ -97,3 +97,17 @@
     .ml-10 {
         margin-left: 10px;
     }
+
+.msg-error {
+    p {
+        font-size: 13px;
+        color: #f00;
+    }
+}
+
+.msg-success {
+    p {
+        font-size: 13px;
+        color: #47a748;
+    }
+}    

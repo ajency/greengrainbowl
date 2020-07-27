@@ -187,9 +187,13 @@ class CartCheckoutSummary extends Component {
 								<hr className="sep m-0"></hr>
 							</div>
 							<div className="p-15">
-								<button className="btn btn-primary btn-arrow-icon w-100 p-15 rounded-0 text-left position-relative h5 ft6 mb-0 d-flex align-items-center justify-content-between text-uppercase overflow-hidden btn-white" onClick={e => this.showCouponScreen()}>
+								<button className="btn btn-outline-primary-custom btn-primary btn-arrow-icon w-100 p-15 rounded-0 text-left position-relative h5 ft6 mb-0 d-flex align-items-center justify-content-between text-uppercase overflow-hidden btn-white mb-3" onClick={e => this.showCouponScreen()}>
+									<span className="zindex-1">Apply Promo Coupon</span>
+									<i class="text-primary fa fa-arrow-right font-size-20" aria-hidden="true"></i>
+								</button>
+								<button className="btn btn-outline-primary-custom btn-primary btn-arrow-icon w-100 p-15 rounded-0 text-left position-relative h5 ft6 mb-0 d-flex align-items-center justify-content-between text-uppercase overflow-hidden btn-white" onClick={e => this.showCouponScreen()}>
 									<span className="zindex-1">Apply Referral Coupon</span>
-									<i class="text-white fa fa-arrow-right font-size-20" aria-hidden="true"></i>
+									<i class="text-primary fa fa-arrow-right font-size-20" aria-hidden="true"></i>
 								</button>
 							</div>
 							<div className="p-15">
