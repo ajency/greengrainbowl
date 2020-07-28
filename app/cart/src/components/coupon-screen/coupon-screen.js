@@ -104,11 +104,8 @@ class CouponScreen extends Component {
                 if (res.formatted_message) {
                     msgContent = res.formatted_message
                 } else {
-                    msgContent = `<div class="msg-success"> ${res.message}</div>`
+                    msgContent = `<div class="msg-success"><p> ${res.message}</p></div>`
                 }
-                msgContent = `<div class="msg-success">
-                <p>Yay! coupon code applied successfully, You have availed discount of <span>₹ 100</span></p>
-             </div>`
                 this.setState({ showPopup: true, msgContent })
                 this.clearCoupon()
                 window.removeCartLoader();
@@ -117,11 +114,9 @@ class CouponScreen extends Component {
                 if (res.formatted_message) {
                     msgContent = res.formatted_message
                 } else {
-                    msgContent = `<div class="msg-error"> ${res.message}</div>`
+                    msgContent = `<div class="msg-error"> <p>${res.message}</p></div>`
                 }
-                msgContent = `<div class="msg-error">
-                                <p>Coupon does not exist</p>
-                            </div>`
+               
                 this.setState({ showPopup: true, msgContent })
                 this.clearCoupon()
                 window.removeCartLoader();
