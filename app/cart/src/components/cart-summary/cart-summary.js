@@ -34,12 +34,13 @@ class CartSummary extends Component {
 	getCouponDiscount() {
 		const { coupon, showPopup = false, msgContent } = this.state;
 		const { couponDetails } = this.props
+		const couponCateLabel = couponDetails.coupon_category_label || "Coupon Discount"
 		if (this.props.summary.cart_discount) {
 			return <div className="pb-52">
 				<div className="summary-item align-items-end">
 					<div>
 						<div>
-							<label className="mb-0">Coupon Discount</label>
+							<label className="mb-0">{couponCateLabel}</label>
 						</div>
 						<div>
 							<label className="font-weight-medium font-italic mb-0 font-size-13">{couponDetails.code}</label>
