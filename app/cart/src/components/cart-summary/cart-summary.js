@@ -83,19 +83,19 @@ class CartSummary extends Component {
 		this.setState({ coupon })
 	}
 
-	applyCoupon() {
-		const { coupon } = this.state;
+	// applyCoupon() {
+	// 	const { coupon } = this.state;
 
-		if (coupon) {
+	// 	if (coupon) {
 
-			this.props.applyCoupon(coupon)
-			console.log(`Applying coupon ${coupon}`)
+	// 		this.props.applyCoupon(coupon)
+	// 		console.log(`Applying coupon ${coupon}`)
 
-		} else {
-			console.log(`Applying error`)
-			this.displayToast("Please enter valid coupon code.", "error")
-		}
-	}
+	// 	} else {
+	// 		console.log(`Applying error`)
+	// 		this.displayToast("Please enter valid coupon code.", "error")
+	// 	}
+	// }
 
 	removeCoupon() {
 		this.props.removeCoupon()

@@ -202,7 +202,7 @@ class CartCheckoutSummary extends Component {
 									ref={this.CartSummary}
 									summary={this.state.orderSummary.summary}
 									callFrom={"CartSummary"}
-									applyCoupon={this.applyCoupon}
+									// applyCoupon={this.applyCoupon}
 									couponDetails={this.state.orderSummary.applied_coupon}
 									removeCoupon={this.removeCoupon}
 								/>
@@ -482,30 +482,30 @@ class CartCheckoutSummary extends Component {
 	}
 
 
-	applyCoupon = (coupon) => {
-		window.addCartLoader()
-		window.cartOperation({ operation: "add", couponCode: coupon }, this.state.orderSummary).then((res) => {
-			if (res.success) {
-				// this.refreshPage().then(() => {
-				this.setState({ orderSummary: res.data.cart })
-				this.CartSummary.current.clearCoupon()
-				this.CartSummary.current.displayToast(`${res.message}`, "success")
-				window.removeCartLoader();
-				// }).catch(e => {
-				// console.log(e)
-				// })
-			} else {
-				this.CartSummary.current.displayToast(`${res.message}`, "error")
-				this.CartSummary.current.clearCoupon()
-				window.removeCartLoader();
-			}
-		}).catch((e) => {
-			console.log(e)
-			this.CartSummary.current.clearCoupon()
-			window.removeCartLoader();
-			this.CartSummary.current.displayToast(`Failed to apply coupon ${coupon}`, "error")
-		})
-	}
+	// applyCoupon = (coupon) => {
+	// 	window.addCartLoader()
+	// 	window.cartOperation({ operation: "add", couponCode: coupon }, this.state.orderSummary).then((res) => {
+	// 		if (res.success) {
+	// 			// this.refreshPage().then(() => {
+	// 			this.setState({ orderSummary: res.data.cart })
+	// 			this.CartSummary.current.clearCoupon()
+	// 			this.CartSummary.current.displayToast(`${res.message}`, "success")
+	// 			window.removeCartLoader();
+	// 			// }).catch(e => {
+	// 			// console.log(e)
+	// 			// })
+	// 		} else {
+	// 			this.CartSummary.current.displayToast(`${res.message}`, "error")
+	// 			this.CartSummary.current.clearCoupon()
+	// 			window.removeCartLoader();
+	// 		}
+	// 	}).catch((e) => {
+	// 		console.log(e)
+	// 		this.CartSummary.current.clearCoupon()
+	// 		window.removeCartLoader();
+	// 		this.CartSummary.current.displayToast(`Failed to apply coupon ${coupon}`, "error")
+	// 	})
+	// }
 
 	removeCoupon = () => {
 		window.addCartLoader()
@@ -513,7 +513,7 @@ class CartCheckoutSummary extends Component {
 			if (res.success) {
 				// this.refreshPage().then(() => {
 				this.setState({ orderSummary: res.data.cart })
-				this.CartSummary.current.displayToast(`${res.message}`, "success")
+				// this.CartSummary.current.displayToast(`${res.message}`, "success")
 				window.removeCartLoader();
 				// }).catch(e => {
 				// console.log(e)
