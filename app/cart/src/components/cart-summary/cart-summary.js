@@ -34,8 +34,8 @@ class CartSummary extends Component {
 	getCouponDiscount() {
 		const { coupon, showPopup = false, msgContent } = this.state;
 		const { couponDetails } = this.props
-		const couponCateLabel = couponDetails.coupon_category_label || "Coupon Discount"
 		if (this.props.summary.cart_discount) {
+			const couponCateLabel = couponDetails.coupon_category_label || "Coupon Discount"
 			return <div className="pb-52">
 				<div className="summary-item align-items-end">
 					<div>
