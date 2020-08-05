@@ -34,7 +34,7 @@ class Quantity extends Component {
 		}
 		return (
 			<div>
-				<div className="">
+				<div className="d-flex">
 					<button className="btn btn-qty text-grey p-0" onClick={() => this.removeFromCart(1)} disabled={this.state.apiCallInProgress}>-</button>
 					<span className="cart-qty text-primary">	{this.state.quantity} </span>
 					<button className="btn btn-qty text-green p-0" onClick={() => this.addToCart(1)} disabled={this.state.apiCallInProgress}>+</button>
