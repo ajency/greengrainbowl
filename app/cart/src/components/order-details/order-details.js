@@ -179,7 +179,7 @@ class OrderDetails extends Component {
             <div class="d-flex mb-4">
                 <div class="product-cartimage d-inline-block"><img class="border-radius-rounded" alt="" title="" height="50" width="50" src={item.attributes.image}/></div>
                 <div class="product-details d-inline-block">
-                    <div className="d-flex justify-content-center">
+                    <div className="d-flex justify-content-between">
                         <div class="product-title-c font-weight-light">{item.attributes.title}</div>
                         <div class="product-price font-weight-light text-right pl-3">
                             <span>₹{item.attributes.price_final}</span>
