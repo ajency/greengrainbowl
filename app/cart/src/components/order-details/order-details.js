@@ -179,12 +179,15 @@ class OrderDetails extends Component {
             <div class="d-flex mb-4">
                 <div class="product-cartimage d-inline-block"><img class="border-radius-rounded" alt="" title="" height="50" width="50" src={item.attributes.image}/></div>
                 <div class="product-details d-inline-block">
-                    <div class="product-title-c font-weight-light">{item.attributes.title}</div>
+                    <div className="d-flex justify-content-center">
+                        <div class="product-title-c font-weight-light">{item.attributes.title}</div>
+                        <div class="product-price font-weight-light text-right pl-3">
+                            <span>₹{item.attributes.price_final}</span>
+                            {item.attributes.price_mrp != item.attributes.price_final && <span>₹{this.props.item.attributes.price_mrp}</span>}    
+                        </div>
+                    </div>
                     <div class="d-flex justify-content-between">
                         <div class="product-size-c text-capitalize">Size: {item.attributes.size} | Qty: {item.quantity}{extraContent}</div>
-                        <div class="d-flex align-items-center">
-                            <div class="product-price font-weight-light text-right pl-3">₹{item.attributes.price_final}</div>
-                        </div>
                     </div>
                     {this.getComboText(item.attributes.size)}
                 </div>
