@@ -183,7 +183,7 @@ class OrderDetails extends Component {
                         <div class="product-title-c font-weight-light">{item.attributes.title}</div>
                         <div class="product-price font-weight-light text-right pl-3">
                             <span className="sale-price">₹{item.attributes.price_final}</span>
-                            {item.attributes.price_mrp != item.attributes.price_final && <span className="mrp-price">₹{this.props.item.attributes.price_mrp}</span>}    
+                            {item.attributes.price_mrp != item.attributes.price_final && <span className="mrp-price">₹{item.attributes.price_mrp}</span>}    
                         </div>
                     </div>
                     <div class="d-flex justify-content-between">
