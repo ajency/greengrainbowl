@@ -33,13 +33,23 @@ class variantSelection extends React.Component {
 			selectedSlot: '',
 			disableSlot: true,
 			slotError:false,
-			dayError:false
+			dayError:false,
+			defaultDay:""
 		};
 	}
 
 	getDays() {
-		const { variants } = this.state
-		const daysArray = variants.map((p) => { return p.day }).filter((value, index, self) => self.indexOf(value) === index)
+		const { variants,selectedSize } = this.state
+		const daysArray = variants.filter((v) => {
+			if(selectedSize) {
+				if(v.size == selectedSize) {
+					return v 
+				} 
+			} else {
+				return v
+			}
+		})
+		.map((p) => { return p.day }).filter((value, index, self) => self.indexOf(value) === index)
 		let days = daysArray.map((day) => {
 			return (
 				<option value={day}>{DAYS[day]}</option>
@@ -216,7 +226,22 @@ class variantSelection extends React.Component {
 
 
 	handleOptionChange(event) {
-		this.setState({ selectedSize: event.target.value });
+		const { variants,defaultDay } = this.state
+		const daysArray = variants.filter((v) => {
+			if(v.size == event.target.value) {
+				return v 
+			} 
+		})
+		.map((p) => { return p.day }).filter((value, index, self) => self.indexOf(value) === index)
+		let selectedDay = ""
+		if(daysArray.includes(defaultDay)) {
+			selectedDay = defaultDay
+		} // else {
+		// 	if(daysArray.length) {
+		// 		selectedDay = daysArray[0]
+		// 	}
+		// }
+		this.setState({ selectedSize: event.target.value, selectedDay, selectedSlot:"" });
 	}
 
 	setSlots(e) {
@@ -315,7 +340,7 @@ const VariantSelectionComponent = ReactDOM.render(e(variantSelection), domContai
 window.showVariantSelectionPopup = (product, last_selected, title) => {
 	console.log("inside updateViewCartCompoent", product.product_id, last_selected);
 	const selectedDay = product.day? product.day:""
-	VariantSelectionComponent.setState({ variants: [], productId: product.product_id, title: title, selectedDay: selectedDay});
+	VariantSelectionComponent.setState({ variants: [], productId: product.product_id, title: title, selectedDay: selectedDay, defaultDay:product.day});
 	VariantSelectionComponent.showVariantModal(product.product_id, last_selected);
 }
 
