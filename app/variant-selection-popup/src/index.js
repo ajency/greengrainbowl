@@ -236,11 +236,11 @@ class variantSelection extends React.Component {
 		let selectedDay = ""
 		if(daysArray.includes(defaultDay)) {
 			selectedDay = defaultDay
-		} else {
-			if(daysArray.length) {
-				selectedDay = daysArray[0]
-			}
-		}
+		} // else {
+		// 	if(daysArray.length) {
+		// 		selectedDay = daysArray[0]
+		// 	}
+		// }
 		this.setState({ selectedSize: event.target.value, selectedDay, selectedSlot:"" });
 	}
 
