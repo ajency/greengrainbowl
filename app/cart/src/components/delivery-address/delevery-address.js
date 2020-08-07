@@ -9,18 +9,25 @@ class DeliveryAddress extends Component {
 	}
 	render() {
 		const { addressType="" } = this.props
-		let addressTypeLabel ="Deliver to";
+		let addressTypeLabel ="Delivery Area";
 		if(addressType == "area") {
 			addressTypeLabel="Delivery Area"
 		}
 		return (
 			<div className="delivery-address-container p-15 mt-3">
 				<div className="address-details list-text-block p-15 mb-0">
-					<div className="address-details-inner font-weight-light">
-						<span className="font-weight-semibold">{addressTypeLabel}</span>
-						<span id="cart-delivery-address"> {this.props.address}</span>
+					{addressType !='area' && <div className="address-details-inner font-weight-light mb-1">
+						<span className="font-weight-semibold">Delivery address:</span>
+						<span id="cart-delivery-address" style={{textTransform:"capitalize"}}> {this.props.deliveryAddress}</span>
+					</div>}
+					<div className="address-details-inner font-weight-light mb-1">
+						<span className="font-weight-semibold">Delivery area:</span>
+						<span id="cart-delivery-address"> {this.props.deliveryArea}</span>
+						<span style={{color:'#4aa751', cursor:"pointer", marginLeft:3}} onClick={(e)=> this.openMap(e)} className>see on map</span>
 						<span className="text-green d-inline-block cursor-pointer ml-2" onClick={() => this.openChangeLocationModal()}>Change</span>
+
 					</div>
+					
 
 					{this.showSummaryContent()}
 				</div>
@@ -62,6 +69,10 @@ class DeliveryAddress extends Component {
 
 	changeShippingAddress() {
 		this.props.history.push('/cart/select-address');
+	}
+	openMap(e) {
+		e.preventDefault()
+		window.open(this.props.mapLink)
 	}
 }
 

@@ -351,11 +351,8 @@ class gpsModalPrompt extends React.Component {
 					if(loc)
 						this.setUserLocations([res.data.result.geometry.location.lat,res.data.result.geometry.location.lng], res.data.result.formatted_address,false);
 					else if(latlng)
-						if(res.data.results>=4) {
-							this.setUserLocations(latlng, res.data.results[1].formatted_address,false);
-						} else {
-							this.setUserLocations(latlng, res.data.results[1].formatted_address,false);
-						}
+						this.setUserLocations(latlng, res.data.results[0].formatted_address,false);
+						
 				}
 				else{
 					this.removeSliderLoader();

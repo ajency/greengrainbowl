@@ -16,7 +16,8 @@ class OrderDetails extends Component {
             loader:true,
             addressLabel:'',
             shippingAddress:'',
-            orderSummary:''
+            orderSummary:'',
+            mapLink:''
         }
     }
 
@@ -53,16 +54,14 @@ class OrderDetails extends Component {
                             this.setState({shippingAddress: " "+this.state.pickupPoint})
                         } else {
                             let shipping_address='';
-                            if (res.order_data.shipping_address.address) {
-                                shipping_address = res.order_data.shipping_address.address+', '
+                            let mapLink =''
+                            shipping_address =  res.order_data.shipping_address.formatted_address;
+                            if(res.order_data.shipping_address.lat_long) {
+                                let  latLong = res.order_data.shipping_address.lat_long.lat + "," + res.order_data.shipping_address.lat_long.lng
+                                mapLink = "https://www.google.com/maps/?q="+ latLong;
                             }
-
-                            if(res.order_data.shipping_address.landmark) {
-                                shipping_address = shipping_address + res.order_data.shipping_address.landmark+', '
-                            }
-                            shipping_address = shipping_address + res.order_data.shipping_address.formatted_address;
-                            this.setState({addressLabel: "Deliver to: "})
-                            this.setState({shippingAddress: shipping_address})
+                            this.setState({shippingAddress: shipping_address, addressLabel: "Delivery area: ", mapLink})
+                            
                         }
 
 
@@ -103,6 +102,18 @@ class OrderDetails extends Component {
             if(order_data.status == "failed") {
                 return this.getFailedMarkup()
             } else {
+                let deliveryAddr= ""
+                let {orderSummary} = this.state
+                if (order_data.shipping_address.hasOwnProperty('address')) {
+                    if(order_data.shipping_address.address)
+                    deliveryAddr = order_data.shipping_address.address + ', '
+                }
+                if (order_data.shipping_address.hasOwnProperty('landmark')) {
+                    if(order_data.shipping_address.landmark)
+                    deliveryAddr = deliveryAddr + order_data.shipping_address.landmark 
+                }
+
+               
                 return (
                     <div className="">
                         <div class="cart-heading p-15 pt-0 pb-0">
@@ -120,10 +131,17 @@ class OrderDetails extends Component {
                         <div>
                             <div className="delivery-address-container p-15">
                                 <div className="address-details list-text-block p-15 mb-0">
+                                    <div className="address-details-inner font-weight-light mb-1">
+                                        <span className="font-weight-semibold">Delivery address:</span>
+                                        <span id="cart-delivery-address" style={{textTransform:"capitalize"}}> {deliveryAddr}</span>
+                                        
+                                    </div>
                                     <div className="address-details-inner font-weight-light">
                                         <span className="font-weight-semibold">{this.state.addressLabel}</span>
                                         <span id="cart-delivery-address">{this.state.shippingAddress}</span>
+                                        <span style={{color:'#4aa751', cursor:"pointer", marginLeft:3}} onClick={(e)=> this.openMap(e)} className>see on map</span>
                                     </div>
+                                    
                                     <div>
                                         <div className="address-details-inner font-weight-light mt-3 pt-3 border-grey-top">
                                             <div className="">
@@ -179,12 +197,15 @@ class OrderDetails extends Component {
             <div class="d-flex mb-4">
                 <div class="product-cartimage d-inline-block"><img class="border-radius-rounded" alt="" title="" height="50" width="50" src={item.attributes.image}/></div>
                 <div class="product-details d-inline-block">
-                    <div class="product-title-c font-weight-light">{item.attributes.title}</div>
+                    <div className="d-flex justify-content-between">
+                        <div class="product-title-c font-weight-light">{item.attributes.title}</div>
+                        <div class="product-price font-weight-light text-right pl-3">
+                            <span className="sale-price">₹{item.attributes.price_final}</span>
+                            {item.attributes.price_mrp != item.attributes.price_final && <span className="mrp-price">₹{item.attributes.price_mrp}</span>}    
+                        </div>
+                    </div>
                     <div class="d-flex justify-content-between">
                         <div class="product-size-c text-capitalize">Size: {item.attributes.size} | Qty: {item.quantity}{extraContent}</div>
-                        <div class="d-flex align-items-center">
-                            <div class="product-price font-weight-light text-right pl-3">₹{item.attributes.price_final}</div>
-                        </div>
                     </div>
                     {this.getComboText(item.attributes.size)}
                 </div>
@@ -274,6 +295,10 @@ class OrderDetails extends Component {
            </div>
        );
     }
+    openMap(e) {
+		e.preventDefault()
+		window.open(this.state.mapLink)
+	}
 }
 
 export default OrderDetails;

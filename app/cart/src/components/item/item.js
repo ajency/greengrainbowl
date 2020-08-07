@@ -21,8 +21,15 @@ class Item extends Component {
 						<img className="border-radius-rounded" alt="" title="" height="50" width="50" src={this.props.item.attributes.images['1x']}/>
 					</div>
 					<div className="product-details d-inline-block">
-						<div className="product-title-c font-weight-light">
-							{this.props.item.attributes.title}
+						<div className="d-flex justify-content-between">
+							<div className="product-title-c font-weight-light">
+								{this.props.item.attributes.title}
+							</div>
+							<div className="product-price font-weight-light text-right pl-3">
+								{/* {this.checkItemDiscount()} */}
+								<span className="sale-price">₹{this.props.item.attributes.price_final}</span>	
+								{this.props.item.attributes.price_mrp != this.props.item.attributes.price_final && <span className="mrp-price">₹{this.props.item.attributes.price_mrp}</span>}															
+							</div>
 						</div>	
 						<div className="d-flex justify-content-between">
 							<div className="product-size-c font-italic text-capitalize">
@@ -31,10 +38,6 @@ class Item extends Component {
 							<div className="d-flex align-items-center">
 								<div className="product-quantity d-inline-block">
 									<Quantity quantity={this.props.item.quantity} variant_id={this.props.item.variant_id} product_id={this.props.item.product_id} removeItem={()=>{this.removeItem()}} updateSummary={(summary) => this.updateSummary(summary)} showApiErrorMsg={(msg) => this.setApiErrorMsg(msg)}/>
-								</div>
-								<div className="product-price font-weight-light text-right pl-3">
-									{/* {this.checkItemDiscount()} */}
-									₹{this.props.item.attributes.price_final}								
 								</div>
 							</div>								
 						</div>

@@ -722,6 +722,9 @@ async function updateDeliveryLocation(lat_long, address,  cart_id, savedAddress=
     let addressFlat = ""
     let formatted_address = address
     let addressId=""
+    let name =""
+    let phone = ""
+    let email =""
     if(window.stockLocations.length){
         locations = window.stockLocations;
     }
@@ -733,6 +736,9 @@ async function updateDeliveryLocation(lat_long, address,  cart_id, savedAddress=
         landmark = address.landmark
         formatted_address = address.formatted_address
         addressId = address.id
+        phone =address.phone
+        name = address.name
+        email = address.email
         if(address.address) {
             addressFlat = address.address
         }
@@ -757,7 +763,10 @@ async function updateDeliveryLocation(lat_long, address,  cart_id, savedAddress=
                     'stock_location_id' : stock_location_id,
                     'shipping_address.landmark' : landmark,
                     'shipping_address.address' : addressFlat,
-                    'shipping_address.id' : addressId
+                    'shipping_address.id' : addressId,
+                    'shipping_address.name' : name,
+                    'shipping_address.email' : email,
+                    'shipping_address.phone' : phone
                 })
     let res = { success : true , message: 'Address updated successfully' }
     return res;
