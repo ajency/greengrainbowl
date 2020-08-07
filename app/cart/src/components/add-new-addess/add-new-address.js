@@ -142,7 +142,7 @@ class AddNewAddress extends Component {
                         </div>
                         <div className="list-text-block p-15 mb-4 mt-4">
                             <div className="font-weight-light h5 mb-0">
-                                <span class="font-weight-semibold d-block mb-2">Delivery area</span>
+                                <span class="font-weight-semibold d-block mb-2">Delivery area:</span>
                                 {this.state.showLoader ? <div>Address is loading...</div> : this.state.address}
                                 {this.state.addressInput ? this.getChangeAddressInput() : this.state.address ? <span className="text-green d-inline-block cursor-pointer" onClick={this.changeAddress}>. Change</span> : null}
                             </div>
@@ -329,8 +329,8 @@ class AddNewAddress extends Component {
             email: this.state.email,
             phone: this.state.phone,
             lat_long: [this.state.latlng.lat, this.state.latlng.lng],
-            address: this.state.building,
-            landmark: this.state.landmark,
+            address: this.titleCase(this.state.building),
+            landmark: this.titleCase(this.state.landmark),
             type: this.state.address_type,
             set_default: false
         }
@@ -519,7 +519,12 @@ class AddNewAddress extends Component {
 
     }
 
-
+    titleCase(str) {
+        return str.toLowerCase().split(' ').map(function(word) {
+          return (word.charAt(0).toUpperCase() + word.slice(1));
+        }).join(' ');
+    }
+    
     displayError(msg) {
         // document.querySelector('#failure-toast').innerHTML = msg;
         // document.querySelector('#failure-toast').classList.remove('d-none');

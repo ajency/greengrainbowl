@@ -60,7 +60,7 @@ class OrderDetails extends Component {
                                 let  latLong = res.order_data.shipping_address.lat_long.lat + "," + res.order_data.shipping_address.lat_long.lng
                                 mapLink = "https://www.google.com/maps/?q="+ latLong;
                             }
-                            this.setState({shippingAddress: shipping_address, addressLabel: "Deliver area: ", mapLink})
+                            this.setState({shippingAddress: shipping_address, addressLabel: "Delivery area: ", mapLink})
                             
                         }
 
@@ -132,8 +132,8 @@ class OrderDetails extends Component {
                             <div className="delivery-address-container p-15">
                                 <div className="address-details list-text-block p-15 mb-0">
                                     <div className="address-details-inner font-weight-light mb-1">
-                                        <span className="font-weight-semibold">Delivery address</span>
-                                        <span id="cart-delivery-address"> {deliveryAddr}</span>
+                                        <span className="font-weight-semibold">Delivery address:</span>
+                                        <span id="cart-delivery-address" style={{textTransform:"capitalize"}}> {deliveryAddr}</span>
                                         
                                     </div>
                                     <div className="address-details-inner font-weight-light">
