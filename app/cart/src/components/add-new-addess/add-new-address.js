@@ -419,7 +419,7 @@ class AddNewAddress extends Component {
                         this.setState({ 'latlng': { lat: res.data.result.geometry.location.lat, lng: res.data.result.geometry.location.lng } });
                         this.setState({ 'locations': [], 'addressInput': false });
                     } else if (obj.lat && obj.lng) {
-                        res_address = res.data.results[1]
+                        res_address = res.data.results[0]
 
                     }
                     if(!obj.address) {

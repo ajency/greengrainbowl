@@ -32,6 +32,8 @@ class CartCheckoutSummary extends Component {
 			cartEmpty: false,
 			approxDeliveryTime: generalConfig.preparationTime,
 			shippingAddress: '',
+			deliveryAddress:'',
+			mapLink:'',
 			accountName: '',
 			accountEmail: '',
 			errors: {
@@ -188,6 +190,23 @@ class CartCheckoutSummary extends Component {
 
 	getDeliveryAddressSection() {
 		let deliveryaddress = '';
+		let deliveryAddr = "";
+		let mapLink = ""
+		let {orderSummary} = this.state
+		if (orderSummary.shipping_address.hasOwnProperty('address')) {
+			if(orderSummary.shipping_address.address)
+			deliveryAddr = orderSummary.shipping_address.address + ', '
+		}
+		if (orderSummary.shipping_address.hasOwnProperty('landmark')) {
+			if(orderSummary.shipping_address.landmark)
+			deliveryAddr = deliveryAddr + orderSummary.shipping_address.landmark 
+		}
+
+		if(orderSummary.shipping_address.lat_long) {
+			let  latLong = orderSummary.shipping_address.lat_long.join()
+			mapLink = "https://www.google.com/maps/?q="+ latLong;
+		}
+		let deliveryArea = orderSummary.shipping_address.formatted_address;
 		if (this.state.site_mode == 'kiosk') {
 			deliveryaddress = <div className="delivery-address-container p-15">
 				<div className="address-details list-text-block p-15 mb-0">
@@ -203,7 +222,7 @@ class CartCheckoutSummary extends Component {
 			</div>
 		} else {
 			deliveryaddress = <div>
-				<DeliveryAddress showSummaryContent={true} address={this.state.shippingAddress} userDetails={this.state.orderSummary.shipping_address} navigateToAddress={() => this.navigateToAddress()} addressType={"location"} />
+				<DeliveryAddress showSummaryContent={true} mapLink={mapLink} deliveryAddress={deliveryAddr} deliveryArea={deliveryArea} userDetails={this.state.orderSummary.shipping_address} navigateToAddress={() => this.navigateToAddress()} addressType={"location"} />
 			</div>
 		}
 		return deliveryaddress
