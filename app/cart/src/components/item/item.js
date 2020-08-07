@@ -27,8 +27,8 @@ class Item extends Component {
 							</div>
 							<div className="product-price font-weight-light text-right pl-3">
 								{/* {this.checkItemDiscount()} */}
-								<span>₹{this.props.item.attributes.price_final}</span>	
-								{this.props.item.attributes.price_mrp != this.props.item.attributes.price_final && <span>₹{this.props.item.attributes.price_mrp}</span>}															
+								<span className="sale-price">₹{this.props.item.attributes.price_final}</span>	
+								{this.props.item.attributes.price_mrp != this.props.item.attributes.price_final && <span className="mrp-price">₹{this.props.item.attributes.price_mrp}</span>}															
 							</div>
 						</div>	
 						<div className="d-flex justify-content-between">

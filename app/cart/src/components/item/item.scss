@@ -28,16 +28,14 @@
 		//width: 13%;
 	    display: flex;
         align-items: baseline;
-		span{
-			&:first-child{
-				font-size: 18px;
-			    font-weight: 500;
-			}
-			&:last-child{
-				color: #878787;
-    			text-decoration: line-through;
-			    margin-left: 8px;
-			}
+		.sale-price{
+			font-size: 18px;
+		    font-weight: 500;
+		}
+		.mrp-price{
+			color: #878787;
+			text-decoration: line-through;
+		    margin-left: 8px;
 		}
 	}
 	&-size-c{
