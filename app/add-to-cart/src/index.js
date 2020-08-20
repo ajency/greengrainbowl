@@ -259,7 +259,7 @@ document.querySelectorAll('.react-add-to-cart-container')
 
 window.updateaddToCartComponent = (item) => {
 	addToCartComponents.forEach((component) =>{
-		if(component.props.product_data.product_id == item.product_id && item.day == component.props.product_data.day){
+		if(component.props.product_data.product_id == item.product_id ){
 			let items = component.state.items;
 			items.push(item)
 			items.sort((a,b)=>{
@@ -281,7 +281,7 @@ window.updateItemQuantity = (item, action) => {
 	addToCartComponents.forEach((component) =>{
 		const product = window.products.find((p) => p.id == item.product_id)
 		const variant = product.variants.find((v) => v.id == item.variant_id)
-		if(component.props.product_data.product_id == item.product_id && component.props.product_data.day == variant.day){
+		if(component.props.product_data.product_id == item.product_id){
 			if(action == 'add')
 				component.addItems(item)
 			else
@@ -294,7 +294,7 @@ window.addToCartFromVariant = (product_id, variant_id , product) => {
 	let found = false;
 	addToCartComponents.forEach((component) =>{
 		const variant = product.variants.find((p) => p.id == variant_id)
-		if(component.props.product_data.product_id == product_id && variant.day == component.props.product_data.day && !found){
+		if(component.props.product_data.product_id == product_id  && !found){
 			component.addToCart(variant_id, product);
 			found = true;
 		}
