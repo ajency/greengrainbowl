@@ -44,7 +44,7 @@ buildFirebaseFunctions(){
 	cd ../firebase
 	npm install
 	node addfirebasecred.js
-	cp src/firebase-functions.js ../build/site/firebase-functions.js
+	# cp src/firebase-functions.js ../build/site/firebase-functions.js
 	cd ..
 }
 

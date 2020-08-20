@@ -44,7 +44,7 @@ buildFirebaseFunctions(){
 	cd ../firebase
 	npm install
 	node addfirebasecred.js
-	cp src/firebase-functions.js ../build/oyofifth/firebase-functions.js
+	# cp src/firebase-functions.js ../build/oyofifth/firebase-functions.js
 	cd ..
 }
 
