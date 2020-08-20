@@ -24,7 +24,7 @@ fs.emptyDir('../pre_build/cart')
 
 			let timestamp = new Date().getTime();
 			
-			await fs.copy('firebase/src/firebase-functions.js', '../build/site/firebase-functions.'+timestamp+'.js');
+			await fs.copy('../firebase/src/firebase-functions.js', '../build/site/firebase-functions.'+timestamp+'.js');
 			react_file_hash["firebase"] = timestamp;
 
 			//copy components to one file
