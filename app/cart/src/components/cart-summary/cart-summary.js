@@ -36,23 +36,23 @@ class CartSummary extends Component {
 		const { couponDetails } = this.props
 		if (this.props.summary.cart_discount) {
 			const couponCateLabel = couponDetails.coupon_category_label || "Coupon Discount"
-			return <div className="pb-52">
+			return <div>
 				<div className="summary-item align-items-end">
-					<div>
-						<div>
-							<label className="mb-0">{couponCateLabel}</label>
-						</div>
-						<div>
-							<label className="font-weight-medium font-italic mb-0 font-size-13">{couponDetails.code}</label>
-							{this.props.callFrom &&
-								<button className="p-0 ml-2 btn-remove-coupon" type="button" onClick={e => this.removeCoupon()}>
-									<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-x-circle-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-										<path fill="red" fill-rule="evenodd" d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-4.146-3.146a.5.5 0 0 0-.708-.708L8 7.293 4.854 4.146a.5.5 0 1 0-.708.708L7.293 8l-3.147 3.146a.5.5 0 0 0 .708.708L8 8.707l3.146 3.147a.5.5 0 0 0 .708-.708L8.707 8l3.147-3.146z" />
-									</svg>
-								</button>}
+					<div className="whitespace-nowrap">
+						<div className="d-flex">
+							<label className="font-weight-light">{couponCateLabel}</label>
+							<div className="pl-1 font-weight-light">
+								(<label className="font-weight-medium font-italic mb-0 font-size-13">{couponDetails.code.lenght > 6 ? couponDetails.code+'...' : couponDetails.code }</label>)
+								{this.props.callFrom &&
+									<button className="p-0 ml-2 btn-remove-coupon" type="button" onClick={e => this.removeCoupon()}>
+										<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-x-circle-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+											<path fill="red" fill-rule="evenodd" d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-4.146-3.146a.5.5 0 0 0-.708-.708L8 7.293 4.854 4.146a.5.5 0 1 0-.708.708L7.293 8l-3.147 3.146a.5.5 0 0 0 .708.708L8 8.707l3.146 3.147a.5.5 0 0 0 .708-.708L8.707 8l3.147-3.146z" />
+										</svg>
+									</button>}
+							</div>
 						</div>
 					</div>
-					<div className="text-success">-₹{this.props.summary.cart_discount}</div>
+					<label className="font-weight-light text-success">-₹{this.props.summary.cart_discount}</label>
 				</div>
 
 				{showPopup && msgContent}
@@ -60,7 +60,7 @@ class CartSummary extends Component {
 
 		} else {
 			if (this.props.callFrom) {
-				return <div className="pb-52">
+				return <div>
 					{/* <div className="apply-coupon-wrapper">
 						<div><label className="">Apply Coupon</label></div>
 						<div className="summary-items">
@@ -164,19 +164,19 @@ class CartSummary extends Component {
 						<button class="background-white border-0 font-weight-medium text-primary outline-0-btn" onClick={e => this.removeToast()}>Okay</button>
 					</div>
 				</div>
-			</div>	
+			</div>
 		}
 
 		this.setState({ showPopup: true, msgContent: element })
 
 		this.popupTimeOut = setTimeout(() => {
-			 this.setState({ showPopup: false, msgContent: "" })
+			this.setState({ showPopup: false, msgContent: "" })
 		}, 4000)
 	}
 
-	removeToast = () =>  {
+	removeToast = () => {
 		console.log(this.popupTimeOut)
-		if(this.popupTimeOut) {
+		if (this.popupTimeOut) {
 			clearTimeout(this.popupTimeOut)
 		}
 		this.setState({ showPopup: false, msgContent: "" })

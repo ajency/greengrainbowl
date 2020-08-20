@@ -73,7 +73,7 @@ class CouponScreen extends Component {
 
     getResCard = () => {
         const { msgContent } = this.state;
-        return <div class="msg-box-wrapper list-text-block">
+        return <div class="msg-box-wrapper list-text-block mt_4">
             <div dangerouslySetInnerHTML={{ __html: msgContent }} />
             <div>
                 <button className="msg-close-btn" onClick={e => this.setState({ showPopup: false })}>
