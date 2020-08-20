@@ -12,7 +12,7 @@ class Payments extends Component {
     getPaymentGateway() {
         switch (this.props.pgname.toLowerCase()) {
             case 'razorpay':
-                return <Razorpay checkNameExists={this.props.checkNameExists} pgconfig={this.props.pgconfig} order={this.props.order} {...this.props.user_details}/>
+                return <Razorpay validateCart={this.props.validateCart} pgconfig={this.props.pgconfig} order={this.props.order} {...this.props.user_details}/>
                 break;
         
             default:

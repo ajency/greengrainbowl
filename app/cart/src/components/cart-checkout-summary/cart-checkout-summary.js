@@ -12,6 +12,7 @@ import Payments from '../payment-gateway/payments'
 import CartSummary from '../cart-summary/cart-summary';
 import { generalConfig } from "../config";
 import logo from '../../assets/images/app-logo.png';
+import { reject } from 'underscore';
 
 
 
@@ -20,7 +21,7 @@ class CartCheckoutSummary extends Component {
 	_isMounted = false;
 	constructor(props) {
 		super(props);
-		this.checkNameExists = this.checkNameExists.bind(this);
+		this.CartSummary = React.createRef();
 		this.state = {
 			site_mode: generalConfig.site_mode,
 			pickupPoint: generalConfig.pickupPoint,
@@ -97,6 +98,36 @@ class CartCheckoutSummary extends Component {
 
 	}
 
+	refreshPage = () => {
+		let shipping_address_extra = ''
+		return new Promise((resolve, reject) => {
+
+			window.assignAddressToCart(null, true)
+				.then((res) => {
+					console.log(res)
+					if (res.code == 'PAYMENT_DONE') {
+						// window.removeFromLocalStorage('cart_id')
+						this.props.history.push('/cart');
+					}
+					this.setState({ orderSummary: res.cart, dataLoading: false, fetchCartComplete: true });
+					if (res.cart.shipping_address.hasOwnProperty('address')) {
+						shipping_address_extra = res.cart.shipping_address.address + ', '
+					}
+					if (res.cart.shipping_address.hasOwnProperty('landmark')) {
+						shipping_address_extra = shipping_address_extra + res.cart.shipping_address.landmark + ', '
+					}
+					shipping_address_extra = shipping_address_extra + res.cart.shipping_address.formatted_address
+					this.setState({ shippingAddress: shipping_address_extra })
+					resolve(true)
+				}).catch(err => {
+					console.log(err)
+					resolve(true)
+					this.setState({ dataLoading: false })
+
+				})
+		})
+	}
+
 	componentWillUnmount() {
 		this._isMounted = false
 	}
@@ -157,10 +188,26 @@ class CartCheckoutSummary extends Component {
 							<div className="p-15 pt-0 pb-0">
 								<hr className="sep m-0"></hr>
 							</div>
-
+							<div className="p-15">
+								<button className="btn btn-outline-primary-custom btn-primary btn-arrow-icon w-100 p-15 rounded-0 text-left position-relative h5 ft6 mb-0 d-flex align-items-center justify-content-between text-uppercase overflow-hidden btn-white mb-3" onClick={e => this.showCouponScreen()}>
+									<span className="zindex-1">Apply Promo Coupon</span>
+									<i class="text-primary fa fa-arrow-right font-size-20" aria-hidden="true"></i>
+								</button>
+								<button className="btn btn-outline-primary-custom btn-primary btn-arrow-icon w-100 p-15 rounded-0 text-left position-relative h5 ft6 mb-0 d-flex align-items-center justify-content-between text-uppercase overflow-hidden btn-white" onClick={e => this.showCouponScreen()}>
+									<span className="zindex-1">Apply Referral Coupon</span>
+									<i class="text-primary fa fa-arrow-right font-size-20" aria-hidden="true"></i>
+								</button>
+							</div>
 							<div className="p-15">
 								<label className="cart-summary-label font-weight-medium">Billing Details</label>
-								<CartSummary summary={this.state.orderSummary.summary} />
+								<CartSummary
+									ref={this.CartSummary}
+									summary={this.state.orderSummary.summary}
+									callFrom={"CartSummary"}
+									// applyCoupon={this.applyCoupon}
+									couponDetails={this.state.orderSummary.applied_coupon}
+									removeCoupon={this.removeCoupon}
+								/>
 							</div>
 
 							<div className="p-15 pt-0">
@@ -173,7 +220,7 @@ class CartCheckoutSummary extends Component {
 						</div>
 						<div className="p-15 pt-0 pb-0">
 							<div className="secure-checkout fixed-bottom visible bg-white p-15">
-								<Payments checkNameExists={this.checkNameExists} pgname="razorpay" pgconfig={{ pgtype: "standard", classes: "btn btn-primary btn-arrow w-100 p-15 rounded-0 text-left position-relative h5 ft6 mb-0" }} order={{ id: window.readFromLocalStorage(generalConfig.site_mode + '-cart_id-' + generalConfig.businessId), amount: this.state.amount }} user_details={{ user_details: this.state.orderSummary.user_details }} />
+								<Payments validateCart={this.validateCart} pgname="razorpay" pgconfig={{ pgtype: "standard", classes: "btn btn-primary btn-arrow w-100 p-15 rounded-0 text-left position-relative h5 ft6 mb-0" }} order={{ id: window.readFromLocalStorage(generalConfig.site_mode + '-cart_id-' + generalConfig.businessId), amount: this.state.amount }} user_details={{ user_details: this.state.orderSummary.user_details }} />
 							</div>
 						</div>
 					</div>
@@ -187,7 +234,6 @@ class CartCheckoutSummary extends Component {
 			</div>
 		);
 	}
-
 	getDeliveryAddressSection() {
 		let deliveryaddress = '';
 		let deliveryAddr = "";
@@ -435,15 +481,90 @@ class CartCheckoutSummary extends Component {
 		this.setState({ orderSummary: cart_data });
 	}
 
-	checkNameExists() {
+	validateCart = async () => {
+		window.addCartLoader()
 		if (this.state.orderSummary.shipping_address.name) {
-			return true;
+			const response = await this.checkIfCartIsValid()
+			if (response) {
+				return true;
+			} else {
+				window.removeCartLoader()
+				return false
+			}
 		} else {
+			window.removeCartLoader()
 			let errors = this.state.errors;
 			errors.accountInfo = 'Please enter account details';
 			this.setState({ "errors": errors });
 			return false;
 		}
+	}
+
+
+	// applyCoupon = (coupon) => {
+	// 	window.addCartLoader()
+	// 	window.cartOperation({ operation: "add", couponCode: coupon }, this.state.orderSummary).then((res) => {
+	// 		if (res.success) {
+	// 			// this.refreshPage().then(() => {
+	// 			this.setState({ orderSummary: res.data.cart })
+	// 			this.CartSummary.current.clearCoupon()
+	// 			this.CartSummary.current.displayToast(`${res.message}`, "success")
+	// 			window.removeCartLoader();
+	// 			// }).catch(e => {
+	// 			// console.log(e)
+	// 			// })
+	// 		} else {
+	// 			this.CartSummary.current.displayToast(`${res.message}`, "error")
+	// 			this.CartSummary.current.clearCoupon()
+	// 			window.removeCartLoader();
+	// 		}
+	// 	}).catch((e) => {
+	// 		console.log(e)
+	// 		this.CartSummary.current.clearCoupon()
+	// 		window.removeCartLoader();
+	// 		this.CartSummary.current.displayToast(`Failed to apply coupon ${coupon}`, "error")
+	// 	})
+	// }
+
+	removeCoupon = () => {
+		window.addCartLoader()
+		window.cartOperation({ operation: "remove" }, this.state.orderSummary).then((res) => {
+			if (res.success) {
+				// this.refreshPage().then(() => {
+				this.setState({ orderSummary: res.data.cart })
+				// this.CartSummary.current.displayToast(`${res.message}`, "success")
+				window.removeCartLoader();
+				// }).catch(e => {
+				// console.log(e)
+				// })
+			} else {
+				this.CartSummary.current.displayToast(`${res.message}`, "error")
+				window.removeCartLoader();
+			}
+		}).catch((e) => {
+			console.log(e)
+			this.CartSummary.current.clearCoupon()
+			window.removeCartLoader();
+			this.CartSummary.current.displayToast(`Failed to remove coupon`, "error")
+		})
+	}
+
+	checkIfCartIsValid() {
+		return new Promise((resolve, reject) => {
+			window.cartOperation({ operation: "validate_cart" }, this.state.orderSummary).then((res) => {
+				if (res.success) {
+					resolve(true)
+				} else {
+					this.CartSummary.current.displayToast(`${res.message}`, "error")
+					resolve(false)
+				}
+			})
+		})
+	}
+
+	showCouponScreen = () => {
+		console.log('/cart/cart-summary/coupons')
+		this.props.history.push('/cart/cart-summary/coupons');
 	}
 
 

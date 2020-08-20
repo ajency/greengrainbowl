@@ -18,9 +18,13 @@ class Standard extends Component {
     }
     async standardPayment(e) {
        
-         await this.props.createOrder(e)
+         const canProceed = await this.props.createOrder(e)
+         if(!canProceed) {
+             return false
+         }
          let amount = this.state.amount*100
          if(!this.props.r_order_id) {
+             console.log("no order id")
             window.displayError("Something went wrong")
             return
          }

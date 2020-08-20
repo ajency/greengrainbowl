@@ -1,0 +1,19 @@
+.btn-white {
+    background-color: white;
+    color: #47A748
+}
+
+.btn-outline-primary-custom {
+    background-color: white !important;
+    color: #47A748 !important;
+    border-color: #47A748 !important;
+
+    &:hover {
+        // background-color: #47a748 !important;
+        // color: #ffffff !important;
+        // border-color: #47a748 !important;
+        // .fa {
+        //     color: #ffffff !important;
+        // }
+    }
+}
