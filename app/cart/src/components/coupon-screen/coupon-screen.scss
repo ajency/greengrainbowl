@@ -100,7 +100,9 @@
 
 .msg-error {
     p {
-        font-size: 13px;
+        font-size: 16px;
+        line-height: 22px;
+        font-weight: 300;
         color: #f00;
         margin: 0;
     }
@@ -108,12 +110,13 @@
 
 .msg-success {
     p {
-        font-size: 13px;
+        font-size: 16px;
+        line-height: 22px;
         color: #47a748;
-        font-weight: 500;
+        font-weight: 300;
         margin: 0;
         span {
-            font-size: 24px;
+            font-size: 16px;
             font-weight: 700;
             color: #47a748;
         }
