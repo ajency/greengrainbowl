@@ -44,8 +44,7 @@ buildFirebaseFunctions(){
 	cd ../firebase
 	npm install
 	node addfirebasecred.js
-	cp src/firebase-functions.js ../build/site/firebase-functions.js
-	cd ..
+	# cp src/firebase-functions.js ../build/site/firebase-functions.js
 }
 
 buildCartApp(){
@@ -53,6 +52,7 @@ buildCartApp(){
 	npm install
 	npm run build
 	node postbuild.js
+	cd ..
 }
 
 
@@ -65,6 +65,6 @@ buildSignIn
 buildVerifyOtp
 buildViewCart
 buildVariationSelection
-buildCartApp
 buildFirebaseFunctions
+buildCartApp
 removePreBuildFolder

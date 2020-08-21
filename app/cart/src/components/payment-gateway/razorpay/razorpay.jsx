@@ -67,7 +67,8 @@ class Razorpay extends Component {
         if(e) {
             e.preventDefault();
         }
-        if(!this.props.checkNameExists()) {
+        let valid = await this.props.validateCart()
+        if(!valid) {
             return false;
         }
         window.addCartLoader();
@@ -90,6 +91,7 @@ class Razorpay extends Component {
 
             return true;
         }) .catch((err) => {
+            console.log(err)
             window.displayError("Something went wrong. Please try in sometime");
             window.removeCartLoader();
             return false;

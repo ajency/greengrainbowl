@@ -12,7 +12,7 @@ let react_component_js_files = ["add-to-cart.js", "delivery-address-slider.js", 
 fs.emptyDir('../pre_build/cart')
 .then(() => {
 	fs.copy('./build/', '../pre_build/cart/')
-		.then((success) =>{
+		.then(async (success) =>{
 			console.log("build folder copied successfully");
 
 			//cart app js and css
@@ -22,10 +22,12 @@ fs.emptyDir('../pre_build/cart')
 
 			fromDir('./build/static/css/', css_files[0], 'css');
 
-
+			let timestamp = new Date().getTime();
+			
+			await fs.copy('../firebase/src/firebase-functions.js', '../build/site/firebase-functions.'+timestamp+'.js');
+			react_file_hash["firebase"] = timestamp;
 
 			//copy components to one file
-			let timestamp = new Date().getTime();
 			for(let file of react_component_js_files){
 			    copyComponentsToOneFile(file, timestamp);
 			}

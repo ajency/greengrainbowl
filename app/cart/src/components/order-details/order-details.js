@@ -247,6 +247,7 @@ class OrderDetails extends Component {
                 </div>
                 <div className="font-weight-light">₹{order_data.summary.sale_price_total} </div>
             </div>
+            {order_data.summary.cart_discount && this.discountHtml()}
             {order_data.order_mode == 'online' && this.deliveryHtml()}
             <div className="summary-item border-grey-50 border-0-left border-0-right mt-1 pt-2 pb-2">
                 <div>
@@ -299,6 +300,20 @@ class OrderDetails extends Component {
 		e.preventDefault()
 		window.open(this.state.mapLink)
 	}
+
+    discountHtml = () => {
+        const order_data = this.state.orderSummary.order_data;
+        const couponCateLabel = order_data.applied_coupon.coupon_category_label || "Coupon Discount"
+        return <>
+            <div className="summary-item align-items-end">
+                <div>
+                    <label className="mb-0">{couponCateLabel}</label>
+                    <label className="d-block font-weight-medium font-italic mb-0 font-size-13">{order_data.applied_coupon.code}</label>
+                </div>
+                <div className="text-success">-₹{order_data.summary.cart_discount}</div>
+            </div>
+        </>
+    }
 }
 
 export default OrderDetails;

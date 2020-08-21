@@ -4,3 +4,75 @@
 	padding-top: .25rem;
 	padding-bottom: .25rem;
 }
+
+.apply-coupon-wrapper {
+    position: relative;
+	margin: 0px 0 10px;
+	
+	.coupon-inp-box {
+		padding-right: 75px !important;
+	}
+	.coupon-apply-btn {
+		border: 0;
+		box-shadow: none;
+		background-color: transparent;
+		position: absolute;
+		top: 50%;
+		right: 10px;
+		transform: translateY(-50%);
+		text-decoration: none !important;
+		outline: 0;
+	}
+}
+.btn-remove-coupon {
+    background: 0;
+    border: 0;
+    line-height: normal;
+    position: relative;
+    top: 1px;
+    outline: 0 !important;
+    font-size: 12px;
+    cursor: pointer;
+    padding: 0 5px !important;
+}
+.pb-52 {
+	padding-bottom: 52px;
+}
+
+.mw-100 {
+	max-width: 100% !important;
+}
+
+.modal-fullscreen {
+	position: fixed !important;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	background:rgba(0,0,0,0.45);
+	z-index: 99999;
+	align-items: center;
+    justify-content: center;
+    display: flex;
+    width: 100%;
+}
+
+.modal-content-block {
+	background-color: #ffffff;
+    padding: 20px 15px;
+    max-width: 80%;
+    margin: 0 auto;
+    border-radius: 6px;
+	width: 100%;
+	position: relative;
+}
+
+.outline-0-btn {
+	outline: 0 !important;
+	background-color: transparent;
+	border: 0;
+}
+
+.whitespace-nowrap {
+	white-space: nowrap;
+}

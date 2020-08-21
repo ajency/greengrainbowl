@@ -46,3 +46,4 @@ node_modules/
 /app/firebase/src/firebase-functions.js
 /app/verify-otp/.env
 /app/view-cart/.env
+package-lock.json
